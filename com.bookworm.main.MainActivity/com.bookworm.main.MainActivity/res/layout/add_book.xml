@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff" >
+
+        
+        <LinearLayout
+            android:id="@+id/imageLayout"
+            android:layout_alignParentTop="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="100"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dip"
+            >
+            
+        <LinearLayout
+            android:id="@+id/imageLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="35"
+            >            
+
+            <!-- Book Name Label -->
+			
+            <TextView
+                android:id="@+id/bookNameText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bookName"
+                android:textColor="#372c24" 
+                />
+
+            <EditText
+                android:id="@+id/book_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dip"
+                android:layout_marginTop="5dip"
+                android:singleLine="true"
+                />
+            </LinearLayout>
+        <ImageView
+            android:id="@+id/newbookImg"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_weight="65" 
+            />
+            
+            
+            
+        </LinearLayout>
+
+            <EditText
+                android:id="@+id/writer"
+                android:layout_below="@id/imageLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:text="@string/writerName"
+                android:textSize="12dip"
+                android:singleLine="true" 
+                />
+            <!-- Publisher Label -->
+        
+
+            <EditText
+                android:id="@+id/sh_description"
+                android:layout_below="@+id/writer"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:lines="4"
+                android:text="@string/bookDescription"
+                android:textSize="12dip"
+                android:singleLine="false" />
+
+            <EditText
+                android:id="@+id/tags"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:lines="2"
+                android:layout_below="@id/sh_description"
+                android:text="@string/bookTags"
+                android:textSize="12dip"
+                android:singleLine="false" />
+
+            <Button
+                android:layout_below="@+id/tags"
+                android:id="@+id/btnAddBook"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:text="@string/btnBookAdd" />
+            
+          <LinearLayout
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:weightSum="100" 
+             android:gravity="bottom"
+             android:layout_alignParentBottom="true"
+             >
+
+             <ImageView
+                 android:id="@+id/home_button"
+                 android:layout_width="wrap_content"
+                 android:layout_height="fill_parent"
+                 android:layout_weight="20"
+                 android:src="@drawable/icon_title" />
+
+             <ImageView
+                 android:id="@+id/explore_button"
+                 android:layout_width="wrap_content"
+                 android:layout_height="fill_parent"
+                 android:layout_weight="20"
+                 android:src="@drawable/icon_title" />
+
+             <ImageView
+                 android:id="@+id/add_button"
+                 android:layout_width="wrap_content"
+                 android:layout_height="fill_parent"
+                 android:layout_weight="20"
+                 android:src="@drawable/icon_title" />
+
+             <ImageView
+                 android:id="@+id/profile_button"
+                 android:layout_width="wrap_content"
+                 android:layout_height="fill_parent"
+                 android:layout_weight="20"
+                 android:src="@drawable/icon_title" />
+
+             <ImageView
+                 android:id="@+id/timeline_button"
+                 android:layout_width="wrap_content"
+                 android:layout_height="fill_parent"
+                 android:layout_weight="20"
+                 android:src="@drawable/icon_title" />
+         </LinearLayout>            
+    </RelativeLayout>
+
+</ScrollView>

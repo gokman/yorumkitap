@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:weightSum="100" >
+
+    <LinearLayout
+        android:id="@+id/mainPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:orientation="vertical" >
+
+		<LinearLayout         
+		android:id="@+id/searchPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dip"
+        
+        android:weightSum="100"
+        android:orientation="horizontal">
+		    
+        <EditText
+            android:id="@+id/searchText"
+            android:layout_width="match_parent"
+            android:layout_weight="100"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@string/explorePageSearch" />
+		    		   
+		</LinearLayout>
+		<LinearLayout         
+		android:id="@+id/searchButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dip"
+        
+        android:weightSum="100"
+        android:orientation="horizontal">
+        
+        <Button
+                android:id="@+id/exploreBooks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="@string/exploreBooks" />
+
+            <Button
+                android:id="@+id/exploreUsers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="@string/exploreUsers" />
+</LinearLayout>
+		<TextView
+            android:id="@+id/tableHeader"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:layout_marginTop="5dip"
+            android:singleLine="true" 
+            android:text="@string/explorePagePopulers"
+            android:gravity="center_horizontal"/>
+                
+        <TableLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/tableLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
+            android:weightSum="100" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:weightSum="60" >
+
+                <ImageView
+                    android:id="@+id/explore_1_1"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/explore_1_2"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/explore_1_3"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/bookNameRow1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:weightSum="60" >
+
+                <TextView
+                    android:id="@+id/bookname_1_1"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bookname_1_2"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bookname_1_3"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:weightSum="60" >
+
+                <ImageView
+                    android:id="@+id/explore_2_1"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/explore_2_2"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/explore_2_3"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/bookNameRow2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:weightSum="60" >
+
+                <TextView
+                    android:id="@+id/bookname_2_1"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bookname_2_2"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bookname_2_3"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:weightSum="60" >
+
+                <ImageView
+                    android:id="@+id/explore_3_1"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/explore_3_2"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/explore_3_3"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/bookNameRow3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:weightSum="60" >
+
+                <TextView
+                    android:id="@+id/bookname_3_1"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bookname_3_2"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bookname_3_3"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:weightSum="60" >
+
+                <ImageView
+                    android:id="@+id/explore_4_1"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/explore_4_2"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/explore_4_3"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+            </TableRow>
+            <TableRow
+                android:id="@+id/bookNameRow5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:weightSum="60" >
+
+                <TextView
+                    android:id="@+id/bookname_4_1"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bookname_4_2"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bookname_4_3"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+            </TableRow>
+            
+            <TableRow
+                android:id="@+id/tableRow5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:weightSum="60" >
+
+                <ImageView
+                    android:id="@+id/explore_5_1"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/explore_5_2"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/explore_5_3"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:src="@drawable/icon_title"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </ImageView>
+            </TableRow>
+            <TableRow
+                android:id="@+id/bookNameRow5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:weightSum="60" >
+
+                <TextView
+                    android:id="@+id/bookname_5_1"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bookname_5_2"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bookname_5_3"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:layout_weight="20"
+                    android:gravity="center_horizontal"
+                    android:text="Feb 9"
+                    android:textStyle="bold"
+                    android:typeface="serif" >
+                </TextView>
+            </TableRow>
+            </TableLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:weightSum="100" >
+
+        <ImageView
+            android:id="@+id/home_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:src="@drawable/icon_title" />
+
+        <ImageView
+            android:id="@+id/explore_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:src="@drawable/icon_title" />
+
+        <ImageView
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:src="@drawable/icon_title" />
+
+        <ImageView
+            android:id="@+id/profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:src="@drawable/icon_title" />
+
+        <ImageView
+            android:id="@+id/timeline_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:src="@drawable/icon_title" />
+    </LinearLayout>
+
+</RelativeLayout>
