@@ -2,19 +2,27 @@ package com.bookworm.main;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Matrix;
+import android.hardware.Camera;
+import android.hardware.Camera.Size;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,11 +33,11 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.InsertDataTask;
 import com.bookworm.common.SelectDataTask;
-import com.bookworm.util.ApplicationUtil;
 import com.netmera.mobile.NetmeraClient;
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
@@ -47,6 +55,8 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 	private Bitmap bitmap;
 	private String imageURIString;
     private Uri uri;
+    
+    
 	private static final Pattern TAG_PATTERN =   Pattern.compile("(?:^|\\s|[\\p{Punct}&&[^/]])(#[\\p{L}0-9-_]+)");
 
     /** Called when the activity is first created. */
@@ -56,6 +66,11 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.add_book);
+
+        setExplore_button((ImageView)findViewById(R.id.explore_button));
+		setHome_button((ImageView)findViewById(R.id.home_button));
+		setAdd_book_button((ImageView)findViewById(R.id.add_button));
+		setProfile_button((ImageView)findViewById(R.id.profile_button));
 
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);        
     	addBookButton = (Button)findViewById(R.id.btnAddBook);
@@ -152,7 +167,7 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 			}
 		});
 
-
+		setNavigationButtons();
     }
 
     @Override
@@ -178,14 +193,12 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
     
 	public void onClick(View v) {
 	}
+
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		if (requestCode == 100) {
-			if (resultCode == RESULT_OK) {
-				
-			}
-		}
+		super.onActivityResult(requestCode, resultCode);
 	}	
 }

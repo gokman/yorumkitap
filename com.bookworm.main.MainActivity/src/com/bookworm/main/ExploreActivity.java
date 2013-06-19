@@ -43,13 +43,8 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 	
     public ImageLoader imageLoader;
     
-    private Uri fileUri;
     NetmeraUser user;
     
-    private ImageView explore_button;
-    private ImageView home_button;
-    private ImageView add_book_button;
-	private ImageView profile_button;
 	private Button btnExploreBooks;
 	private Button btnExploreUsers;
 	private EditText searchText ;
@@ -70,11 +65,13 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 			e.printStackTrace();
 		}
         imageLoader=new ImageLoader(this.getApplicationContext());
-		explore_button = (ImageView)findViewById(R.id.explore_button);
-		home_button = (ImageView)findViewById(R.id.home_button);
-        add_book_button = (ImageView)findViewById(R.id.add_button);
-        profile_button = (ImageView)findViewById(R.id.profile_button);
-        btnExploreBooks = (Button)findViewById(R.id.exploreBooks);
+        
+        setExplore_button((ImageView)findViewById(R.id.explore_button));
+		setHome_button((ImageView)findViewById(R.id.home_button));
+		setAdd_book_button((ImageView)findViewById(R.id.add_button));
+		setProfile_button((ImageView)findViewById(R.id.profile_button));
+		
+		btnExploreBooks = (Button)findViewById(R.id.exploreBooks);
         btnExploreUsers = (Button)findViewById(R.id.exploreUsers);
         searchText = (EditText)findViewById(R.id.searchText);
         preparelistItems();
@@ -160,66 +157,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 
 
 		});
-		profile_button.setOnClickListener(new View.OnClickListener() {
-			
-			public void onClick(View v) {
-				Intent profileIntent = new Intent(getApplicationContext(), ProfileActivity.class);
-				startActivity(profileIntent);
-				
-			}
-		});
-		
-		explore_button.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent exploreIntent = new Intent(getApplicationContext(), ExploreActivity.class);
-				startActivity(exploreIntent);
-			}
-		});
-		home_button.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent homeIntent = new Intent(getApplicationContext(),MainActivity.class);
-				startActivity(homeIntent);
-			}
-		});		
-		add_book_button.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				try {
-					PackageManager packageManager = getPackageManager();
-					boolean doesHaveCamera = packageManager
-							.hasSystemFeature(PackageManager.FEATURE_CAMERA);
-
-					if (doesHaveCamera) {
-						Camera mCamera = Camera.open();
-						// start the image capture Intent
-						Camera.Parameters cp = mCamera.getParameters();
-
-						Size cameraResolution = cp.getPictureSize();
-						mCamera.release();
-						if (cameraResolution.height > 1024
-								&& cameraResolution.width > 1024) {
-							Toast.makeText(getApplicationContext(),
-									"Camera resolution must be decreased.",
-									Toast.LENGTH_LONG).show();
-						} else {
-							Intent intent = new Intent(
-									MediaStore.ACTION_IMAGE_CAPTURE);
-							// Get our fileURI
-							fileUri = getOutputMediaFile();
-							intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-							startActivityForResult(intent, 100);
-						}
-					}
-				} catch (Exception ex) {
-					Toast.makeText(getApplicationContext(),
-							"There was an error with the camera.",
-							Toast.LENGTH_LONG).show();
-				}
-			}
-		});
-
+		setNavigationButtons();
     }
 	public void onClick(View v) {
 		
@@ -229,35 +167,10 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		if (requestCode == 100) {
-			if (resultCode == RESULT_OK) {
+		super.onActivityResult(requestCode, resultCode);
+    }
 
-				Intent newbookIntent = new Intent(this, AddBookActivity.class);
-				newbookIntent.putExtra("newBookImageURI", fileUri.toString());
-
-				startActivity(newbookIntent);
-
-			}
-		}
-	}
-	private Uri getOutputMediaFile() throws IOException {
-		File mediaStorageDir = new File(
-				Environment
-						.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-				"DayTwentyNine");
-		// Create a media file name
-		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-				.format(new Date());
-		File mediaFile;
-		mediaFile = new File(mediaStorageDir.getPath() + File.separator
-				+ "IMG_" + timeStamp + ".jpg");
-
-		if (mediaFile.exists() == false) {
-			mediaFile.getParentFile().mkdirs();
-			mediaFile.createNewFile();
-		}
-		return Uri.fromFile(mediaFile);
-	}
+    
     private void applyDataToTable(List <NetmeraContent> dataList,String fieldName,String imageProperty) throws NetmeraException{
     	try {
     	for(int k = 0 ; k < dataList.size() ; k++){

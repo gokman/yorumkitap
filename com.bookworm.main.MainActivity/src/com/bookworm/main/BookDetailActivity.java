@@ -1,13 +1,25 @@
 package com.bookworm.main;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.hardware.Camera;
+import android.hardware.Camera.Size;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -17,6 +29,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.ExpandableListAdapter;
@@ -55,6 +68,14 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 	private ExpandableListView commentsArena; // :))
 	private LinearLayout profileLayout;
 	private String currentUser;
+	
+	private Uri fileUri;
+	
+	private ImageView explore_button;
+	private ImageView home_button;
+	private ImageView add_book_button;
+	private ImageView profile_button;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -76,6 +97,11 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		addComment = (Button) findViewById(R.id.btnAddComment);
 		commentsArena = (ExpandableListView) findViewById(R.id.expandableListView);
 		profileLayout = (LinearLayout) findViewById(R.id.profileLayout);
+		
+        setExplore_button((ImageView)findViewById(R.id.explore_button));
+		setHome_button((ImageView)findViewById(R.id.home_button));
+		setAdd_book_button((ImageView)findViewById(R.id.add_button));
+		setProfile_button((ImageView)findViewById(R.id.profile_button));
 		
 		Intent myIntent = getIntent();
 		book_name = myIntent.getStringExtra(ApplicationConstants.book_name);
@@ -183,6 +209,9 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 				});
 
 			}
+
+			setNavigationButtons();
+			
 		} catch (NetmeraException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -266,4 +295,11 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 				mExpandableListView, mGroupCollection);
 		mExpandableListView.setAdapter(adapter);
 	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+		super.onActivityResult(requestCode, resultCode);
+	}
+	
 }
