@@ -12,7 +12,7 @@
         <LinearLayout android:id="@+id/header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@layout/header_gradient"
+                android:background="#e35507"
                 android:paddingTop="5dip"
                 android:paddingBottom="5dip">
                 <!-- Logo Start-->

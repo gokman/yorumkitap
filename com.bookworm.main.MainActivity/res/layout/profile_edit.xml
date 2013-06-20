@@ -12,7 +12,7 @@
         <LinearLayout android:id="@+id/header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@layout/header_gradient"
+                android:background="#e35507"
                 android:paddingTop="5dip"
                 android:paddingBottom="5dip">
 
@@ -102,35 +102,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="20"
-                android:src="@drawable/icon_title" />
+                android:src="@drawable/home_button" />
 
             <ImageView
                 android:id="@+id/explore_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="20"
-                android:src="@drawable/icon_title" />
+                android:src="@drawable/explore_button" />
 
             <ImageView
                 android:id="@+id/add_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="20"
-                android:src="@drawable/icon_title" />
+                android:src="@drawable/add_button" />
 
             <ImageView
                 android:id="@+id/profile_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="20"
-                android:src="@drawable/icon_title" />
+                android:src="@drawable/profile_button" />
 
             <ImageView
                 android:id="@+id/timeline_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="20"
-                android:src="@drawable/icon_title" />
+                android:src="@drawable/timeline_button" />
         </LinearLayout>        
   </RelativeLayout>
 </ScrollView>
