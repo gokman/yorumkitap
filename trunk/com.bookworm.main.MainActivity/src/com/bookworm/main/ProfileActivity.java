@@ -221,26 +221,30 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 			commentedBooks = new ArrayList<NetmeraContent>(); 
 
 			HashMap<String,String> existing = new HashMap<String, String>();
-//			for(NetmeraContent content : comments){
-//
-//				if(commentedBooks.size()< ApplicationConstants.item_count_per_page_for_comments){ //TODO bu kalkmalý sayfalama filan olmali
-//					
-//					NetmeraService service = new NetmeraService(ApplicationConstants.book);
-//					
-//					service.whereEqual(ApplicationConstants.book_adderId, content.get(ApplicationConstants.comment_edBookOwner).toString());
-//					service.whereEqual(ApplicationConstants.book_name, content.get(ApplicationConstants.comment_edBook).toString());
-//					
-//					List<NetmeraContent> tempBookList = new SelectDataTask().execute(service).get(); 
-//					NetmeraContent tempBook = tempBookList.get(0);
-//					
-//					if(!existing.containsKey(tempBook.get(ApplicationConstants.book_adderId).toString()) || !tempBook.get(ApplicationConstants.book_name).toString().equals(existing.get(tempBook.get(ApplicationConstants.book_adderId)))){
-//						
-//						existing.put(content.get(ApplicationConstants.comment_edBookOwner).toString(),content.get(ApplicationConstants.comment_edBook).toString());
-//						commentedBooks.add(tempBook);
-//					}
-//				}
-//				
-//			}
+			for(NetmeraContent content : comments){
+
+				if(commentedBooks.size()< ApplicationConstants.item_count_per_page_for_comments){ //TODO bu kalkmalý sayfalama filan olmali
+					
+					NetmeraService service = new NetmeraService(ApplicationConstants.book);
+					
+					service.whereEqual(ApplicationConstants.book_adderId, content.get(ApplicationConstants.comment_edBookOwner).toString());
+					service.whereEqual(ApplicationConstants.book_name, content.get(ApplicationConstants.comment_edBook).toString());
+					
+					List<NetmeraContent> tempBookList = new SelectDataTask().execute(service).get(); 
+					
+					if(tempBookList.size()==0)
+						continue;
+					
+					NetmeraContent tempBook = tempBookList.get(0);
+					
+					if(!existing.containsKey(tempBook.get(ApplicationConstants.book_adderId).toString()) || !tempBook.get(ApplicationConstants.book_name).toString().equals(existing.get(tempBook.get(ApplicationConstants.book_adderId)))){
+						
+						existing.put(content.get(ApplicationConstants.comment_edBookOwner).toString(),content.get(ApplicationConstants.comment_edBook).toString());
+						commentedBooks.add(tempBook);
+					}
+				}
+				
+			}
 			//book list and comments list are prepared.
 
 			txtBookCount.setText(addedBookCount.toString());
