@@ -10,7 +10,7 @@ public class ApplicationConstants {
 	public static final int item_count_per_page = 12;
 	public static final int item_count_per_page_for_comments = 100;
 	public static final int item_count_per_page_for_explore_page = 15;
-	public static final int item_count_per_page_for_main_page = 20;
+	public static final int item_count_per_page_for_main_page = 1;
 	
 	//Tables
 	public static final String user	= "User";
@@ -65,5 +65,12 @@ public class ApplicationConstants {
 	
 	//Form Fields Tip Texts
 	public static final String comment_write_comment = "Yorum ekle...";
+	
+	
+	//Stored Credential parameters
+	public static final String username = "bl_user_name";
+	public static final String password = "bl_password";
+	public static final String unregistered_username = "unregistered_username";
+	public static final String unregistered_password = "unregistered_password";
 	
 }
