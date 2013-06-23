@@ -37,7 +37,7 @@
     <string name="createAccount">Hesap Oluştur</string>
     <string name="alreadyMember">Zaten Üyeyim,Giriş Yapmak İstiyorum</string>
     <string name="login">Giriş Yap</string>
-    <string name="wannaToCreateAccount">Yeni Üyeyim,Hesap Oluşturmak İstiyorum</string>
+    <string name="wannaToCreateAccount">Yeni Üyeyim, Hesap Oluşturmak İstiyorum</string>
     
     
     <!-- AddBook UI Component Labels -->
