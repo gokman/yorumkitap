@@ -129,15 +129,18 @@
             android:id="@+id/btnAddComment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/linearLayoutAltDugmeler"
             android:layout_below="@+id/comment"
             android:layout_marginTop="10dip"
             android:text="@string/bookDetailAddComment" />
 
         <LinearLayout
+            android:id="@+id/linearLayoutAltDugmeler"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="bottom"
+            android:background="@color/ownGray"
             android:weightSum="100" >
 
             <ImageView
