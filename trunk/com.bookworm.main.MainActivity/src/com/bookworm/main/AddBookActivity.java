@@ -121,7 +121,6 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 				    book.add(ApplicationConstants.book_coverPhoto,coverPhoto);
 
 			    	new InsertDataTask().execute(book).get();
-			    	
 			    	/*
 			    	 * Hashtag insertion
 			    	 */
