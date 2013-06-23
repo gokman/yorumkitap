@@ -37,23 +37,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dip"
-        
         android:weightSum="100"
         android:orientation="horizontal">
         
-        <Button
-                android:id="@+id/exploreBooks"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:text="@string/exploreBooks" />
-
+	        <Button
+	            android:id="@+id/exploreBooks"
+	            style="@style/explorePage_button"
+	            android:layout_weight="50"
+	            android:text="@string/exploreBooks" />
             <Button
                 android:id="@+id/exploreUsers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/explorePage_button"
                 android:layout_weight="50"
+                
                 android:text="@string/exploreUsers" />
+
 </LinearLayout>
 		<TextView
             android:id="@+id/tableHeader"
