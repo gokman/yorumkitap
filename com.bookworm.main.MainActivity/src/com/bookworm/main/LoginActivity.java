@@ -21,8 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
-import com.bookworm.test.DataHelper;
-import com.bookworm.test.MyApplication;
 import com.netmera.mobile.NetmeraClient;
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
@@ -35,7 +33,6 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 
 	public static String filename = "let_the_books_begin";
 	private SharedPreferences SP;
-	private DataHelper dataHelper;
 
 	private EditText _email;
 	private EditText _password;
@@ -49,7 +46,6 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		this.dataHelper = new DataHelper(this);
 
 		
 		setContentView(R.layout.login);
@@ -181,16 +177,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 
 	@Override
 	public void onSaveInstanceState(final Bundle b) {
-		Log.d(MyApplication.APP_NAME, "onSaveInstanceState");
 		super.onSaveInstanceState(b);
-	}
-
-	public DataHelper getDataHelper() {
-		return this.dataHelper;
-	}
-
-	public void setDataHelper(DataHelper dataHelper) {
-		this.dataHelper = dataHelper;
 	}
 
 	@Override

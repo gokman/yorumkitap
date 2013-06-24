@@ -10,7 +10,7 @@ public class ApplicationConstants {
 	public static final int item_count_per_page = 12;
 	public static final int item_count_per_page_for_comments = 100;
 	public static final int item_count_per_page_for_explore_page = 15;
-	public static final int item_count_per_page_for_main_page = 1;
+	public static final int item_count_per_page_for_main_page = 10;
 	
 	//Tables
 	public static final String user	= "User";

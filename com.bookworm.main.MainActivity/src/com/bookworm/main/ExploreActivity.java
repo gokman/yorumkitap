@@ -30,7 +30,6 @@ import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.common.ImageLoader;
 import com.bookworm.common.SelectDataTask;
-import com.bookworm.model.Book;
 import com.bookworm.util.ApplicationUtil;
 import com.netmera.mobile.NetmeraClient;
 import com.netmera.mobile.NetmeraContent;
@@ -75,13 +74,8 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
         btnExploreUsers = (Button)findViewById(R.id.exploreUsers);
         searchText = (EditText)findViewById(R.id.searchText);
         preparelistItems();
-		/*TODO Get latest 15 records to show in explore page (must be integrated with refresh button)
-		 * Stub booklist object */
-		List<Book> bookList = new ArrayList<Book>();
 
-		/*
-		*/		
-		btnExploreUsers.setOnClickListener(new View.OnClickListener() {
+        btnExploreUsers.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
 				String searchKey = searchText.getText().toString();
