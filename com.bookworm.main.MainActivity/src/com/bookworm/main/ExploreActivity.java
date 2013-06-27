@@ -17,7 +17,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
@@ -73,22 +75,39 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 		btnExploreBooks = (Button)findViewById(R.id.exploreBooks);
         btnExploreUsers = (Button)findViewById(R.id.exploreUsers);
         searchText = (EditText)findViewById(R.id.searchText);
-        preparelistItems();
 
+        preparelistItems();
+        makeAllInvisible();
+        
         btnExploreUsers.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
 				String searchKey = searchText.getText().toString();
 				NetmeraService service = new NetmeraService(ApplicationConstants.user);
 				if(searchKey!=null && !searchKey.equals(ApplicationConstants.EMPTY_STRING)){
-					String regEx = "*"+searchKey+ "*";
-					service.whereMatches(ApplicationConstants.user_username, regEx);
+					
+				if (searchKey.substring(0, 1).equals(
+						ApplicationConstants.AT_SIGN)) {
+					searchKey = searchKey.substring(1);
+				}
+					
+					service.whereEqual(ApplicationConstants.user_username, searchKey);
 				}
 				service.setMax(ApplicationConstants.item_count_per_page_for_explore_page);
 				try{
 					List<NetmeraContent> usersList = new SelectDataTask().execute(service).get();
 					makeAllInvisible();
 					applyDataToTable(usersList,ApplicationConstants.user_username,ApplicationConstants.user_userProfile);
+					
+					if(usersList.size()==0){
+						getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+						
+						Toast toast= Toast.makeText(getApplicationContext(),
+								"No result found related with your search key !!!", Toast.LENGTH_LONG);
+								toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
+								toast.show();
+
+					}					
 					
 				}catch(Exception ex){
 					ex.printStackTrace();
@@ -124,6 +143,15 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 						}
 						makeAllInvisible();
 						applyDataToTable(bookList,ApplicationConstants.book_name,ApplicationConstants.book_coverPhoto);
+						if(bookList.size()==0){
+							getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+							Toast toast= Toast.makeText(getApplicationContext(),
+									"No result found related with your search key !!!", Toast.LENGTH_LONG);
+									toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
+									toast.show();
+	
+						}
 
 					} catch (Exception ex) {
 						ex.printStackTrace();
@@ -315,6 +343,9 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 		text_4_1.setVisibility(View.INVISIBLE);
 		text_4_2.setVisibility(View.INVISIBLE);
 		text_4_3.setVisibility(View.INVISIBLE);
+		text_5_1.setVisibility(View.INVISIBLE);
+		text_5_2.setVisibility(View.INVISIBLE);
+		text_5_3.setVisibility(View.INVISIBLE);
 }
 	private void preparelistItems(){
 		exp_1_1 = (ImageView)findViewById(R.id.explore_1_1);

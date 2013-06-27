@@ -4,13 +4,14 @@ public class ApplicationConstants {
 
 	public static final String EMPTY_STRING ="";
 	public static final String DIESIS_SIGN = "#";
+	public static final String AT_SIGN = "@";
 	public static final String userEmailParam = "useremail";
-	public static final String object_path ="Path";
+	public static final String object_path ="path";
 	
 	public static final int item_count_per_page = 12;
 	public static final int item_count_per_page_for_comments = 100;
 	public static final int item_count_per_page_for_explore_page = 15;
-	public static final int item_count_per_page_for_main_page = 10;
+	public static final int item_count_per_page_for_main_page = 3;
 	
 	//Tables
 	public static final String user	= "User";
