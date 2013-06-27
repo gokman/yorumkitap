@@ -129,6 +129,9 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 			}
 		});
 		
+		if(!savedUsername.equals(ApplicationConstants.unregistered_username) && !savedPassword.equals(ApplicationConstants.unregistered_password)){
+			btnLogin.performClick();
+		}
 		_forgotPassword.setOnClickListener( new OnClickListener() {
 			
 			public void onClick(View v) {
