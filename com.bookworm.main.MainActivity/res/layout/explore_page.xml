@@ -44,16 +44,19 @@
 	            android:id="@+id/exploreBooks"
 	            style="@style/explorePage_button"
 	            android:layout_weight="50"
+	            android:layout_marginRight="2dp"
 	            android:text="@string/exploreBooks" />
+
             <Button
                 android:id="@+id/exploreUsers"
                 style="@style/explorePage_button"
                 android:layout_weight="50"
-                
+                android:layout_marginLeft="2dp"
                 android:text="@string/exploreUsers" />
 
 </LinearLayout>
-		<TextView
+	<!-- 
+			<TextView
             android:id="@+id/tableHeader"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -62,7 +65,7 @@
             android:singleLine="true" 
             android:text="@string/explorePagePopulers"
             android:gravity="center_horizontal"/>
-                
+    -->             
         <TableLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/tableLayout1"
