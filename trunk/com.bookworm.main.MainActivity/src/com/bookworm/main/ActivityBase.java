@@ -31,6 +31,7 @@ public class ActivityBase extends Activity{
 	private ImageView home_button;
 	private ImageView add_book_button;
 	private ImageView profile_button;
+	private ImageView timeline_button;
 	
 	public void setNavigationButtons(){
 		
@@ -38,6 +39,12 @@ public class ActivityBase extends Activity{
 			public void onClick(View v) {
 				Intent exploreIntent = new Intent(getApplicationContext(), ExploreActivity.class);
 				startActivity(exploreIntent);
+			}
+		});
+		timeline_button.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent timelineIntent = new Intent(getApplicationContext(), TimeLineActivity.class);
+				startActivity(timelineIntent);
 			}
 		});
 		home_button.setOnClickListener(new View.OnClickListener() {
