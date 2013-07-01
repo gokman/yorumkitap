@@ -27,6 +27,7 @@
 		<activity android:name=".BookDetailActivity" android:label="@string/app_name_tr"/>
 		<activity android:name=".ProfileActivity" android:label="@string/app_name_tr"/>
 		<activity android:name=".ProfileEditActivity" android:label="@string/app_name_tr"/>
+		<activity android:name=".TimeLineActivity" android:label="@string/app_name_tr"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
