@@ -82,11 +82,12 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 			setHome_button((ImageView)findViewById(R.id.home_button));
 			setAdd_book_button((ImageView)findViewById(R.id.add_button));
 			setProfile_button((ImageView)findViewById(R.id.profile_button));
+			setTimeline_button((ImageView)findViewById(R.id.timeline_button));
 			
 			statusView = (ImageView)findViewById(R.id.status);
 			
 	        preparelistItems();
-	        //TODO listeleme sayfalarýndan biriyle gelinirse  userEmail sessiondan alinmali.
+	        //TODO listeleme sayfalarï¿½ndan biriyle gelinirse  userEmail sessiondan alinmali.
 			Intent myIntent = getIntent();
 			userEmail = myIntent.getStringExtra(ApplicationConstants.userEmailParam);
 			
@@ -223,7 +224,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 			HashMap<String,String> existing = new HashMap<String, String>();
 			for(NetmeraContent content : comments){
 
-				if(commentedBooks.size()< ApplicationConstants.item_count_per_page_for_comments){ //TODO bu kalkmalý sayfalama filan olmali
+				if(commentedBooks.size()< ApplicationConstants.item_count_per_page_for_comments){ //TODO bu kalkmalï¿½ sayfalama filan olmali
 					
 					NetmeraService service = new NetmeraService(ApplicationConstants.book);
 					

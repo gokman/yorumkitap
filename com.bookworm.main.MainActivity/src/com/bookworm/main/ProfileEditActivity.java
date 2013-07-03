@@ -73,7 +73,8 @@ public class ProfileEditActivity extends ActivityBase implements OnClickListener
         setExplore_button((ImageView)findViewById(R.id.explore_button));
 		setHome_button((ImageView)findViewById(R.id.home_button));
 		setAdd_book_button((ImageView)findViewById(R.id.add_button));
-		setProfile_button((ImageView)findViewById(R.id.profile_button));		
+		setProfile_button((ImageView)findViewById(R.id.profile_button));	
+		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
 
         
         txtUsername = (EditText)findViewById(R.id.edit_profile_uname);
