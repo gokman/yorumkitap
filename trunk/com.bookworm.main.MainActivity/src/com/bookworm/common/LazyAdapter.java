@@ -1,6 +1,7 @@
 package com.bookworm.common;
  
 import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -52,7 +53,8 @@ public class LazyAdapter extends BaseAdapter {
         View vi=convertView;
         if(convertView==null)
             vi = inflater.inflate(R.layout.main_page_row, null);
- 
+        
+      
         TextView titleLeft = (TextView)vi.findViewById(R.id.book_title_left); 
         TextView descLeft = (TextView)vi.findViewById(R.id.desc_left); 
         TextView bookAdderIdLeft = (TextView)vi.findViewById(R.id.book_adder_id_left); 
