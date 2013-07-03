@@ -71,6 +71,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 		setHome_button((ImageView)findViewById(R.id.home_button));
 		setAdd_book_button((ImageView)findViewById(R.id.add_button));
 		setProfile_button((ImageView)findViewById(R.id.profile_button));
+		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
 		
 		btnExploreBooks = (Button)findViewById(R.id.exploreBooks);
         btnExploreUsers = (Button)findViewById(R.id.exploreUsers);
@@ -158,7 +159,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 					}
 
 					/*
-					 * Hashtag le arama yapýyoruz sadece NetmeraService service
+					 * Hashtag le arama yapï¿½yoruz sadece NetmeraService service
 					 * = new NetmeraService(ApplicationConstants.book); //
 					 * if(searchKey!=null &&
 					 * !searchKey.equals(ApplicationConstants.EMPTY_STRING)){ //

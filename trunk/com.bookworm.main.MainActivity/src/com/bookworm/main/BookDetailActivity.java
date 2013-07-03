@@ -102,6 +102,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		setHome_button((ImageView)findViewById(R.id.home_button));
 		setAdd_book_button((ImageView)findViewById(R.id.add_button));
 		setProfile_button((ImageView)findViewById(R.id.profile_button));
+		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
 		
 		Intent myIntent = getIntent();
 		book_name = myIntent.getStringExtra(ApplicationConstants.book_name);

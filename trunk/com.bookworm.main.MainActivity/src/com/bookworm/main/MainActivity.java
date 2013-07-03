@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -75,7 +74,8 @@ public class MainActivity extends ActivityBase implements OnClickListener {
         setExplore_button((ImageView)findViewById(R.id.explore_button));
 		setHome_button((ImageView)findViewById(R.id.home_button));
 		setAdd_book_button((ImageView)findViewById(R.id.add_button));
-		setProfile_button((ImageView)findViewById(R.id.profile_button));		
+		setProfile_button((ImageView)findViewById(R.id.profile_button));
+		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
 		
 		NetmeraClient.init(getApplicationContext(), apiKey);
 		
@@ -105,6 +105,7 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 			map.put(KEY_DESC_LEFT, tempBook1.get(ApplicationConstants.book_desc).toString());
 			map.put(KEY_BOOK_ADDER_ID_LEFT, tempBook1.get(ApplicationConstants.book_adderId).toString());
 			if (tempBook2 != null) {
+				
 				String tempBook2CoverURL = new GetNetmerMediaTask().execute(tempBook2).get();//getNetmeraMedia(ApplicationConstants.book_coverPhoto);
 
 				map.put(KEY_COVER_RIGHT, tempBook2CoverURL);

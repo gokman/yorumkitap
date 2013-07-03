@@ -175,6 +175,12 @@ public class ActivityBase extends Activity{
 	public void setProfile_button(ImageView profile_button) {
 		this.profile_button = profile_button;
 	}
+	public ImageView getTimeline_button() {
+		return timeline_button;
+	}
+	public void setTimeline_button(ImageView timeline_button) {
+		this.timeline_button = timeline_button;
+	}
 
 	
 }

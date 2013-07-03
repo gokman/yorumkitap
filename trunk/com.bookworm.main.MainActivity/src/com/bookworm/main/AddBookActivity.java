@@ -71,6 +71,7 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 		setHome_button((ImageView)findViewById(R.id.home_button));
 		setAdd_book_button((ImageView)findViewById(R.id.add_button));
 		setProfile_button((ImageView)findViewById(R.id.profile_button));
+		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
 
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);        
     	addBookButton = (Button)findViewById(R.id.btnAddBook);
