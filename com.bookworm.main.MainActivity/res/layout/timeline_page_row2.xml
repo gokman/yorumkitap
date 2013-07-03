@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" 
+    android:clickable="false">
+
+    <TextView
+        android:id="@+id/textFollower"
+        android:paddingLeft="10dip"
+        style="@style/follow_in_timeline"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Gökman" />
+
+    <TextView
+        android:id="@+id/textFollowship"
+        android:paddingLeft="4dip"
+        style="@style/follow_in_timeline"
+        android:layout_toRightOf="@+id/textFollower"
+        android:text="takip ediyor" />
+
+    <TextView
+        android:id="@+id/textFollowed"
+        android:paddingLeft="4dip"
+        style="@style/follow_in_timeline"
+        android:layout_toRightOf="@+id/textFollowship"
+        android:text="Fatih'i" />
+ 
+</RelativeLayout>
