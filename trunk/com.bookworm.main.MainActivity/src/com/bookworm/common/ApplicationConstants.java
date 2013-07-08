@@ -12,6 +12,7 @@ public class ApplicationConstants {
 	public static final int item_count_per_page_for_comments = 100;
 	public static final int item_count_per_page_for_explore_page = 15;
 	public static final int item_count_per_page_for_main_page = 3;
+	public static final int item_count_per_page_for_timeline_page = 10;
 	
 	//Tables
 	public static final String user	= "User";
@@ -73,5 +74,17 @@ public class ApplicationConstants {
 	public static final String password = "bl_password";
 	public static final String unregistered_username = "unregistered_username";
 	public static final String unregistered_password = "unregistered_password";
+	
+	//Timeline Listview book Types
+	public static final String TYPE="TYPE";
+	public static final String TYPE_BOOK="BOOK";
+	public static final String TYPE_COMMENT="COMMENT";
+	public static final String TYPE_FOLLOW="FOLLOW";
+	
+	//Timeline Listview comment Types
+	public static final String TYPE_COMMENDATOR="COMMENDATOR";
+	public static final String TYPE_COMMENTEDBOOKOWNER="BOOKOWNER";
+	public static final String TYPE_COMMENTEDBOOKNAME="BOOKNAME";
+	public static final String TYPE_COMMENTDATE="COMMENTDATE";
 	
 }
