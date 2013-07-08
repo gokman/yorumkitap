@@ -71,10 +71,22 @@ public class TimeLineAdapter extends BaseAdapter {
 	        bookAdderIdLeft.setText(eldekiSatir.get("BOOK_ADDERID"));
 	        imageLoader.DisplayImage(eldekiSatir.get("COVER_URL"), image_left);
 		
-		//1 ise yorum yapılmıştır
-		}else if(Integer.parseInt(eldekiSatir.get(TimeLineActivity.ListElementType).toString())==1){
-		
-		//2 ise takip durumu vardır
+		//comment için
+		}else if(eldekiSatir.get(TimeLineActivity.ListElementType).toString().equals("COMMENT")){
+			convertView=mInflater.inflate(R.layout.timeline_page_row3, null);
+			
+			  TextView commendator = (TextView)convertView.findViewById(R.id.textCommentator); 
+		      TextView commentedBookOwner = (TextView)convertView.findViewById(R.id.bookOwner); 
+		      TextView commentedBookName = (TextView)convertView.findViewById(R.id.commentedBookName); 
+		      TextView commentDate = (TextView)convertView.findViewById(R.id.tl_commentDate); 
+		      
+		        //bütün değerleri listviewdaki elemana ata
+		        commendator.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENDATOR));
+		        commentedBookOwner.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENTEDBOOKOWNER));
+		        commentedBookName.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENTEDBOOKNAME));
+		        commentDate.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENTDATE));
+		        
+		//takip için
 		}else{
 			
 		}
