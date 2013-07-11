@@ -17,8 +17,6 @@
         <TextView
             android:id="@+id/bookOwner"
             style="@style/follow_in_timeline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textCommentator"
             android:layout_toRightOf="@+id/textCommentator"
             android:paddingLeft="10dp"
@@ -27,8 +25,6 @@
         <TextView
             android:id="@+id/textComment"
             style="@style/follow_in_timeline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/bookOwner"
             android:layout_toRightOf="@+id/bookOwner"
             android:paddingLeft="10dp"
@@ -37,8 +33,6 @@
         <TextView
             android:id="@+id/commentedBookName"
             style="@style/follow_in_timeline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_below="@+id/textCommentator"
             android:paddingLeft="10dip"
             android:text="Java" />
@@ -46,8 +40,6 @@
     <TextView
         android:id="@+id/textComment2"
         style="@style/follow_in_timeline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/commentedBookName"
         android:layout_alignTop="@+id/commentedBookName"
         android:paddingLeft="10dp"
@@ -56,8 +48,6 @@
     <TextView
         android:id="@+id/tl_commentDate"
         style="@style/follow_in_timeline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textComment2"
         android:layout_alignBottom="@+id/textComment2"
         android:paddingLeft="10dp"
