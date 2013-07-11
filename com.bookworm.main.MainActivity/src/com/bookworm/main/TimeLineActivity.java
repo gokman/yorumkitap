@@ -97,6 +97,7 @@ public class TimeLineActivity extends ActivityBase{
 					map.put("BOOK_ADDERID", tempBook1.get(ApplicationConstants.book_adderId).toString());
 					bookListToView.add(map);
 				}
+				
 					//comment ile alakalı verileri çekme işlemi 
 					//başla
 					
@@ -109,13 +110,16 @@ public class TimeLineActivity extends ActivityBase{
 					for(int j=0;j<commentList.size();j++){
 						commentDate=commentList.get(j).getCreateDate().toString();
 						//book servisimize commentten gelen değerler doğrultusunda filtre koyup yorum yapılan kitapları tek tek çekiyoruz
-						servicer.whereEqual(ApplicationConstants.book_adderId, commentList.get(j).get(ApplicationConstants.comment_edBookOwner).toString());
-				        servicer.whereEqual(ApplicationConstants.book_name, commentList.get(j).get(ApplicationConstants.comment_edBook).toString());
+						NetmeraService serviceBook = new NetmeraService(ApplicationConstants.book);
+						serviceBook.setMax(ApplicationConstants.item_count_per_page_for_main_page);
+						serviceBook.whereEqual(ApplicationConstants.book_adderId, commentList.get(j).get(ApplicationConstants.comment_edBookOwner).toString());
+				        serviceBook.whereEqual(ApplicationConstants.book_name, commentList.get(j).get(ApplicationConstants.comment_edBook).toString());
 				        //selectten gelen değer 1 tane olmalı. biz de bu gelen değerlerden 1. yi al dedik
-				        commentBook=new SelectDataTask().execute(servicer).get().get(0);
+				        commentBook=new SelectDataTask().execute(serviceBook).get().get(0);
 					    commentBookList.add(commentBook);
 					}
 					//elimizde yorum yapılan kitap listesi commentBookList te tutuluyor
+					commentBookListToView=new ArrayList<HashMap<String,String>>();
 					for(int z=0;z<commentBookList.size();z++){
 						//listview da gösterilen satıra ait elemanları tek tek tutacak
 						commentBookTempMap=new HashMap<String, String>();
