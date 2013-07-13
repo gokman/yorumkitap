@@ -66,10 +66,10 @@ public class TimeLineAdapter extends BaseAdapter {
 	      ImageView image_left =(ImageView)convertView.findViewById(R.id.timeline_list_image);
 	      
 	        //bütün değerleri listviewdaki elemana ata
-	        titleLeft.setText(eldekiSatir.get("BOOK_NAME"));
-	        descLeft.setText(eldekiSatir.get("BOOK_DESC"));
-	        bookAdderIdLeft.setText(eldekiSatir.get("BOOK_ADDERID"));
-	        imageLoader.DisplayImage(eldekiSatir.get("COVER_URL"), image_left);
+	        titleLeft.setText(eldekiSatir.get(ApplicationConstants.TYPE_BOOK_NAME));
+	        descLeft.setText(eldekiSatir.get(ApplicationConstants.TYPE_BOOK_DESC));
+	        bookAdderIdLeft.setText(eldekiSatir.get(ApplicationConstants.TYPE_BOOK_ADDERID));
+	        imageLoader.DisplayImage(eldekiSatir.get(ApplicationConstants.TYPE_COVER_URL), image_left);
 		
 		//comment için
 		}else if(eldekiSatir.get(TimeLineActivity.ListElementType).toString().equals("COMMENT")){
@@ -87,8 +87,19 @@ public class TimeLineAdapter extends BaseAdapter {
 		        commentDate.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENTDATE));
 		        
 		//takip için
-		}else{
+		}else if(eldekiSatir.get(TimeLineActivity.ListElementType).toString().equals("FOLLOW")){
+			convertView=mInflater.inflate(R.layout.timeline_page_row2, null);
 			
+			  TextView follower = (TextView)convertView.findViewById(R.id.textFollower); 
+		      TextView followed = (TextView)convertView.findViewById(R.id.textFollowed); 
+		      TextView followship = (TextView)convertView.findViewById(R.id.textFollowship); 
+		      TextView followdate = (TextView)convertView.findViewById(R.id.tl_follow_date); 
+		      
+		        //bütün değerleri listviewdaki elemana ata
+		        follower.setText(eldekiSatir.get(ApplicationConstants.TYPE_FOLLOWER));
+		        followed.setText(eldekiSatir.get(ApplicationConstants.TYPE_FOLLOWED));
+		        followship.setText(eldekiSatir.get(ApplicationConstants.TYPE_FOLLOWSHIP));
+		        followdate.setText(eldekiSatir.get(ApplicationConstants.TYPE_FOLLOWDATE));
 		}
 		return convertView;
 	}

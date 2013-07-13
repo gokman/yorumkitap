@@ -34,6 +34,7 @@ public class ApplicationConstants {
 	public static final String book_writer = "writer";	
 	public static final String book_coverPhoto = "coverPhoto";
 	public static final String book_tags = "tags";
+	public static final String book_create_date = "Create Date";
 	
 	//Comment
 	public static final String comment_er = "commenterID";
@@ -75,7 +76,7 @@ public class ApplicationConstants {
 	public static final String unregistered_username = "unregistered_username";
 	public static final String unregistered_password = "unregistered_password";
 	
-	//Timeline Listview book Types
+	//Timeline Listview Types
 	public static final String TYPE="TYPE";
 	public static final String TYPE_BOOK="BOOK";
 	public static final String TYPE_COMMENT="COMMENT";
@@ -87,4 +88,18 @@ public class ApplicationConstants {
 	public static final String TYPE_COMMENTEDBOOKNAME="BOOKNAME";
 	public static final String TYPE_COMMENTDATE="COMMENTDATE";
 	
+	//Timeline Listview follow Types
+	public static final String TYPE_FOLLOWER="FOLLOWER";
+	public static final String TYPE_FOLLOWED="FOLLOWED";
+	public static final String TYPE_FOLLOWSHIP="FOLLOWSHIP";
+	public static final String TYPE_FOLLOWDATE="FOLLOWDATE";
+	
+	//Timeline Listview book Types
+	public static final String TYPE_COVER_URL="COVER URL";
+	public static final String TYPE_BOOK_NAME="BOOK_NAME";
+	public static final String TYPE_BOOK_DESC="BOOK_DESC";
+	public static final String TYPE_BOOK_ADDERID="BOOK_ADDERID";
+	public static final String TYPE_BOOK_CREATE_DATE="BOOK_CREATE_DATE";
+	
+	public static final String CREATE_DATE="CREATE_DATE";
 }
