@@ -1,5 +1,7 @@
 package com.bookworm.common;
 
+import java.text.SimpleDateFormat;
+
 public class ApplicationConstants {
 
 	public static final String EMPTY_STRING ="";
@@ -102,4 +104,7 @@ public class ApplicationConstants {
 	public static final String TYPE_BOOK_CREATE_DATE="BOOK_CREATE_DATE";
 	
 	public static final String CREATE_DATE="CREATE_DATE";
+	
+	//tarih formatý
+	public final static SimpleDateFormat dateFormat=new SimpleDateFormat("hh:mm dd-MM-yyyy");
 }

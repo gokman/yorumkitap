@@ -1,5 +1,6 @@
 package com.bookworm.main;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -20,6 +21,7 @@ import com.netmera.mobile.NetmeraService;
 import com.netmera.mobile.NetmeraUser;
 
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -40,12 +42,14 @@ public class TimeLineActivity extends ActivityBase{
 	//viewda gösterilecek olan satırları tutar --comment
 	private ArrayList<HashMap<String, String>>  commentBookListToView;
 	private HashMap<String,String> commentBookTempMap;
-	private List<String> commentDateList;
+	private List<Date> commentDateList;
 	private String commendatorName;
 	//follow ile alakal�
 	List<NetmeraContent> followList;
 	private ListView followListView;
 	private ArrayList<HashMap<String,String>> followListToView;
+	
+	
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,31 +86,34 @@ public class TimeLineActivity extends ActivityBase{
 			
 			//servis ile kitapları tek tek çek
 			try {
-				//tüm kitap tablosu elimde
+				//kitap basla
+				//tum kitap tablosu elimde
 				bookList=new SelectDataTask().execute(servicer).get();
-				//viewa dolacak liste hazırda bekliyor
+				//viewa dolacak liste hazirda bekliyor
 				bookListToView=new ArrayList<HashMap<String, String>>();
 				for(int i=0;i<bookList.size();i++){
 					//tek tek tempBook1 e ata
 					NetmeraContent tempBook1=bookList.get(i);
-					//düzgünce adapter a uygun yerleştireceğimiz map imiz var
+					//duzgunce adapter a uygun yerlestirecegimiz map imiz var
 					HashMap<String,String> map=new HashMap<String,String>();
-					//BUNU BİLMİYORUM ????
+					//BUNU BiLMiYORUM ????
 					tempBook1.add(ApplicationConstants.generic_property, ApplicationConstants.book_coverPhoto);
 					String tempBook1CoverURL = new GetNetmerMediaTask().execute(tempBook1).get();
-					//artık elimde bir satıra ait herşey var. bunu şimdi map e atacağız.
+					//artik elimde bir satira ait hersey var. bunu simdi map e atacagiz.
 					map.put(ApplicationConstants.TYPE, ApplicationConstants.TYPE_BOOK);
 					map.put(ApplicationConstants.TYPE_COVER_URL, tempBook1CoverURL);
 					map.put(ApplicationConstants.TYPE_BOOK_NAME, tempBook1.get(ApplicationConstants.book_name).toString());
 					map.put(ApplicationConstants.TYPE_BOOK_DESC, tempBook1.get(ApplicationConstants.book_desc).toString());
 					map.put(ApplicationConstants.TYPE_BOOK_ADDERID, tempBook1.get(ApplicationConstants.book_adderId).toString());
-					map.put(ApplicationConstants.CREATE_DATE, tempBook1.getCreateDate().toString());
+					map.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(tempBook1.getCreateDate()).toString());
 					bookListToView.add(map);
+				
+				//kitap bitir
 				}
 				
 					//comment ile alakalı verileri çekme işlemi 
 					//başla
-					commentDateList=new ArrayList<String>();
+					commentDateList=new ArrayList<Date>();
 					//bu kullanıcıya ait tüm commentleri çekeceğiz
 					//servise sadece bu kullanıcının yorum yaptığı satırları çekiyoruz
 					servicerComment.whereEqual(ApplicationConstants.comment_er, NetmeraUser.getCurrentUser().getEmail());
@@ -114,7 +121,7 @@ public class TimeLineActivity extends ActivityBase{
 					commentList=new SelectDataTask().execute(servicerComment).get();
 					commentBookList=new ArrayList<NetmeraContent>();
 					for(int j=0;j<commentList.size();j++){
-						commentDateList.add(commentList.get(j).getCreateDate().toString());
+						commentDateList.add(commentList.get(j).getCreateDate());
 						//book servisimize commentten gelen değerler doğrultusunda filtre koyup yorum yapılan kitapları tek tek çekiyoruz
 						NetmeraService serviceBook = new NetmeraService(ApplicationConstants.book);
 						serviceBook.setMax(ApplicationConstants.item_count_per_page_for_timeline_page);
@@ -131,7 +138,7 @@ public class TimeLineActivity extends ActivityBase{
 						commentBookTempMap=new HashMap<String, String>();
 						commentBookTempMap.put(ApplicationConstants.TYPE, ApplicationConstants.TYPE_COMMENT);
 						commentBookTempMap.put(ApplicationConstants.TYPE_COMMENDATOR, commendatorName);
-						commentBookTempMap.put(ApplicationConstants.CREATE_DATE, commentDateList.get(z));
+						commentBookTempMap.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(commentDateList.get(z)).toString());
 						commentBookTempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKNAME, 
 								commentBookList.get(z).get(ApplicationConstants.book_name).toString());
 						commentBookTempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKOWNER, 
