@@ -84,7 +84,7 @@ public class TimeLineAdapter extends BaseAdapter {
 		        commendator.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENDATOR));
 		        commentedBookOwner.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENTEDBOOKOWNER));
 		        commentedBookName.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENTEDBOOKNAME));
-		        commentDate.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENTDATE));
+		        commentDate.setText(eldekiSatir.get(ApplicationConstants.CREATE_DATE));
 		        
 		//takip için
 		}else if(eldekiSatir.get(TimeLineActivity.ListElementType).toString().equals("FOLLOW")){

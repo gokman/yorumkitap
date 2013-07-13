@@ -40,7 +40,7 @@ public class TimeLineActivity extends ActivityBase{
 	//viewda gösterilecek olan satırları tutar --comment
 	private ArrayList<HashMap<String, String>>  commentBookListToView;
 	private HashMap<String,String> commentBookTempMap;
-	private String commentDate;
+	private List<String> commentDateList;
 	private String commendatorName;
 	//follow ile alakal�
 	List<NetmeraContent> followList;
@@ -106,7 +106,7 @@ public class TimeLineActivity extends ActivityBase{
 				
 					//comment ile alakalı verileri çekme işlemi 
 					//başla
-					
+					commentDateList=new ArrayList<String>();
 					//bu kullanıcıya ait tüm commentleri çekeceğiz
 					//servise sadece bu kullanıcının yorum yaptığı satırları çekiyoruz
 					servicerComment.whereEqual(ApplicationConstants.comment_er, NetmeraUser.getCurrentUser().getEmail());
@@ -114,7 +114,7 @@ public class TimeLineActivity extends ActivityBase{
 					commentList=new SelectDataTask().execute(servicerComment).get();
 					commentBookList=new ArrayList<NetmeraContent>();
 					for(int j=0;j<commentList.size();j++){
-						commentDate=commentList.get(j).getCreateDate().toString();
+						commentDateList.add(commentList.get(j).getCreateDate().toString());
 						//book servisimize commentten gelen değerler doğrultusunda filtre koyup yorum yapılan kitapları tek tek çekiyoruz
 						NetmeraService serviceBook = new NetmeraService(ApplicationConstants.book);
 						serviceBook.setMax(ApplicationConstants.item_count_per_page_for_timeline_page);
@@ -131,7 +131,7 @@ public class TimeLineActivity extends ActivityBase{
 						commentBookTempMap=new HashMap<String, String>();
 						commentBookTempMap.put(ApplicationConstants.TYPE, ApplicationConstants.TYPE_COMMENT);
 						commentBookTempMap.put(ApplicationConstants.TYPE_COMMENDATOR, commendatorName);
-						commentBookTempMap.put(ApplicationConstants.CREATE_DATE, commentDate);
+						commentBookTempMap.put(ApplicationConstants.CREATE_DATE, commentDateList.get(z));
 						commentBookTempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKNAME, 
 								commentBookList.get(z).get(ApplicationConstants.book_name).toString());
 						commentBookTempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKOWNER, 
