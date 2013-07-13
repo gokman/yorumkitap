@@ -28,5 +28,13 @@
         style="@style/follow_in_timeline"
         android:layout_toRightOf="@+id/textFollowship"
         android:text="Fatih'i" />
+
+    <TextView
+        android:id="@+id/tl_follow_date"
+        style="@style/follow_in_timeline"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingRight="10dp"
+        android:text="20 10 2012" />
  
 </RelativeLayout>
