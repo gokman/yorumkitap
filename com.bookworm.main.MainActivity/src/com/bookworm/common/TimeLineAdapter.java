@@ -62,13 +62,13 @@ public class TimeLineAdapter extends BaseAdapter {
 		
 		  TextView titleLeft = (TextView)convertView.findViewById(R.id.timeline_book_title); 
 	      TextView descLeft = (TextView)convertView.findViewById(R.id.timeline_desc); 
-	      TextView bookAdderIdLeft = (TextView)convertView.findViewById(R.id.timeline_book_adder_id); 
+	      TextView bookAdderIdLeft = (TextView)convertView.findViewById(R.id.timeline_book_owner); 
 	      ImageView image_left =(ImageView)convertView.findViewById(R.id.timeline_list_image);
 	      
 	        //bütün değerleri listviewdaki elemana ata
 	        titleLeft.setText(eldekiSatir.get(ApplicationConstants.TYPE_BOOK_NAME));
 	        descLeft.setText(eldekiSatir.get(ApplicationConstants.TYPE_BOOK_DESC));
-	        bookAdderIdLeft.setText(eldekiSatir.get(ApplicationConstants.TYPE_BOOK_ADDERID));
+	        bookAdderIdLeft.setText(eldekiSatir.get(ApplicationConstants.TYPE_BOOK_OWNER));
 	        imageLoader.DisplayImage(eldekiSatir.get(ApplicationConstants.TYPE_COVER_URL), image_left);
 		
 		//comment için
