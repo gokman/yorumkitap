@@ -32,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class TimeLineActivity extends ActivityBase implements OnClickListener{
@@ -207,9 +208,12 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	        bookListView.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-				//	ListView l = (ListView)bookListView.getSelectedItem();
-				//	System.out.println(l.getTag().toString());
-					System.out.println("sss="+view);
+					
+				TextView text1=(TextView)view.findViewById(R.id.tl_book_hidden);
+				TextView text2=(TextView)view.findViewById(R.id.tl_comment_hidden);
+				TextView text3=(TextView)view.findViewById(R.id.tl_follow_hidden);
+				String clicked_type=text1.getText().toString()+text2.getText().toString()+text3.getText().toString();
+				System.out.println(clicked_type);
 				}
 			});
 	}

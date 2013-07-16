@@ -60,12 +60,14 @@ public class TimeLineAdapter extends BaseAdapter {
 		if(eldekiSatir.get(TimeLineActivity.ListElementType).toString().equals("BOOK")){
 		convertView=mInflater.inflate(R.layout.timeline_page_row1, null);
 		
+		  TextView hiddenVal = (TextView)convertView.findViewById(R.id.tl_book_hidden);
 		  TextView titleLeft = (TextView)convertView.findViewById(R.id.timeline_book_title); 
 	      TextView descLeft = (TextView)convertView.findViewById(R.id.timeline_desc); 
 	      TextView bookAdderIdLeft = (TextView)convertView.findViewById(R.id.timeline_book_owner); 
 	      ImageView image_left =(ImageView)convertView.findViewById(R.id.timeline_list_image);
 	      
 	        //bütün değerleri listviewdaki elemana ata
+	        hiddenVal.setText(ApplicationConstants.TYPE_BOOK);
 	        titleLeft.setText(eldekiSatir.get(ApplicationConstants.TYPE_BOOK_NAME));
 	        descLeft.setText(eldekiSatir.get(ApplicationConstants.TYPE_BOOK_DESC));
 	        bookAdderIdLeft.setText(eldekiSatir.get(ApplicationConstants.TYPE_BOOK_OWNER));
@@ -75,12 +77,14 @@ public class TimeLineAdapter extends BaseAdapter {
 		}else if(eldekiSatir.get(TimeLineActivity.ListElementType).toString().equals("COMMENT")){
 			convertView=mInflater.inflate(R.layout.timeline_page_row3, null);
 			
+			  TextView hiddenVal = (TextView)convertView.findViewById(R.id.tl_comment_hidden);
 			  TextView commendator = (TextView)convertView.findViewById(R.id.textCommentator); 
 		      TextView commentedBookOwner = (TextView)convertView.findViewById(R.id.bookOwner); 
 		      TextView commentedBookName = (TextView)convertView.findViewById(R.id.commentedBookName); 
 		      TextView commentDate = (TextView)convertView.findViewById(R.id.tl_commentDate); 
 		      
 		        //bütün değerleri listviewdaki elemana ata
+		        hiddenVal.setText(ApplicationConstants.TYPE_COMMENT);
 		        commendator.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENDATOR));
 		        commentedBookOwner.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENTEDBOOKOWNER));
 		        commentedBookName.setText(eldekiSatir.get(ApplicationConstants.TYPE_COMMENTEDBOOKNAME));
