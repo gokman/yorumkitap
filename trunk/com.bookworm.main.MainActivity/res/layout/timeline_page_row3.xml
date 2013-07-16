@@ -55,6 +55,9 @@
         android:layout_toRightOf="@+id/textComment2"
         android:text="20.06.2013" />
 
-   
+    <TextView
+        android:id="@+id/tl_comment_hidden"
+        android:visibility="invisible"
+        android:text="tl_comment_hidden" />
 
 </RelativeLayout>

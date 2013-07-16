@@ -36,5 +36,10 @@
         android:layout_centerVertical="true"
         android:paddingRight="10dp"
         android:text="20 10 2012" />
+
+    <TextView
+        android:id="@+id/tl_follow_hidden"
+        android:visibility="invisible"
+        android:text="tl_follow_hidden" />
  
 </RelativeLayout>
