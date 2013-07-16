@@ -8,8 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import org.json.JSONException;
+
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.CustomComparator;
+import com.bookworm.common.DatabaseProcess;
 import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.common.LazyAdapter;
 import com.bookworm.common.SelectDataTask;
@@ -22,11 +25,16 @@ import com.netmera.mobile.NetmeraUser;
 
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-public class TimeLineActivity extends ActivityBase{
+
+public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	//listelenen elemanlarÄ±n tipini tutacak
 	public static final String ListElementType="TYPE";
 	private TimeLineAdapter adapter;
@@ -71,14 +79,14 @@ public class TimeLineActivity extends ActivityBase{
 	        
 	        //kullanÄ±cÄ±yÄ± Ã§ek
 	        try {
-				commendatorName=NetmeraUser.getCurrentUser().getEmail();
+				commendatorName=NetmeraUser.getCurrentUser().getNickname();
 			} catch (NetmeraException e1) {
 				e1.printStackTrace();
 			}
 	        
 	        //kitap iÃ§in bize yardÄ±mcÄ± olacak servisimiz
 	        NetmeraService servicer = new NetmeraService(ApplicationConstants.book);
-			servicer.setMax(ApplicationConstants.item_count_per_page_for_main_page);
+			servicer.setMax(ApplicationConstants.item_count_per_page_for_timeline_page);
 			
 			//yorum iÃ§in bize yardÄ±mcÄ± olacak servisimiz
 			NetmeraService servicerComment = new NetmeraService(ApplicationConstants.comment);
@@ -99,12 +107,13 @@ public class TimeLineActivity extends ActivityBase{
 					//BUNU BiLMiYORUM ????
 					tempBook1.add(ApplicationConstants.generic_property, ApplicationConstants.book_coverPhoto);
 					String tempBook1CoverURL = new GetNetmerMediaTask().execute(tempBook1).get();
+					
 					//artik elimde bir satira ait hersey var. bunu simdi map e atacagiz.
 					map.put(ApplicationConstants.TYPE, ApplicationConstants.TYPE_BOOK);
 					map.put(ApplicationConstants.TYPE_COVER_URL, tempBook1CoverURL);
 					map.put(ApplicationConstants.TYPE_BOOK_NAME, tempBook1.get(ApplicationConstants.book_name).toString());
 					map.put(ApplicationConstants.TYPE_BOOK_DESC, tempBook1.get(ApplicationConstants.book_desc).toString());
-					map.put(ApplicationConstants.TYPE_BOOK_ADDERID, tempBook1.get(ApplicationConstants.book_adderId).toString());
+					map.put(ApplicationConstants.TYPE_BOOK_OWNER, new DatabaseProcess().getUserName(tempBook1.get(ApplicationConstants.book_adderId).toString()));
 					map.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(tempBook1.getCreateDate()).toString());
 					bookListToView.add(map);
 				
@@ -142,11 +151,12 @@ public class TimeLineActivity extends ActivityBase{
 						commentBookTempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKNAME, 
 								commentBookList.get(z).get(ApplicationConstants.book_name).toString());
 						commentBookTempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKOWNER, 
-								commentBookList.get(z).get(ApplicationConstants.book_adderId).toString());
+								new DatabaseProcess().getUserName(commentBookList.get(z).get(ApplicationConstants.book_adderId).toString()));
 						commentBookListToView.add(commentBookTempMap);
 					}
 					//commentlisttoview listemizi yani commentlerin listesini tutan view nesnelerini atama iÅŸlemi yapÄ±yoruz
 					bookListToView.addAll(commentBookListToView);
+					//tarihe göre elemanlarý listeliyoruz
 					Collections.sort(bookListToView,new CustomComparator());
 					
 					//bitir
@@ -192,5 +202,24 @@ public class TimeLineActivity extends ActivityBase{
 			bookListView=(ListView)findViewById(R.id.timeline_elements);
 	        adapter=new TimeLineAdapter(this, bookListToView);
 	        bookListView.setAdapter(adapter);
+	        
+	        //listedeki elemanlara týklandýðýnda yapýlacak iþlemler
+	        bookListView.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+				//	ListView l = (ListView)bookListView.getSelectedItem();
+				//	System.out.println(l.getTag().toString());
+					System.out.println("sss="+view);
+				}
+			});
 	}
+
+
+
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

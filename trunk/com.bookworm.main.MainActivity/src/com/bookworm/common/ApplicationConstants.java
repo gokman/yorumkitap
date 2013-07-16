@@ -37,6 +37,7 @@ public class ApplicationConstants {
 	public static final String book_coverPhoto = "coverPhoto";
 	public static final String book_tags = "tags";
 	public static final String book_create_date = "Create Date";
+	public static final String book_owner="Owner";
 	
 	//Comment
 	public static final String comment_er = "commenterID";
@@ -100,11 +101,11 @@ public class ApplicationConstants {
 	public static final String TYPE_COVER_URL="COVER URL";
 	public static final String TYPE_BOOK_NAME="BOOK_NAME";
 	public static final String TYPE_BOOK_DESC="BOOK_DESC";
-	public static final String TYPE_BOOK_ADDERID="BOOK_ADDERID";
+	public static final String TYPE_BOOK_OWNER="BOOK_OWNER";
 	public static final String TYPE_BOOK_CREATE_DATE="BOOK_CREATE_DATE";
 	
 	public static final String CREATE_DATE="CREATE_DATE";
 	
-	//tarih formatý
+	//zaman tünelinde listelenen elemanlarda bulunan tarih bölümünün formatýný tutar
 	public final static SimpleDateFormat dateFormat=new SimpleDateFormat("hh:mm dd-MM-yyyy");
 }
