@@ -72,5 +72,11 @@
     android:text="Bence mükemmel bir kitap herkes okumalı ..."
     android:textColor="@color/ownOrange"
     android:textSize="10dip" />
+
+<TextView
+    android:id="@+id/tl_book_hidden"
+    android:visibility="invisible"
+    android:layout_toRightOf="@+id/timeline_book_title"
+    android:text="tl_book_hidden" />
     
  </RelativeLayout>
