@@ -23,6 +23,7 @@ import com.netmera.mobile.NetmeraException;
 import com.netmera.mobile.NetmeraService;
 import com.netmera.mobile.NetmeraUser;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -115,6 +116,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 					map.put(ApplicationConstants.TYPE_BOOK_NAME, tempBook1.get(ApplicationConstants.book_name).toString());
 					map.put(ApplicationConstants.TYPE_BOOK_DESC, tempBook1.get(ApplicationConstants.book_desc).toString());
 					map.put(ApplicationConstants.TYPE_BOOK_OWNER, new DatabaseProcess().getUserName(tempBook1.get(ApplicationConstants.book_adderId).toString()));
+					map.put(ApplicationConstants.book_adderId, tempBook1.get(ApplicationConstants.book_adderId).toString());
 					map.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(tempBook1.getCreateDate()).toString());
 					bookListToView.add(map);
 				
@@ -151,6 +153,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 						commentBookTempMap.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(commentDateList.get(z)).toString());
 						commentBookTempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKNAME, 
 								commentBookList.get(z).get(ApplicationConstants.book_name).toString());
+						commentBookTempMap.put(ApplicationConstants.book_adderId, commentBookList.get(z).get(ApplicationConstants.book_adderId).toString());
 						commentBookTempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKOWNER, 
 								new DatabaseProcess().getUserName(commentBookList.get(z).get(ApplicationConstants.book_adderId).toString()));
 						commentBookListToView.add(commentBookTempMap);
@@ -205,17 +208,36 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	        bookListView.setAdapter(adapter);
 	        
 	        //listedeki elemanlara týklandýðýnda yapýlacak iþlemler
+	        
+	        
 	        bookListView.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 					
-				TextView text1=(TextView)view.findViewById(R.id.tl_book_hidden);
-				TextView text2=(TextView)view.findViewById(R.id.tl_comment_hidden);
-				TextView text3=(TextView)view.findViewById(R.id.tl_follow_hidden);
-				String clicked_type=text1.getText().toString()+text2.getText().toString()+text3.getText().toString();
-				System.out.println(clicked_type);
+				if(view.getTag().toString().equals(ApplicationConstants.TYPE_BOOK)){
+					
+					
+					Intent bookDetailIntent = new Intent(getApplicationContext(), BookDetailActivity.class);
+			    	bookDetailIntent.putExtra(ApplicationConstants.book_name, ((TextView)view.findViewById(R.id.timeline_book_title)).getText().toString());
+			    	bookDetailIntent.putExtra(ApplicationConstants.book_adderId, ((TextView)view.findViewById(R.id.timeline_book_adderId)).getText().toString());
+			    	startActivity(bookDetailIntent);
+					
+				}else if(view.getTag().toString().equals(ApplicationConstants.TYPE_COMMENT)){
+					
+					Intent bookDetailIntent = new Intent(getApplicationContext(), BookDetailActivity.class);
+			    	bookDetailIntent.putExtra(ApplicationConstants.book_name, ((TextView)view.findViewById(R.id.commentedBookName)).getText().toString());
+			    	bookDetailIntent.putExtra(ApplicationConstants.book_adderId, ((TextView)view.findViewById(R.id.timeline_follow_book_adderId)).getText().toString());
+			    	startActivity(bookDetailIntent);
+					
+				}else if(view.getTag().toString().equals(ApplicationConstants.TYPE_FOLLOW)){
+					
+				}
+					
 				}
 			});
+	        
+	        
+	        
 	}
 
 
