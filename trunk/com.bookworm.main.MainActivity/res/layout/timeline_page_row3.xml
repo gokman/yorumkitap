@@ -56,8 +56,10 @@
         android:text="20.06.2013" />
 
     <TextView
-        android:id="@+id/tl_comment_hidden"
+        android:id="@+id/timeline_follow_book_adderId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="invisible"
-        android:text="tl_comment_hidden" />
+        android:text="book_adder_id" />
 
 </RelativeLayout>

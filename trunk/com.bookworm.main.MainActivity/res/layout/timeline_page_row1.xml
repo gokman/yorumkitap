@@ -74,9 +74,10 @@
     android:textSize="10dip" />
 
 <TextView
-    android:id="@+id/tl_book_hidden"
+    android:id="@+id/timeline_book_adderId"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:visibility="invisible"
-    android:layout_toRightOf="@+id/timeline_book_title"
-    android:text="tl_book_hidden" />
+    android:text="adderid" />
     
  </RelativeLayout>
