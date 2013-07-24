@@ -55,7 +55,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	private HashMap<String,String> commentBookTempMap;
 	private List<Date> commentDateList;
 	private String commendatorName;
-	//follow ile alakalý
+	//follow ile alakalï¿½
 	List<NetmeraContent> followList;
 	private ListView followListView;
 	private ArrayList<HashMap<String,String>> followListToView;
@@ -161,7 +161,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 					}
 					//commentlisttoview listemizi yani commentlerin listesini tutan view nesnelerini atama iÅŸlemi yapÄ±yoruz
 					bookListToView.addAll(commentBookListToView);
-					//tarihe göre elemanlarý listeliyoruz
+					//tarihe gï¿½re elemanlarï¿½ listeliyoruz
 					Collections.sort(bookListToView,new CustomComparator());
 					
 					//bitir
@@ -169,7 +169,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 					//follow ile alakalÄ± verileri cekme islemi 
 					//basla
 					
-					//bu kullaniciya ait tum followlarý cekecegiz
+					//bu kullaniciya ait tum followlarï¿½ cekecegiz
 					NetmeraService serviceFollow = new NetmeraService(ApplicationConstants.followship);
 					serviceFollow.setMax(ApplicationConstants.item_count_per_page_for_timeline_page);
 					serviceFollow.whereEqual(ApplicationConstants.book_adderId, commentList.get(j).get(ApplicationConstants.comment_edBookOwner).toString());
@@ -209,8 +209,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	        bookListView.setItemsCanFocus(false);
 	        bookListView.setAdapter(adapter);
 	        
-	        
-	        //listedeki elemanlara týklandýðýnda yapýlacak iþlemler
+	        //listedeki elemanlara tï¿½klandï¿½ï¿½ï¿½nda yapï¿½lacak iï¿½lemler
 	        
 	        
 	        bookListView.setOnItemClickListener(new OnItemClickListener() {
@@ -242,7 +241,8 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	        
 	        
 	}
-	
+
+
 
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
