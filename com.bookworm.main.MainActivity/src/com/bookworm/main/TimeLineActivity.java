@@ -206,8 +206,9 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 			//elimizdeki listviewÄ± ekliyoruz
 			bookListView=(ListView)findViewById(R.id.timeline_elements);
 	        adapter=new TimeLineAdapter(this, bookListToView);
+	        bookListView.setItemsCanFocus(false);
 	        bookListView.setAdapter(adapter);
-	        bookListView.setItemsCanFocus(true);
+	        
 	        
 	        //listedeki elemanlara týklandýðýnda yapýlacak iþlemler
 	        

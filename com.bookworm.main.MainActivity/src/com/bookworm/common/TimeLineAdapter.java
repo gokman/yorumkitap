@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class TimeLineAdapter extends BaseAdapter implements OnClickListener{
+public class TimeLineAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
 	private Activity activity;
@@ -68,6 +68,15 @@ public class TimeLineAdapter extends BaseAdapter implements OnClickListener{
 		  TextView bookAdderId = (TextView)convertView.findViewById(R.id.timeline_book_adderId); 
 	      TextView descLeft = (TextView)convertView.findViewById(R.id.timeline_desc); 
 	      TextView bookOwner = (TextView)convertView.findViewById(R.id.timeline_book_adderId);
+	      bookOwner.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				Toast.makeText(parent.getContext(), "ddd", Toast.LENGTH_LONG).show();
+				
+			}
+	    	  
+	    	  
+	      });
 	      ImageView image_left =(ImageView)convertView.findViewById(R.id.timeline_list_image);
 	      
 	        //bütün değerleri listviewdaki elemana ata
