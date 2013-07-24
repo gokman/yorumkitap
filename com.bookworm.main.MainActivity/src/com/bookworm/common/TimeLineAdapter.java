@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.bookworm.main.BookDetailActivity;
 import com.bookworm.main.MainActivity;
+import com.bookworm.main.ProfileActivity;
 import com.bookworm.main.TimeLineActivity;
 import com.bookworm.main.R;
 
@@ -56,7 +57,7 @@ public class TimeLineAdapter extends BaseAdapter{
 		return position;
 	}
 
-	public View getView(int position, View convertView,final ViewGroup parent) {
+	public View getView(int position, View convertView,final  ViewGroup parent) {
 		
 		//listelenen elemanları sıra ile çekiyoruz. Ona göre şekil vereceğiz
 		final HashMap<String,String> eldekiSatir=data.get(position);
@@ -71,7 +72,7 @@ public class TimeLineAdapter extends BaseAdapter{
 	      bookOwner.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-				Toast.makeText(parent.getContext(), "ddd", Toast.LENGTH_LONG).show();
+					Toast.makeText(parent.getContext(), "ddd", Toast.LENGTH_LONG).show();
 				
 			}
 	    	  
@@ -119,12 +120,6 @@ public class TimeLineAdapter extends BaseAdapter{
 		        followdate.setText(eldekiSatir.get(ApplicationConstants.TYPE_FOLLOWDATE));
 		}
 		return convertView;
-	}
-
-
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
