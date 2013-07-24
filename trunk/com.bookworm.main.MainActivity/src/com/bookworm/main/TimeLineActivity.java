@@ -34,6 +34,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class TimeLineActivity extends ActivityBase implements OnClickListener{
@@ -206,6 +207,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 			bookListView=(ListView)findViewById(R.id.timeline_elements);
 	        adapter=new TimeLineAdapter(this, bookListToView);
 	        bookListView.setAdapter(adapter);
+	        bookListView.setItemsCanFocus(true);
 	        
 	        //listedeki elemanlara týklandýðýnda yapýlacak iþlemler
 	        
@@ -239,8 +241,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	        
 	        
 	}
-
-
+	
 
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
