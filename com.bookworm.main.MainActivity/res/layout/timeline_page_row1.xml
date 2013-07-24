@@ -55,6 +55,8 @@
         android:text="Fatih"
         android:textColor="#10bcc9"
         android:textSize="10dip"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:textStyle="bold" />
     
 <View   android:id="@+id/firstDivider"
