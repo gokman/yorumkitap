@@ -3,6 +3,7 @@ package com.bookworm.common;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.bookworm.main.BookDetailActivity;
 import com.bookworm.main.MainActivity;
 import com.bookworm.main.TimeLineActivity;
 import com.bookworm.main.R;
@@ -14,12 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class TimeLineAdapter extends BaseAdapter {
+public class TimeLineAdapter extends BaseAdapter implements OnClickListener{
 	
 	private LayoutInflater mInflater;
 	private Activity activity;
@@ -52,7 +56,7 @@ public class TimeLineAdapter extends BaseAdapter {
 		return position;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(int position, View convertView,final ViewGroup parent) {
 		
 		//listelenen elemanları sıra ile çekiyoruz. Ona göre şekil vereceğiz
 		final HashMap<String,String> eldekiSatir=data.get(position);
@@ -64,13 +68,6 @@ public class TimeLineAdapter extends BaseAdapter {
 		  TextView bookAdderId = (TextView)convertView.findViewById(R.id.timeline_book_adderId); 
 	      TextView descLeft = (TextView)convertView.findViewById(R.id.timeline_desc); 
 	      TextView bookOwner = (TextView)convertView.findViewById(R.id.timeline_book_adderId);
-	      bookOwner.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				System.out.println("dddd");
-				
-			}
-		});
 	      ImageView image_left =(ImageView)convertView.findViewById(R.id.timeline_list_image);
 	      
 	        //bütün değerleri listviewdaki elemana ata
@@ -113,6 +110,12 @@ public class TimeLineAdapter extends BaseAdapter {
 		        followdate.setText(eldekiSatir.get(ApplicationConstants.TYPE_FOLLOWDATE));
 		}
 		return convertView;
+	}
+
+
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
