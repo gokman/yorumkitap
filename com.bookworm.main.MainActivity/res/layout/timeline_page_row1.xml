@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/timeline_element_bg"
     android:orientation="horizontal"
-    android:padding="5dip" 
-    android:clickable="false">
+    android:padding="5dip" >
  
     <!--  ListRow Left sied Thumbnail image -->
     <LinearLayout android:id="@+id/coverLeft"
@@ -55,8 +54,7 @@
         android:text="Fatih"
         android:textColor="#10bcc9"
         android:textSize="10dip"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
+        android:clickable="true"
         android:textStyle="bold" />
     
 <View   android:id="@+id/firstDivider"
