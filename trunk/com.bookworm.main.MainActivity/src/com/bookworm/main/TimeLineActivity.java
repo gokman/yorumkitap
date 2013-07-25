@@ -1,6 +1,7 @@
 package com.bookworm.main;
 
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -55,7 +56,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	private HashMap<String,String> commentBookTempMap;
 	private List<Date> commentDateList;
 	private String commendatorName;
-	//follow ile alakalï¿½
+	//follow ile alakalý
 	List<NetmeraContent> followList;
 	private ListView followListView;
 	private ArrayList<HashMap<String,String>> followListToView;
@@ -161,7 +162,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 					}
 					//commentlisttoview listemizi yani commentlerin listesini tutan view nesnelerini atama iÅŸlemi yapÄ±yoruz
 					bookListToView.addAll(commentBookListToView);
-					//tarihe gï¿½re elemanlarï¿½ listeliyoruz
+					//tarihe göre elemanlarý listeliyoruz
 					Collections.sort(bookListToView,new CustomComparator());
 					
 					//bitir
@@ -169,7 +170,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 					//follow ile alakalÄ± verileri cekme islemi 
 					//basla
 					
-					//bu kullaniciya ait tum followlarï¿½ cekecegiz
+					//bu kullaniciya ait tum followlarý cekecegiz
 					NetmeraService serviceFollow = new NetmeraService(ApplicationConstants.followship);
 					serviceFollow.setMax(ApplicationConstants.item_count_per_page_for_timeline_page);
 					serviceFollow.whereEqual(ApplicationConstants.book_adderId, commentList.get(j).get(ApplicationConstants.comment_edBookOwner).toString());
@@ -205,17 +206,23 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 			}
 			//elimizdeki listviewÄ± ekliyoruz
 			bookListView=(ListView)findViewById(R.id.timeline_elements);
-	        adapter=new TimeLineAdapter(this, bookListToView);
-	        bookListView.setItemsCanFocus(false);
+	        adapter=new TimeLineAdapter(getApplicationContext(),this, bookListToView);
 	        bookListView.setAdapter(adapter);
 	        
-	        //listedeki elemanlara tï¿½klandï¿½ï¿½ï¿½nda yapï¿½lacak iï¿½lemler
 	        
-	        
+	        //listedeki elemanlara týklandýðýnda yapýlacak iþlemler
+	        TextView te=(TextView)bookListView.findViewById(R.id.timeline_book_owner);
+	        te.setOnClickListener(new OnClickListener() {
+				
+				public void onClick(View arg0) {
+				Toast.makeText(getApplicationContext(), "dd", Toast.LENGTH_LONG).show();
+					
+				}
+			});
 	        bookListView.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					
+				
 				if(view.getTag().toString().equals(ApplicationConstants.TYPE_BOOK)){
 					
 					
@@ -241,13 +248,20 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	        
 	        
 	}
+	//bu þekilde çalýþtý.
+	/*public void fak(View view){
+		
+		 Intent profileIntent = new Intent(view.getContext(),ProfileActivity.class);
+		 profileIntent.putExtra(ApplicationConstants.userEmailParam,((TextView)view.findViewById(R.id.timeline_book_adderId)).getText().toString());
+		 startActivity(profileIntent);
+		
+	}*/
 
-
-
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
+	public void onClick(View v) {
 		
 	}
+	
+
 
 
 }
