@@ -211,18 +211,10 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	        
 	        
 	        //listedeki elemanlara týklandýðýnda yapýlacak iþlemler
-	        TextView te=(TextView)bookListView.findViewById(R.id.timeline_book_owner);
-	        te.setOnClickListener(new OnClickListener() {
-				
-				public void onClick(View arg0) {
-				Toast.makeText(getApplicationContext(), "dd", Toast.LENGTH_LONG).show();
-					
-				}
-			});
 	        bookListView.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-				
+			
 				if(view.getTag().toString().equals(ApplicationConstants.TYPE_BOOK)){
 					
 					
@@ -248,14 +240,6 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	        
 	        
 	}
-	//bu þekilde çalýþtý.
-	/*public void fak(View view){
-		
-		 Intent profileIntent = new Intent(view.getContext(),ProfileActivity.class);
-		 profileIntent.putExtra(ApplicationConstants.userEmailParam,((TextView)view.findViewById(R.id.timeline_book_adderId)).getText().toString());
-		 startActivity(profileIntent);
-		
-	}*/
 
 	public void onClick(View v) {
 		
