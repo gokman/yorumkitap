@@ -67,11 +67,6 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.add_book);
 
-        setExplore_button((ImageView)findViewById(R.id.explore_button));
-		setHome_button((ImageView)findViewById(R.id.home_button));
-		setAdd_book_button((ImageView)findViewById(R.id.add_button));
-		setProfile_button((ImageView)findViewById(R.id.profile_button));
-		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
 
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);        
     	addBookButton = (Button)findViewById(R.id.btnAddBook);
@@ -149,7 +144,7 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 			    	NetmeraService service = new NetmeraService(ApplicationConstants.book);
 			    	service.whereEqual(ApplicationConstants.book_adderId,NetmeraUser.getCurrentUser().getEmail());
 			    	service.whereEqual(ApplicationConstants.book_name,bookName.getText().toString());
-			    	List<NetmeraContent> bookList = new SelectDataTask().execute(service).get();
+			    	List<NetmeraContent> bookList = new SelectDataTask(AddBookActivity.this).execute(service).get();
 			    	NetmeraContent addedBook = bookList.get(0);
 			    	
 			    	Intent bookDetailIntent = new Intent(getApplicationContext(), BookDetailActivity.class);

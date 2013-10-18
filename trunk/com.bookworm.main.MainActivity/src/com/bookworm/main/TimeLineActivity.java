@@ -72,12 +72,6 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
 					R.layout.window_title);
 
-	        setExplore_button((ImageView)findViewById(R.id.explore_button));
-			setHome_button((ImageView)findViewById(R.id.home_button));
-			setAdd_book_button((ImageView)findViewById(R.id.add_button));
-			setProfile_button((ImageView)findViewById(R.id.profile_button));
-			setTimeline_button((ImageView)findViewById(R.id.timeline_button));
-	        
 	        NetmeraClient.init(this, apiKey);
 	        setNavigationButtons();
 	        
@@ -100,7 +94,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 			try {
 				//kitap basla
 				//tum kitap tablosu elimde
-				bookList=new SelectDataTask().execute(servicer).get();
+				bookList=new SelectDataTask(TimeLineActivity.this).execute(servicer).get();
 				//viewa dolacak liste hazirda bekliyor
 				bookListToView=new ArrayList<HashMap<String, String>>();
 				for(int i=0;i<bookList.size();i++){
@@ -117,7 +111,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 					map.put(ApplicationConstants.TYPE_COVER_URL, tempBook1CoverURL);
 					map.put(ApplicationConstants.TYPE_BOOK_NAME, tempBook1.get(ApplicationConstants.book_name).toString());
 					map.put(ApplicationConstants.TYPE_BOOK_DESC, tempBook1.get(ApplicationConstants.book_desc).toString());
-					map.put(ApplicationConstants.TYPE_BOOK_OWNER, new DatabaseProcess().getUserName(tempBook1.get(ApplicationConstants.book_adderId).toString()));
+					map.put(ApplicationConstants.TYPE_BOOK_OWNER, new DatabaseProcess().getUserName(tempBook1.get(ApplicationConstants.book_adderId).toString(),TimeLineActivity.this));
 					map.put(ApplicationConstants.book_adderId, tempBook1.get(ApplicationConstants.book_adderId).toString());
 					map.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(tempBook1.getCreateDate()).toString());
 					bookListToView.add(map);
@@ -132,7 +126,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 					//servise sadece bu kullanıcının yorum yaptığı satırları çekiyoruz
 					servicerComment.whereEqual(ApplicationConstants.comment_er, NetmeraUser.getCurrentUser().getEmail());
 					//elimizde bu kullanıcının yorum yaptığı liste var
-					commentList=new SelectDataTask().execute(servicerComment).get();
+					commentList=new SelectDataTask(TimeLineActivity.this).execute(servicerComment).get();
 					commentBookList=new ArrayList<NetmeraContent>();
 					for(int j=0;j<commentList.size();j++){
 						commentDateList.add(commentList.get(j).getCreateDate());
@@ -142,7 +136,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 						serviceBook.whereEqual(ApplicationConstants.book_adderId, commentList.get(j).get(ApplicationConstants.comment_edBookOwner).toString());
 				        serviceBook.whereEqual(ApplicationConstants.book_name, commentList.get(j).get(ApplicationConstants.comment_edBook).toString());
 				        //selectten gelen değer 1 tane olmalı. biz de bu gelen değerlerden 1. yi al dedik
-				        commentBook=new SelectDataTask().execute(serviceBook).get().get(0);
+				        commentBook=new SelectDataTask(TimeLineActivity.this).execute(serviceBook).get().get(0);
 					    commentBookList.add(commentBook);
 					}
 					//elimizde yorum yapılan kitap listesi commentBookList te tutuluyor
@@ -157,7 +151,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 								commentBookList.get(z).get(ApplicationConstants.book_name).toString());
 						commentBookTempMap.put(ApplicationConstants.book_adderId, commentBookList.get(z).get(ApplicationConstants.book_adderId).toString());
 						commentBookTempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKOWNER, 
-								new DatabaseProcess().getUserName(commentBookList.get(z).get(ApplicationConstants.book_adderId).toString()));
+								new DatabaseProcess().getUserName(commentBookList.get(z).get(ApplicationConstants.book_adderId).toString(),TimeLineActivity.this));
 						commentBookListToView.add(commentBookTempMap);
 					}
 					//commentlisttoview listemizi yani commentlerin listesini tutan view nesnelerini atama işlemi yapıyoruz

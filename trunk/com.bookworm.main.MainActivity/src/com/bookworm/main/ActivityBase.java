@@ -34,6 +34,12 @@ public class ActivityBase extends Activity{
 	private ImageView timeline_button;
 	
 	public void setNavigationButtons(){
+
+        setExplore_button((ImageView)findViewById(R.id.explore_button));
+		setHome_button((ImageView)findViewById(R.id.home_button));
+		setAdd_book_button((ImageView)findViewById(R.id.add_button));
+		setProfile_button((ImageView)findViewById(R.id.profile_button));
+		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
 		
 		explore_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {

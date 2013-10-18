@@ -70,13 +70,6 @@ public class ProfileEditActivity extends ActivityBase implements OnClickListener
 
 		imageLoader=new ImageLoader(this.getApplicationContext());
 
-        setExplore_button((ImageView)findViewById(R.id.explore_button));
-		setHome_button((ImageView)findViewById(R.id.home_button));
-		setAdd_book_button((ImageView)findViewById(R.id.add_button));
-		setProfile_button((ImageView)findViewById(R.id.profile_button));	
-		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
-
-        
         txtUsername = (EditText)findViewById(R.id.edit_profile_uname);
         txtAbout = (EditText)findViewById(R.id.edit_profile_about);
         imgProfilePhoto = (ImageView)findViewById(R.id.edit_profile_photo);
@@ -91,7 +84,7 @@ public class ProfileEditActivity extends ActivityBase implements OnClickListener
         NetmeraService service = new NetmeraService(ApplicationConstants.user);
         service.whereEqual(ApplicationConstants.user_email, user_param);
         try{
-        	List<NetmeraContent > userList = new SelectDataTask().execute(service).get();
+        	List<NetmeraContent > userList = new SelectDataTask(ProfileEditActivity.this).execute(service).get();
         	user = userList.get(0);
         	user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
         	

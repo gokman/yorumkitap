@@ -1,19 +1,30 @@
 package com.bookworm.common;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 
+import com.bookworm.main.ActivityBase;
+import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
 import com.netmera.mobile.NetmeraService;
-import com.netmera.mobile.NetmeraContent;
 
 public class SelectDataTask extends AsyncTask<NetmeraService, Void, List<NetmeraContent>> {
 
+
+	private ActivityBase baseActivity;
+	private Context context ;
+	
+	public SelectDataTask(ActivityBase baseActivity){
+		this.baseActivity = baseActivity;
+		context = baseActivity;
+	}
+	
+	
 	// can use UI thread here
 	protected void onPreExecute() {
+		super.onPreExecute();
 	}
 
 	// automatically done on worker thread (separate from UI thread)
@@ -32,9 +43,7 @@ public class SelectDataTask extends AsyncTask<NetmeraService, Void, List<Netmera
 		}
 		return searchResultList;
 	}
-
-	// can use UI thread here
-	protected void onPostExecute(final String result) {
-
+	@Override
+	protected void onPostExecute(List<NetmeraContent> result){
 	}
 }

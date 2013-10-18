@@ -1,14 +1,10 @@
 package com.bookworm.common;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
 import com.netmera.mobile.NetmeraService;
-import com.netmera.mobile.NetmeraContent;
 
 public class SelectDataWithPathTask extends AsyncTask<NetmeraService, Void, NetmeraContent> {
 

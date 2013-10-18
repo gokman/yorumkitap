@@ -1,13 +1,10 @@
 package com.bookworm.common;
 
-import java.util.List;
-
 import android.os.AsyncTask;
 
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
 import com.netmera.mobile.NetmeraMedia;
-import com.netmera.mobile.NetmeraService;
 
 public class GetNetmerMediaTask extends AsyncTask<NetmeraContent, Void, String> {
 
@@ -35,6 +32,7 @@ public class GetNetmerMediaTask extends AsyncTask<NetmeraContent, Void, String> 
 	}
 
 	// can use UI thread here
+	@Override
 	protected void onPostExecute(final String result) {
 
 	}

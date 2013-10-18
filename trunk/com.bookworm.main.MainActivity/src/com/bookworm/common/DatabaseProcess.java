@@ -2,19 +2,20 @@ package com.bookworm.common;
 
 import java.util.concurrent.ExecutionException;
 
+import com.bookworm.main.ActivityBase;
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
 import com.netmera.mobile.NetmeraService;
 
 public class DatabaseProcess {
 	//id dediðimiz aslýnda email adresi oluyor
-public String getUserName(String id){
+public String getUserName(String id,ActivityBase activity){
 	NetmeraContent userRow=null;
 	String username=null;
 	NetmeraService userService=new NetmeraService(ApplicationConstants.user);
 	userService.whereEqual(ApplicationConstants.user_email, id);
 	try {
-		userRow=new SelectDataTask().execute(userService).get().get(0);
+		userRow=new SelectDataTask(activity).execute(userService).get().get(0);
 	} catch (InterruptedException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
