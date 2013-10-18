@@ -78,16 +78,10 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 
 	        imageLoader=new ImageLoader(this.getApplicationContext());
 
-	        setExplore_button((ImageView)findViewById(R.id.explore_button));
-			setHome_button((ImageView)findViewById(R.id.home_button));
-			setAdd_book_button((ImageView)findViewById(R.id.add_button));
-			setProfile_button((ImageView)findViewById(R.id.profile_button));
-			setTimeline_button((ImageView)findViewById(R.id.timeline_button));
-			
 			statusView = (ImageView)findViewById(R.id.status);
 			
 	        preparelistItems();
-	        //TODO listeleme sayfalarï¿½ndan biriyle gelinirse  userEmail sessiondan alinmali.
+	        //TODO listeleme sayfalarýndan biriyle gelinirse  userEmail sessiondan alinmali.
 			Intent myIntent = getIntent();
 			userEmail = myIntent.getStringExtra(ApplicationConstants.userEmailParam);
 			
@@ -128,7 +122,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 			
 			servicer = new NetmeraService(ApplicationConstants.user);
 			servicer.whereEqual(ApplicationConstants.user_email,userEmail);
-			List<NetmeraContent> usersList = new SelectDataTask().execute(servicer).get();
+			List<NetmeraContent> usersList = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
 			NetmeraContent user = usersList.get(0);
 			String userProfileImageURL = new GetNetmerMediaTask().execute(user).get();
 			
@@ -170,7 +164,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 								NetmeraService servicer = new NetmeraService(ApplicationConstants.followship);
 								servicer.whereEqual(ApplicationConstants.followship_user_id, currentUserEmail);
 								servicer.whereEqual(ApplicationConstants.followship_follows, userEmail);
-								followedUsers = new SelectDataTask().execute(servicer).get();
+								followedUsers = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
 								for(int k = 0 ; k <followedUsers.size() ; k++){
 									NetmeraContent content = followedUsers.get(k);
 									new DeletetDataTask().execute(content).get();
@@ -212,26 +206,26 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 			servicer.whereEqual(ApplicationConstants.book_adderId, userEmail); 
 			servicer.setMax(ApplicationConstants.item_count_per_page);
 			servicer.setPage(0);
-			booksAddedByUser = new SelectDataTask().execute(servicer).get();
+			booksAddedByUser = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
 			
 			servicer = new NetmeraService(ApplicationConstants.comment);
 			servicer.whereEqual(ApplicationConstants.comment_er, userEmail);
 			servicer.setMax(ApplicationConstants.item_count_per_page_for_comments);
 			servicer.setPage(0);
-			List<NetmeraContent> comments = new SelectDataTask().execute(servicer).get();
+			List<NetmeraContent> comments = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
 			commentedBooks = new ArrayList<NetmeraContent>(); 
 
 			HashMap<String,String> existing = new HashMap<String, String>();
 			for(NetmeraContent content : comments){
 
-				if(commentedBooks.size()< ApplicationConstants.item_count_per_page_for_comments){ //TODO bu kalkmalï¿½ sayfalama filan olmali
+				if(commentedBooks.size()< ApplicationConstants.item_count_per_page_for_comments){ //TODO bu kalkmalý sayfalama filan olmali
 					
 					NetmeraService service = new NetmeraService(ApplicationConstants.book);
 					
 					service.whereEqual(ApplicationConstants.book_adderId, content.get(ApplicationConstants.comment_edBookOwner).toString());
 					service.whereEqual(ApplicationConstants.book_name, content.get(ApplicationConstants.comment_edBook).toString());
 					
-					List<NetmeraContent> tempBookList = new SelectDataTask().execute(service).get(); 
+					List<NetmeraContent> tempBookList = new SelectDataTask(ProfileActivity.this).execute(service).get(); 
 					
 					if(tempBookList.size()==0)
 						continue;
@@ -289,7 +283,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 					try {
 						NetmeraService followerListService = new NetmeraService(ApplicationConstants.followship);
 						followerListService.whereEqual(ApplicationConstants.followship_follows,userEmail);
-						followersTransactionList = new SelectDataTask().execute(followerListService).get();
+						followersTransactionList = new SelectDataTask(ProfileActivity.this).execute(followerListService).get();
 						String[] userEmailList = ApplicationUtil.convertObjectListToInputList(followersTransactionList,ApplicationConstants.followship_user_id);
 						
 						/*TODO 
@@ -297,7 +291,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 						 */
 						followerListService = new NetmeraService(ApplicationConstants.user);
 						followerListService.whereContainedIn(ApplicationConstants.netmera_user_email, Arrays.asList(userEmailList));
-						followersList = new SelectDataTask().execute(followerListService).get();
+						followersList = new SelectDataTask(ProfileActivity.this).execute(followerListService).get();
 
 						makeAllInvisible();
 						applyDataToTable(followersList,ApplicationConstants.netmera_user_username,null);
@@ -317,7 +311,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 					try {
 						NetmeraService followingListService = new NetmeraService(ApplicationConstants.followship);
 						followingListService.whereEqual(ApplicationConstants.followship_user_id, userEmail);
-						followingTransactionList = new SelectDataTask().execute(followingListService).get();
+						followingTransactionList = new SelectDataTask(ProfileActivity.this).execute(followingListService).get();
 						String[] userEmailList = ApplicationUtil.convertObjectListToInputList(followingTransactionList, ApplicationConstants.followship_follows);
 
 						/*TODO 
@@ -325,7 +319,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 						 */
 						followingListService = new NetmeraService(ApplicationConstants.user);
 						followingListService.whereContainedIn(ApplicationConstants.netmera_user_email, Arrays.asList(userEmailList));
-						followingUsers = new SelectDataTask().execute(followingListService).get();
+						followingUsers = new SelectDataTask(ProfileActivity.this).execute(followingListService).get();
 
 						makeAllInvisible();
 						applyDataToTable(followingUsers,ApplicationConstants.netmera_user_username,null);

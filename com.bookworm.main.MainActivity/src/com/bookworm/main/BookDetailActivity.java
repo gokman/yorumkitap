@@ -98,12 +98,6 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		commentsArena = (ExpandableListView) findViewById(R.id.expandableListView);
 		profileLayout = (LinearLayout) findViewById(R.id.profileLayout);
 		
-        setExplore_button((ImageView)findViewById(R.id.explore_button));
-		setHome_button((ImageView)findViewById(R.id.home_button));
-		setAdd_book_button((ImageView)findViewById(R.id.add_button));
-		setProfile_button((ImageView)findViewById(R.id.profile_button));
-		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
-		
 		Intent myIntent = getIntent();
 		book_name = myIntent.getStringExtra(ApplicationConstants.book_name);
 		adderID = myIntent.getStringExtra(ApplicationConstants.book_adderId);
@@ -144,7 +138,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 
 				NetmeraService userService = new NetmeraService(ApplicationConstants.user);
 				userService.whereEqual(ApplicationConstants.user_email, adderID);
-				List<NetmeraContent> usersList = new SelectDataTask().execute(userService).get();
+				List<NetmeraContent> usersList = new SelectDataTask(BookDetailActivity.this).execute(userService).get();
 				NetmeraContent user = usersList.get(0);
 				user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
 				profilePhotoUrl  = new GetNetmerMediaTask().execute(user).get();
@@ -159,7 +153,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 				imageLoader.DisplayImage(profilePhotoUrl, profileImage);
 
 				
-				List<NetmeraContent> commentList= new SelectDataTask().execute(commentService).get();
+				List<NetmeraContent> commentList= new SelectDataTask(BookDetailActivity.this).execute(commentService).get();
 				prepareResource(commentList);
 				initComments();
 				
@@ -190,7 +184,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 							commentService.setSortOrder(SortOrder.ascending);
 							commentService.setSortBy(ApplicationConstants.comment_create_date);
 							
-							List<NetmeraContent> commentList= new SelectDataTask().execute(commentService).get();
+							List<NetmeraContent> commentList= new SelectDataTask(BookDetailActivity.this).execute(commentService).get();
 							prepareResource(commentList);
 							initComments();
 														

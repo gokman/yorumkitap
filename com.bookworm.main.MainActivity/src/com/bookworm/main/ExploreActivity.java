@@ -67,12 +67,6 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 		}
         imageLoader=new ImageLoader(this.getApplicationContext());
         
-        setExplore_button((ImageView)findViewById(R.id.explore_button));
-		setHome_button((ImageView)findViewById(R.id.home_button));
-		setAdd_book_button((ImageView)findViewById(R.id.add_button));
-		setProfile_button((ImageView)findViewById(R.id.profile_button));
-		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
-		
 		btnExploreBooks = (Button)findViewById(R.id.exploreBooks);
         btnExploreUsers = (Button)findViewById(R.id.exploreUsers);
         searchText = (EditText)findViewById(R.id.searchText);
@@ -96,7 +90,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 				}
 				service.setMax(ApplicationConstants.item_count_per_page_for_explore_page);
 				try{
-					List<NetmeraContent> usersList = new SelectDataTask().execute(service).get();
+					List<NetmeraContent> usersList = new SelectDataTask(ExploreActivity.this).execute(service).get();
 					makeAllInvisible();
 					applyDataToTable(usersList,ApplicationConstants.user_username,ApplicationConstants.user_userProfile);
 					
@@ -133,14 +127,14 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 							searchKey);
 					service.setMax(ApplicationConstants.item_count_per_page_for_explore_page);
 					try {
-						List<NetmeraContent> hashtagList = new SelectDataTask().execute(service).get();
+						List<NetmeraContent> hashtagList = new SelectDataTask(ExploreActivity.this).execute(service).get();
 						List <NetmeraContent> bookList = new ArrayList<NetmeraContent>();
 						
 						if (hashtagList != null && hashtagList.size() > 0) {
 							String[] bookPathList = ApplicationUtil.convertObjectListToInputList(hashtagList, ApplicationConstants.hashtable_book_path);
 							
 							bookService.whereContainedIn(ApplicationConstants.object_path, Arrays.asList(bookPathList));
-							bookList = new SelectDataTask().execute(bookService).get();	
+							bookList = new SelectDataTask(ExploreActivity.this).execute(bookService).get();	
 						}
 						makeAllInvisible();
 						applyDataToTable(bookList,ApplicationConstants.book_name,ApplicationConstants.book_coverPhoto);
@@ -159,7 +153,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 					}
 
 					/*
-					 * Hashtag le arama yapï¿½yoruz sadece NetmeraService service
+					 * Hashtag le arama yapýyoruz sadece NetmeraService service
 					 * = new NetmeraService(ApplicationConstants.book); //
 					 * if(searchKey!=null &&
 					 * !searchKey.equals(ApplicationConstants.EMPTY_STRING)){ //
