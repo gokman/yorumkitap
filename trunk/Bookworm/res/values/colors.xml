@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>    
+    <color name="ownGray">#685b5b</color>
+    <color name="ownOrange">#e35507</color>
+    <color name="newAccountBlue">#0b84aa</color>
+    <color name="backgroundBlue">#afcfcf</color>
+</resources>
