@@ -25,18 +25,18 @@
 		android:weightSum="30">
 	
 	    <ImageView
-	        android:id="@+id/icon_title_2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="15"
-	        android:src="@drawable/home_button" />
-	    				    
-	    <ImageView
-	        android:id="@+id/icon_title"
+	        android:id="@+id/refresh"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="15"
 	        android:src="@drawable/refresh" />
+	    				    
+	    <ImageView
+	        android:id="@+id/logout"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="15"
+	        android:src="@drawable/home_button" />
 				
 	</LinearLayout>
 

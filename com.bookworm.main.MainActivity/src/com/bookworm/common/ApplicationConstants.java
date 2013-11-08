@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ApplicationConstants {
-	
+
 	//general table columns
 	public static final String GENERAL_COLUMN_CREATE_DATE="creationdate";
 	public static final String GENERAL_COLUMN_UPDATE_DATE="updatedate";
@@ -79,6 +79,7 @@ public class ApplicationConstants {
 	
 	
 	//Stored Credential parameters
+	public static String sharedPrefName = "let_the_books_begin";
 	public static final String username = "bl_user_name";
 	public static final String password = "bl_password";
 	public static final String unregistered_username = "unregistered_username";
