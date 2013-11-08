@@ -4,15 +4,37 @@
     android:layout_height="wrap_content"
     android:background="@drawable/timeline_element_bg"
     android:orientation="horizontal"
-    android:padding="5dip" 
-    android:clickable="false">
-
-    <TextView
+    android:padding="5dip" >
+ 
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout android:id="@+id/coverLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/image_bg"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="2dip"
+        android:layout_marginBottom="2dip">
+ 
+        <ImageView
+            android:id="@+id/timeline_list_image"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@color/ownOrange"
+            android:padding="1dip"
+            android:src="@drawable/step" />
+ 
+    </LinearLayout>
+ 
+   
+ 
+    <!-- Rightend Duration -->
+      <TextView
         android:id="@+id/textFollower"
         android:paddingLeft="10dip"
         style="@style/follow_in_timeline"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/coverLeft"
         android:text="Gökman" />
 
     <TextView
@@ -36,5 +58,25 @@
         android:layout_centerVertical="true"
         android:paddingRight="10dp"
         android:text="20 10 2012" />
- 
-</RelativeLayout>
+
+    <TextView
+        android:id="@+id/timeline_follow_book_adderId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="book_adder_id" />
+    
+<View   android:id="@+id/firstDivider"
+        android:layout_height="0.5dp"
+        android:layout_width="fill_parent"
+        android:background="@color/ownOrange" 
+        android:layout_below="@id/coverLeft"/>
+
+<TextView
+    android:id="@+id/timeline_book_adderId"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="invisible"
+    android:text="adderid" />
+    
+ </RelativeLayout>

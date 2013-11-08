@@ -122,7 +122,7 @@
             android:layout_marginTop="5dip"
             android:lines="3"
             android:singleLine="false"
-            android:text="@string/bookDetailComment"
+            android:hint="@string/bookDetailComment"
             android:textSize="16dip" />
 
         <Button

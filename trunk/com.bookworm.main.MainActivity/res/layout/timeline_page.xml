@@ -13,7 +13,6 @@
          android:layout_height="match_parent"
          android:divider="@color/ownGray"
          android:focusable="true"
-         android:dividerHeight="3dp"
          android:listSelector="@drawable/list_selector" />
     
      <LinearLayout
