@@ -116,6 +116,18 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 				    book.add(ApplicationConstants.book_adderId,bookAdderId);
 				    book.add(ApplicationConstants.book_coverPhoto,coverPhoto);
 
+				    //action tablo kaydı
+				    NetmeraContent action=new NetmeraContent(ApplicationConstants.action);
+				    action.add(ApplicationConstants.ACTION_TYPE, ApplicationConstants.ACTION_TYPE_BOOK);
+				    action.add(ApplicationConstants.action_book_adderId, bookAdderId);
+				    action.add(ApplicationConstants.action_book_coverPhoto, coverPhoto);
+				    action.add(ApplicationConstants.action_book_desc, bookDesc.getText().toString());
+				    action.add(ApplicationConstants.action_book_name, bookName.getText().toString());
+				    action.add(ApplicationConstants.action_book_tags, bookTags.getText().toString());
+				    action.add(ApplicationConstants.action_book_writer, bookWriter.getText().toString());
+				    action.add(ApplicationConstants.ACTION_OWNER, NetmeraUser.getCurrentUser().getEmail());
+				    new InsertDataTask().execute(action).get();
+				    
 			    	new InsertDataTask().execute(book).get();
 			    	/*
 			    	 * Hashtag insertion
