@@ -1,8 +1,13 @@
 package com.bookworm.common;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ApplicationConstants {
+	
+	//general table columns
+	public static final String GENERAL_COLUMN_CREATE_DATE="creationdate";
+	public static final String GENERAL_COLUMN_UPDATE_DATE="updatedate";
 
 	public static final String EMPTY_STRING ="";
 	public static final String DIESIS_SIGN = "#";
@@ -14,7 +19,7 @@ public class ApplicationConstants {
 	public static final int item_count_per_page_for_comments = 100;
 	public static final int item_count_per_page_for_explore_page = 15;
 	public static final int item_count_per_page_for_main_page = 3;
-	public static final int item_count_per_page_for_timeline_page = 2;
+	public static final int item_count_per_page_for_timeline_page = 1;
 	
 	//Tables
 	public static final String user	= "User";
@@ -134,4 +139,9 @@ public class ApplicationConstants {
 	
 	//zaman t�nelinde listelenen elemanlarda bulunan tarih b�l�m�n�n format�n� tutar
 	public final static SimpleDateFormat dateFormat=new SimpleDateFormat("hh:mm dd-MM-yyyy");
+	
+	//zaman tunelindeki sonraki dugmesinin degerini tutar
+	public static int timelineListStatus=1;
+	//zaman tunelinde gosterilen elemanların en geçmiş tarihli olan değeri tutar
+	public static Date timelineLastDate=dateFormat.getCalendar().getTime();
 }

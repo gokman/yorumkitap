@@ -44,6 +44,10 @@ public class TimeLineAdapter extends BaseAdapter{
         
     }
     
+    public void add(ArrayList<HashMap<String, String>> list){
+    	data.addAll(list);
+    }
+    
 
 	public int getCount() {
 		// TODO Auto-generated method stub
