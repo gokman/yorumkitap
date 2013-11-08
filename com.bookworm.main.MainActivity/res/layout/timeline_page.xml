@@ -14,7 +14,17 @@
          android:divider="@color/ownGray"
          android:focusable="true"
          android:listSelector="@drawable/list_selector" />
-    
+     
+     
+     <TextView
+         android:id="@+id/timeline_next_button"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/linearLayoutAltDugmeler"
+         android:layout_centerHorizontal="true"
+         android:clickable="true"
+         android:text="Daha Geçmişe Git" />
+      
      <LinearLayout
             android:id="@+id/linearLayoutAltDugmeler"
             android:layout_width="fill_parent"
@@ -59,4 +69,5 @@
                 android:layout_weight="20"
                 android:src="@drawable/timeline_button" />
         </LinearLayout>
+
 </RelativeLayout>
