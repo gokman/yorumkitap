@@ -38,7 +38,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 	private CheckBox _rememberMe;
 	private CheckBox _forgotPassword;
 	private String savedUsername = ApplicationConstants.EMPTY_STRING;
-	private String savedPassword = ApplicationConstants.EMPTY_STRING;;
+	private String savedPassword = ApplicationConstants.EMPTY_STRING;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -100,7 +100,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 				} else {
 					/*
 					 * Eger login olan kullanici;
-					 * sifresi kayitli olan kullanýcýysa ve "beni hatirla" secenegi secilmemisse
+					 * sifresi kayitli olan kullanï¿½cï¿½ysa ve "beni hatirla" secenegi secilmemisse
 					 * kayitli sifre ve kullanici bilgileri
 					 * else kisminda siliniyor.
 					 */
@@ -121,6 +121,10 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 							editit.commit();
 						}
 					}
+					SharedPreferences.Editor editit = SP.edit();
+					editit.clear();
+					
+					
 					Intent mainPageIntent = new Intent(getApplicationContext(),
 							MainActivity.class);
 					startActivity(mainPageIntent);

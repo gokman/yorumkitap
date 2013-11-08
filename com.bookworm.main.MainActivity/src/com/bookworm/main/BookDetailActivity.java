@@ -102,10 +102,12 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		book_name = myIntent.getStringExtra(ApplicationConstants.book_name);
 		adderID = myIntent.getStringExtra(ApplicationConstants.book_adderId);
 
-
 		NetmeraService service = new NetmeraService(ApplicationConstants.book);
 		service.whereEqual(ApplicationConstants.book_name, book_name);
 		service.whereEqual(ApplicationConstants.book_adderId, adderID);
+		
+		
+		
 		try {
 
 			List<NetmeraContent> bookList = new SelectDataInnerTask().execute(
@@ -174,6 +176,16 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 							comment.add(ApplicationConstants.comment_text,
 									commentText.getText().toString());
 							new InsertDataTask().execute(comment).get();
+							
+							//comment için action kaydı oluştur
+							NetmeraContent action=new NetmeraContent(ApplicationConstants.action);
+							action.add(ApplicationConstants.ACTION_TYPE, ApplicationConstants.ACTION_TYPE_COMMENT);
+							action.add(ApplicationConstants.action_comment_edBook, book_name);
+							action.add(ApplicationConstants.action_comment_edBookOwner, adderID);
+							action.add(ApplicationConstants.action_comment_er, NetmeraUser.getCurrentUser().getEmail());
+							action.add(ApplicationConstants.action_comment_text, commentText.getText().toString());
+							action.add(ApplicationConstants.ACTION_OWNER, NetmeraUser.getCurrentUser().getEmail());
+							new InsertDataTask().execute(action).get();
 							
 							commentText.setText(ApplicationConstants.comment_write_comment);
 

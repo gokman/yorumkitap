@@ -75,13 +75,13 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 	        super.onCreate(savedInstanceState);
 	        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 	        setContentView(R.layout.profile_page);
-
+	        
 	        imageLoader=new ImageLoader(this.getApplicationContext());
 
 			statusView = (ImageView)findViewById(R.id.status);
 			
 	        preparelistItems();
-	        //TODO listeleme sayfalarýndan biriyle gelinirse  userEmail sessiondan alinmali.
+	        //TODO listeleme sayfalarï¿½ndan biriyle gelinirse  userEmail sessiondan alinmali.
 			Intent myIntent = getIntent();
 			userEmail = myIntent.getStringExtra(ApplicationConstants.userEmailParam);
 			
@@ -169,6 +169,13 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 									NetmeraContent content = followedUsers.get(k);
 									new DeletetDataTask().execute(content).get();
 								}
+								//action sil
+								NetmeraService servicerAction=new NetmeraService(ApplicationConstants.action);
+								servicerAction.whereEqual(ApplicationConstants.action_follower_id, currentUserEmail);
+								servicerAction.whereEqual(ApplicationConstants.action_followed_id, userEmail);
+								NetmeraContent contentAction=new SelectDataTask(ProfileActivity.this).execute(servicerAction).get().get(0);
+								new DeletetDataTask().execute(contentAction).get();
+								
 								statusView.setImageResource(R.drawable.follow);	
 								
 								servicer = new NetmeraService(ApplicationConstants.followship);
@@ -182,10 +189,17 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 						
 						}else{											//Follow Action
 							NetmeraContent followship = new NetmeraContent(ApplicationConstants.followship);
+							NetmeraContent action=new NetmeraContent(ApplicationConstants.action);
 							try {
 								followship.add(ApplicationConstants.followship_user_id,currentUserEmail);
 								followship.add(ApplicationConstants.followship_follows,userEmail);
 								new InsertDataTask().execute(followship).get();
+								
+								action.add(ApplicationConstants.ACTION_TYPE, ApplicationConstants.ACTION_TYPE_FOLLOW);
+								action.add(ApplicationConstants.action_follower_id, currentUserEmail);
+								action.add(ApplicationConstants.action_followed_id, userEmail);
+								action.add(ApplicationConstants.ACTION_OWNER, NetmeraUser.getCurrentUser().getEmail());
+								new InsertDataTask().execute(action).get();
 
 								NetmeraService servicer = new NetmeraService(ApplicationConstants.followship);
 								servicer.whereEqual(ApplicationConstants.followship_follows,userEmail);
@@ -218,7 +232,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 			HashMap<String,String> existing = new HashMap<String, String>();
 			for(NetmeraContent content : comments){
 
-				if(commentedBooks.size()< ApplicationConstants.item_count_per_page_for_comments){ //TODO bu kalkmalý sayfalama filan olmali
+				if(commentedBooks.size()< ApplicationConstants.item_count_per_page_for_comments){ //TODO bu kalkmalï¿½ sayfalama filan olmali
 					
 					NetmeraService service = new NetmeraService(ApplicationConstants.book);
 					
