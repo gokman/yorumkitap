@@ -141,7 +141,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 					NetmeraContent tempComment=actionList.get(i);
 					tempMap=new HashMap<String, String>();
 					tempMap.put(ApplicationConstants.TYPE, ApplicationConstants.TYPE_COMMENT);
-					tempMap.put(ApplicationConstants.TYPE_COMMENDATOR, tempComment.get(ApplicationConstants.action_comment_er).toString());
+					tempMap.put(ApplicationConstants.TYPE_COMMENDATOR, new DatabaseProcess().getUserName(tempComment.get(ApplicationConstants.action_comment_er).toString(),TimeLineActivity.this));
 					tempMap.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(tempComment.getCreateDate()).toString());
 					tempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKNAME, 
 							tempComment.get(ApplicationConstants.action_comment_edBook).toString());
@@ -155,10 +155,10 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 					NetmeraContent tempFollow=actionList.get(i);
 					tempMap=new HashMap<String, String>();
 					tempMap.put(ApplicationConstants.TYPE, ApplicationConstants.TYPE_FOLLOW);
-					tempMap.put(ApplicationConstants.TYPE_FOLLOWER, tempFollow.get(ApplicationConstants.action_follower_id).toString());
+					tempMap.put(ApplicationConstants.TYPE_FOLLOWER, new DatabaseProcess().getUserName(tempFollow.get(ApplicationConstants.action_follower_id).toString(),TimeLineActivity.this));
 					tempMap.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(tempFollow.getCreateDate()).toString());
 					tempMap.put(ApplicationConstants.TYPE_FOLLOWED, 
-							tempFollow.get(ApplicationConstants.action_followed_id).toString());
+							new DatabaseProcess().getUserName(tempFollow.get(ApplicationConstants.action_followed_id).toString(),TimeLineActivity.this));
 					actionListToView.add(tempMap);
 				}
 			
