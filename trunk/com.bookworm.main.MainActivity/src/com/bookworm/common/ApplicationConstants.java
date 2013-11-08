@@ -23,7 +23,7 @@ public class ApplicationConstants {
 	public static final String followship = "Followship";
 	public static final String netmera_user = "NetmeraUser";
 	public static final String hashtable ="HashTable";
-	
+	public static final String action="Action";
 	
 	
 	//Generic object properties
@@ -104,8 +104,34 @@ public class ApplicationConstants {
 	public static final String TYPE_BOOK_OWNER="BOOK_OWNER";
 	public static final String TYPE_BOOK_CREATE_DATE="BOOK_CREATE_DATE";
 	
+	//Action tablo elemanlari
+	public static final String ACTION_TYPE="actionType";
+	public static final String ACTION_OWNER="actionOwner";
+	//book tablo hareketleri icin
+	public static final String action_book_name = "bookName";
+	public static final String action_book_desc = "desc";
+	public static final String action_book_adderId = "adderId";
+	public static final String action_book_writer = "writer";	
+	public static final String action_book_coverPhoto = "coverPhoto";
+	public static final String action_book_tags = "tags";
+	//comment tablo hareketleri iÃ§in
+	public static final String action_comment_er = "commenterID";
+	public static final String action_comment_text = "commentText";	
+	public static final String action_comment_edBook = "commentedBookName";
+	public static final String action_comment_edBookOwner ="bookAdderId";
+	//follow tablo hareketleri iÃ§in
+	public static final String action_follower_id="followerID";
+	public static final String action_followed_id="followedID";
+	
+	//action tipleri
+	public static final int ACTION_TYPE_BOOK=1;
+	public static final int ACTION_TYPE_COMMENT=2;
+	public static final int ACTION_TYPE_FOLLOW=3;
+	
+	
+	
 	public static final String CREATE_DATE="CREATE_DATE";
 	
-	//zaman tünelinde listelenen elemanlarda bulunan tarih bölümünün formatýný tutar
+	//zaman tï¿½nelinde listelenen elemanlarda bulunan tarih bï¿½lï¿½mï¿½nï¿½n formatï¿½nï¿½ tutar
 	public final static SimpleDateFormat dateFormat=new SimpleDateFormat("hh:mm dd-MM-yyyy");
 }

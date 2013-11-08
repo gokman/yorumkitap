@@ -121,8 +121,8 @@ public class TimeLineAdapter extends BaseAdapter{
 		        //bütün değerleri listviewdaki elemana ata
 		        follower.setText(eldekiSatir.get(ApplicationConstants.TYPE_FOLLOWER));
 		        followed.setText(eldekiSatir.get(ApplicationConstants.TYPE_FOLLOWED));
-		        followship.setText(eldekiSatir.get(ApplicationConstants.TYPE_FOLLOWSHIP));
-		        followdate.setText(eldekiSatir.get(ApplicationConstants.TYPE_FOLLOWDATE));
+		        followship.setText(followship.getText().toString());
+		        followdate.setText(eldekiSatir.get(ApplicationConstants.CREATE_DATE));
 		}
 		return convertView;
 	}
