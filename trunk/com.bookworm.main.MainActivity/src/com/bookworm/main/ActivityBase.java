@@ -5,10 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.netmera.mobile.NetmeraClient;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Matrix;
@@ -21,6 +20,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bookworm.common.ApplicationConstants;
+
 public class ActivityBase extends Activity{
 	static final String apiKey ="WVhCd1ZYSnNQV2gwZEhBbE0wRWxNa1lsTWtZek1UUTNNREUzTmk1dVpYUnRaWEpoTG1OdmJTVXpRVGd3SlRKR2JXOWlhVzFsY21FbE1rWm5ZV1JuWlhRbE1rWm9iMjFsTG5odGJDWnViVk5wZEdWVmNtdzlhSFIwY0NVelFTVXlSaVV5UmpNeE5EY3dNVGMyTG01bGRHMWxjbUV1WTI5dEpUTkJPREFtYlc5a2RXeGxTV1E5T1RReU15WmhjSEJKWkQwek1UUTNNREUzTmladWJWUmxiWEJzWVhSbFBXMXZZbWwwWlcxd2JHRjBaU1p2ZDI1bGNrbGtQV1poZEdsb2VXVnphV3hrWVd3bVpHOXRZV2x1UFc1bGRHMWxjbUV1WTI5dEptNXRVMmwwWlQwek1UUTNNREUzTmladmQyNWxjbEp2YkdWVWVYQmxQVEVtZG1sbGQyVnlVbTlzWlZSNWNHVTlNU1oyYVdWM1pYSkpaRDFtWVhScGFIbGxjMmxzWkdGc0pn";
 
@@ -32,6 +33,7 @@ public class ActivityBase extends Activity{
 	private ImageView add_book_button;
 	private ImageView profile_button;
 	private ImageView timeline_button;
+	private ImageView logout_button;
 	
 	public void setNavigationButtons(){
 
@@ -40,6 +42,7 @@ public class ActivityBase extends Activity{
 		setAdd_book_button((ImageView)findViewById(R.id.add_button));
 		setProfile_button((ImageView)findViewById(R.id.profile_button));
 		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
+		setLogout_button((ImageView)findViewById(R.id.logout));
 		
 		explore_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -106,6 +109,24 @@ public class ActivityBase extends Activity{
 			}
 		});
 		
+		logout_button.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				/*
+				 * 1.remove saved info(password and username) from shared preferences
+				 * 2.redirect to login page
+				 */
+				 SharedPreferences sharedPref= getSharedPreferences(ApplicationConstants.sharedPrefName,0);
+				 SharedPreferences.Editor editor = sharedPref.edit();
+				 editor.remove(ApplicationConstants.username);
+				 editor.remove(ApplicationConstants.password);
+				 
+				 editor.commit(); //Don't forgot to commit  SharedPreferences.
+				
+				Intent logoutIntent = new Intent(getApplicationContext(), LoginActivity.class);
+				startActivity(logoutIntent);
+			}
+		});
 		
 	}
 	public void onActivityResult(int requestCode,int resultCode){
@@ -186,6 +207,12 @@ public class ActivityBase extends Activity{
 	}
 	public void setTimeline_button(ImageView timeline_button) {
 		this.timeline_button = timeline_button;
+	}
+	public ImageView getLogout_button() {
+		return logout_button;
+	}
+	public void setLogout_button(ImageView logout_button) {
+		this.logout_button = logout_button;
 	}
 
 	

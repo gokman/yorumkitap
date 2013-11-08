@@ -30,7 +30,6 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 	static NetmeraContent temp;
 	boolean registered = false;
 
-	public static String filename = "let_the_books_begin";
 	private SharedPreferences SP;
 
 	private EditText _email;
@@ -50,7 +49,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 		setContentView(R.layout.login);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);
 
-		SP = getSharedPreferences(filename, 0);
+		SP = getSharedPreferences(ApplicationConstants.sharedPrefName, 0);
 
 		savedUsername = SP.getString(ApplicationConstants.username,ApplicationConstants.unregistered_username);
 		savedPassword = SP.getString(ApplicationConstants.password,ApplicationConstants.unregistered_password);
