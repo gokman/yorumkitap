@@ -161,7 +161,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="2dip"
                         android:layout_weight="20"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:text="Feb 9"
                         android:textStyle="bold"
                         android:typeface="serif"
@@ -173,7 +173,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="2dip"
                         android:layout_weight="20"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:text="Feb 9"
                         android:visibility="invisible"
                         android:textStyle="bold"
@@ -186,7 +186,7 @@
                         android:layout_margin="2dip"
                         android:visibility="invisible"
                         android:layout_weight="20"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:text="Feb 9"
                         android:textStyle="bold"
                         android:typeface="serif" >
@@ -249,7 +249,7 @@
                         android:layout_margin="2dip"
                         android:visibility="invisible"
                         android:layout_weight="20"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:text="Feb 9"
                         android:textStyle="bold"
                         android:typeface="serif" >
@@ -261,7 +261,7 @@
                         android:layout_margin="2dip"
                         android:layout_weight="20"
                         android:visibility="invisible"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:text="Feb 9"
                         android:textStyle="bold"
                         android:typeface="serif" >
@@ -272,7 +272,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="2dip"
                         android:layout_weight="20"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:visibility="invisible"
                         android:text="Feb 9"
                         android:textStyle="bold"
@@ -336,7 +336,7 @@
                         android:layout_margin="2dip"
                         android:layout_weight="20"
                         android:visibility="invisible"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:text="Feb 9"
                         android:textStyle="bold"
                         android:typeface="serif" >
@@ -348,7 +348,7 @@
                         android:layout_margin="2dip"
                         android:visibility="invisible"
                         android:layout_weight="20"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:text="Feb 9"
                         android:textStyle="bold"
                         android:typeface="serif" >
@@ -360,7 +360,7 @@
                         android:layout_margin="2dip"
                         android:layout_weight="20"
                         android:visibility="invisible"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:text="Feb 9"
                         android:textStyle="bold"
                         android:typeface="serif" >
@@ -423,7 +423,7 @@
                         android:layout_margin="2dip"
                         android:layout_weight="20"
                         android:visibility="invisible"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:text="Feb 9"
                         android:textStyle="bold"
                         android:typeface="serif" >
@@ -435,7 +435,7 @@
                         android:layout_margin="2dip"
                         android:layout_weight="20"
                         android:visibility="invisible"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:text="Feb 9"
                         android:textStyle="bold"
                         android:typeface="serif" >
@@ -447,7 +447,7 @@
                         android:layout_margin="2dip"
                         android:layout_weight="20"
                         android:visibility="invisible"
-                        android:src="@drawable/icon_title"
+                        android:src="@drawable/program_icon"
                         android:text="Feb 9"
                         android:textStyle="bold"
                         android:typeface="serif" >

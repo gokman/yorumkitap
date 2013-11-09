@@ -15,8 +15,7 @@
          android:focusable="true"
          android:listSelector="@drawable/list_selector" />
      
-     
-     <TextView
+          <TextView
          android:id="@+id/timeline_next_button"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
@@ -24,6 +23,7 @@
          android:layout_centerHorizontal="true"
          android:clickable="true"
          android:text="Daha Geçmişe Git" />
+
       
      <LinearLayout
             android:id="@+id/linearLayoutAltDugmeler"
