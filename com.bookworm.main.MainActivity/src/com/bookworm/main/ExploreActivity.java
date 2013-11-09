@@ -86,7 +86,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 					searchKey = searchKey.substring(1);
 				}
 					
-					service.whereEqual(ApplicationConstants.user_username, searchKey);
+					service.whereMatches(ApplicationConstants.user_username, ".*"+searchKey+".*");
 				}
 				service.setMax(ApplicationConstants.item_count_per_page_for_explore_page);
 				try{
@@ -118,13 +118,12 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 				NetmeraService bookService = new NetmeraService(ApplicationConstants.book);
 				if (searchKey != null
 						&& !searchKey.equals(ApplicationConstants.EMPTY_STRING)) {
-					if (!searchKey.substring(0, 1).equals(
+					if (searchKey.substring(0, 1).equals(
 							ApplicationConstants.DIESIS_SIGN)) {
-						searchKey = ApplicationConstants.DIESIS_SIGN
-								+ searchKey;
+						searchKey = searchKey.substring(1);
 					}
-					service.whereEqual(ApplicationConstants.hashtable_tag,
-							searchKey);
+					service.whereMatches(ApplicationConstants.hashtable_tag,
+							".*"+searchKey+".*");
 					service.setMax(ApplicationConstants.item_count_per_page_for_explore_page);
 					try {
 						List<NetmeraContent> hashtagList = new SelectDataTask(ExploreActivity.this).execute(service).get();
