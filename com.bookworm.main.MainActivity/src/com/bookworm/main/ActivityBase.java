@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -27,7 +30,7 @@ public class ActivityBase extends Activity{
 
 
 	private Uri fileUri;
-	
+	final Context context = this; 
 	private ImageView explore_button;
 	private ImageView home_button;
 	private ImageView add_book_button;
@@ -116,15 +119,32 @@ public class ActivityBase extends Activity{
 				 * 1.remove saved info(password and username) from shared preferences
 				 * 2.redirect to login page
 				 */
-				 SharedPreferences sharedPref= getSharedPreferences(ApplicationConstants.sharedPrefName,0);
-				 SharedPreferences.Editor editor = sharedPref.edit();
-				 editor.remove(ApplicationConstants.username);
-				 editor.remove(ApplicationConstants.password);
-				 
-				 editor.commit(); //Don't forgot to commit  SharedPreferences.
+
+				AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(context);
+				 myAlertDialog.setTitle("Logout Warning");
+				 myAlertDialog.setMessage("You're going to log out.Are you sure ?");
+				 myAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+				  public void onClick(DialogInterface arg0, int arg1) {
+
+						 SharedPreferences sharedPref= getSharedPreferences(ApplicationConstants.sharedPrefName,0);
+						 SharedPreferences.Editor editor = sharedPref.edit();
+						 editor.remove(ApplicationConstants.username);
+						 editor.remove(ApplicationConstants.password);
+						 
+						 editor.commit(); //Don't forgot to commit  SharedPreferences.
+						
+						Intent logoutIntent = new Intent(getApplicationContext(), LoginActivity.class);
+						startActivity(logoutIntent);
+					  
+				  }});
+				 myAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				       
+				  public void onClick(DialogInterface arg0, int arg1) {
+				  // do something when the Cancel button is clicked
+				  }});
+				 myAlertDialog.show();				
 				
-				Intent logoutIntent = new Intent(getApplicationContext(), LoginActivity.class);
-				startActivity(logoutIntent);
 			}
 		});
 		
