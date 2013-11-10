@@ -85,7 +85,7 @@ public class ActivityBase extends Activity{
 						if (cameraResolution.height > 1024
 								&& cameraResolution.width > 1024) {
 							Toast.makeText(getApplicationContext(),
-									"Camera resolution must be decreased.",
+									getString(R.string.cameraResolutionNotification),
 									Toast.LENGTH_LONG).show();
 						} else {
 							Intent intent = new Intent(
@@ -98,7 +98,7 @@ public class ActivityBase extends Activity{
 					}
 				} catch (Exception ex) {
 					Toast.makeText(getApplicationContext(),
-							"There was an error with the camera.",
+							getString(R.string.cameraError),
 							Toast.LENGTH_LONG).show();
 				}
 			}
@@ -121,9 +121,9 @@ public class ActivityBase extends Activity{
 				 */
 
 				AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(context);
-				 myAlertDialog.setTitle("Logout Warning");
-				 myAlertDialog.setMessage("You're going to log out.Are you sure ?");
-				 myAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				 myAlertDialog.setTitle(getString(R.string.logoutWarningTitle));
+				 myAlertDialog.setMessage(getString(R.string.logoutWarningMessage));
+				 myAlertDialog.setPositiveButton(getString(R.string.okey), new DialogInterface.OnClickListener() {
 
 				  public void onClick(DialogInterface arg0, int arg1) {
 
@@ -138,7 +138,7 @@ public class ActivityBase extends Activity{
 						startActivity(logoutIntent);
 					  
 				  }});
-				 myAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				 myAlertDialog.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 				       
 				  public void onClick(DialogInterface arg0, int arg1) {
 				  // do something when the Cancel button is clicked

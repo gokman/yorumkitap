@@ -94,7 +94,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 				if (!registered) {
 					getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 					Toast.makeText(getApplicationContext(),
-							"Email or password is wrong", Toast.LENGTH_LONG)
+							getString(R.string.wrongEmailPassword), Toast.LENGTH_LONG)
 							.show();
 				} else {
 					/*

@@ -79,7 +79,7 @@ public class RegisterActivity extends ActivityBase {
 					e.printStackTrace();
 				}
 
-				Toast.makeText(getApplicationContext(),"Registration completed.Please sign in !!!", Toast.LENGTH_LONG)
+				Toast.makeText(getApplicationContext(),getString(R.string.completionRegister), Toast.LENGTH_LONG)
 						.show();
 
 				Intent i = new Intent(getApplicationContext(),LoginActivity.class);
