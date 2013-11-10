@@ -98,7 +98,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 						getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 						
 						Toast toast= Toast.makeText(getApplicationContext(),
-								"No result found related with your search key !!!", Toast.LENGTH_LONG);
+								getString(R.string.noResultFound), Toast.LENGTH_LONG);
 								toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
 								toast.show();
 
@@ -141,7 +141,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 							getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 							Toast toast= Toast.makeText(getApplicationContext(),
-									"No result found related with your search key !!!", Toast.LENGTH_LONG);
+									getString(R.string.noResultFound), Toast.LENGTH_LONG);
 									toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
 									toast.show();
 	
@@ -152,7 +152,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 					}
 
 					/*
-					 * Hashtag le arama yapýyoruz sadece NetmeraService service
+					 * Hashtag le arama yapï¿½yoruz sadece NetmeraService service
 					 * = new NetmeraService(ApplicationConstants.book); //
 					 * if(searchKey!=null &&
 					 * !searchKey.equals(ApplicationConstants.EMPTY_STRING)){ //
