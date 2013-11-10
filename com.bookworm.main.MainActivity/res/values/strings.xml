@@ -25,6 +25,7 @@
     <string name="explorePagePopulers">Vitrindekiler</string>
     <string name="exploreBooks">Kitap</string>
     <string name="exploreUsers">Okur</string>
+    <string name="noResultFound">No result found related with your search key !!!</string>
     
     <!-- ProfilePage UI Component Details -->
     <string name="profilePageStatus">Durum</string>
@@ -38,6 +39,7 @@
     <string name="alreadyMember">Zaten Üyeyim,Giriş Yapmak İstiyorum</string>
     <string name="login">Giriş</string>
     <string name="wannaToCreateAccount">Yeni Üyeyim, Hesap Oluşturmak İstiyorum</string>
+    <string name="wrongEmailPassword">Email or password is wrong</string>
     
     
     <!-- AddBook UI Component Labels -->
@@ -72,4 +74,20 @@
 	<string name="rememberMe">Beni Hatırla</string>
 	<string name="forgotPassword">Şifremi Unuttum</string>
 	
+	<!-- Activity Base -->
+	<string name="cameraResolutionNotification">Camera resolution must be decreased</string>
+	<string name="cameraError">There was an error with the camera.</string>
+	<string name="logoutWarningTitle">Logout Warning</string>
+	<string name="logoutWarningMessage">You\'re going to log out.Are you sure ?</string>
+	<string name="okey">Ok</string>
+	<string name="cancel">Cancel</string>
+	
+	<!-- Register Activity and UI -->
+	<string name="completionRegister">Registration completed.You can sign in !!!</string>
+	
+	<!-- Timeline row2 -->
+	<string name="timeLineRow2FollowText">follows</string>
+	
+	<!-- Timeline main page -->
+	<string name="goPast">Go Past</string>
 </resources>
