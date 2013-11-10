@@ -22,7 +22,7 @@
          android:layout_above="@+id/linearLayoutAltDugmeler"
          android:layout_centerHorizontal="true"
          android:clickable="true"
-         android:text="Daha Geçmişe Git" />
+         android:text="@string/goPast" />
 
       
      <LinearLayout

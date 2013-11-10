@@ -42,7 +42,7 @@
         android:paddingLeft="4dip"
         style="@style/follow_in_timeline"
         android:layout_toRightOf="@+id/textFollower"
-        android:text="takip ediyor" />
+        android:text="@string/timeLineRow2FollowText" />
 
     <TextView
         android:id="@+id/textFollowed"
