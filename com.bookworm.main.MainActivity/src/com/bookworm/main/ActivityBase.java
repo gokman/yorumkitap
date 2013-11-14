@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Matrix;
 import android.hardware.Camera;
@@ -19,8 +21,14 @@ import android.hardware.Camera.Size;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
@@ -37,6 +45,13 @@ public class ActivityBase extends Activity{
 	private ImageView profile_button;
 	private ImageView timeline_button;
 	private ImageView logout_button;
+	private ImageView language_button;
+	private View layout;
+	RadioGroup  languageRadioGroup;
+	RadioButton turkishRadio;
+	RadioButton englishRadio;
+	PopupWindow pwindo;
+	
 	
 	public void setNavigationButtons(){
 
@@ -46,6 +61,8 @@ public class ActivityBase extends Activity{
 		setProfile_button((ImageView)findViewById(R.id.profile_button));
 		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
 		setLogout_button((ImageView)findViewById(R.id.logout));
+		setLanguage_button((ImageView)findViewById(R.id.language_button));
+		
 		
 		explore_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -53,6 +70,56 @@ public class ActivityBase extends Activity{
 				startActivity(exploreIntent);
 			}
 		});
+		language_button.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				
+				 LayoutInflater inflater = (LayoutInflater) ActivityBase.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+						 layout = inflater.inflate(R.layout.language,
+						 (ViewGroup) findViewById(R.id.popup_element));
+						 pwindo = new PopupWindow(layout,150,100,true);
+						 pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
+						 languageRadioGroup=(RadioGroup)layout.findViewById(R.id.radioGroupLanguage);
+						 turkishRadio=(RadioButton)layout.findViewById(R.id.radioButton1);
+						 englishRadio=(RadioButton)layout.findViewById(R.id.radioButton2);
+						 if(Locale.getDefault().toString().equals("en_US")){
+							 englishRadio.setChecked(true);
+						 }else{
+							 turkishRadio.setChecked(true);
+						 }
+						 
+						 languageRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+								
+								public void onCheckedChanged(RadioGroup group, int checkedId) {
+									switch (checkedId) {
+									case R.id.radioButton1:
+										
+										// change language by onclick a button
+							             Configuration newConfig = new Configuration();
+							             newConfig.locale = new Locale("tr");
+							             context.getResources().updateConfiguration(newConfig,context.getResources().getDisplayMetrics());
+							             Locale.setDefault(newConfig.locale);
+										
+										pwindo.dismiss();
+										break;
+									case R.id.radioButton2:
+										
+										// change language by onclick a button
+							             Configuration newConfig2 = new Configuration();
+							             newConfig2.locale = new Locale("en");
+							             context.getResources().updateConfiguration(newConfig2,context.getResources().getDisplayMetrics());
+							             Locale.setDefault(newConfig2.locale);
+										pwindo.dismiss();
+										break;
+									}
+									
+								}
+							});
+				
+			}
+		});
+		
+	
+		
 		timeline_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent timelineIntent = new Intent(getApplicationContext(), TimeLineActivity.class);
@@ -222,6 +289,12 @@ public class ActivityBase extends Activity{
 	public void setProfile_button(ImageView profile_button) {
 		this.profile_button = profile_button;
 	}
+	public ImageView getLanguage_button() {
+		return language_button;
+	}
+	public void setLanguage_button(ImageView language_button) {
+		this.language_button = language_button;
+	}
 	public ImageView getTimeline_button() {
 		return timeline_button;
 	}
@@ -234,6 +307,17 @@ public class ActivityBase extends Activity{
 	public void setLogout_button(ImageView logout_button) {
 		this.logout_button = logout_button;
 	}
-
+	public RadioButton getTurkishRadio() {
+		return turkishRadio;
+	}
+	public void setTurkishRadio(RadioButton turkishRadio) {
+		this.turkishRadio = turkishRadio;
+	}
+	public RadioButton getEnglishRadio() {
+		return englishRadio;
+	}
+	public void setEnglishRadio(RadioButton englishRadio) {
+		this.englishRadio = englishRadio;
+	}
 	
 }
