@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" 
+    android:clickable="false">
+ 
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout android:id="@+id/coverLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/image_bg"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="2dip"
+        android:layout_marginBottom="2dip">
+ 
+        <ImageView
+            android:id="@+id/list_imageLeft"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:padding="1dip"
+            android:background="@color/ownOrange"
+            android:src="@drawable/rihanna"/>
+ 
+    </LinearLayout>
+ 
+    <!-- Title Of Song-->
+
+    <TextView
+        android:id="@+id/comment_owner_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/coverLeft"
+        android:layout_toRightOf="@+id/coverLeft"
+        android:text="Çalıkuşu"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+ 
+    <TextView
+        android:id="@+id/comment_left"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_owner_left"
+        android:textColor="@color/ownOrange"
+        android:textSize="10dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/coverLeft"
+        android:text="Bence mükemmel bir kitap herkes okumalı ..." />
+ 
+    <!-- Rightend Duration -->
+ 
+    
+<View   android:id="@+id/firstDivider"
+        android:layout_height="0.5dp"
+        android:layout_width="fill_parent"
+        android:background="@color/ownOrange" 
+        android:layout_below="@id/coverLeft"/>
+    
+    <!-- ListRow Left sied Thumbnail image -->
+    <LinearLayout
+        android:id="@+id/coverRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/coverLeft"
+        android:layout_marginLeft="5dip"
+        android:layout_marginTop="2dip"
+        android:layout_marginBottom="2dip"
+        android:background="@drawable/image_bg"
+        android:padding="3dip" >
+
+        <ImageView
+            android:id="@+id/list_imageRight"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:padding="1dip"
+            android:background="@color/ownOrange"
+            android:src="@drawable/rihanna" />
+    </LinearLayout>
+
+
+    <!-- Title Of Song -->
+
+    <TextView
+        android:id="@+id/comment_owner_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/coverRight"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/coverRight"
+        android:text="Çalıkuşu"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <!-- Artist Name -->
+
+    <TextView
+        android:id="@+id/comment_right"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/comment_owner_right"
+        android:layout_marginTop="1dip"
+        android:layout_toLeftOf="@+id/coverRight"
+        android:text="Bence mükemmel bir kitap herkes okumalı ..."
+        android:textColor="@color/ownOrange"
+        android:textSize="10dip" />
+
+    <!-- Rightend Duration -->
+
+<View   android:id="@+id/secondDivider"
+        android:layout_height="0.5dp"
+        android:layout_width="fill_parent"
+        android:background="@color/ownOrange" 
+        android:layout_below="@id/coverRight"/>
+    
+</RelativeLayout>

@@ -90,4 +90,9 @@
 	
 	<!-- Timeline main page -->
 	<string name="goPast">Go Past</string>
+	
+	<!-- Comments Arena -->
+	<string name="comments">Yorumlar</string>
+	<string name="btnCommentAdd">Ekle</string>
+	<string name="commentLabel">Yorum Ekle</string>	
 </resources>
