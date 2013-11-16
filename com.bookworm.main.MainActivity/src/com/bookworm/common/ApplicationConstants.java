@@ -13,6 +13,7 @@ public class ApplicationConstants {
 	public static final String DIESIS_SIGN = "#";
 	public static final String AT_SIGN = "@";
 	public static final String userEmailParam = "useremail";
+	public static final String bookIdParam = "bookId";
 	public static final String object_path ="path";
 	
 	public static final int item_count_per_page = 12;

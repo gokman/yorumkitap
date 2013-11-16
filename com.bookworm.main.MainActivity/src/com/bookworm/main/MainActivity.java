@@ -29,14 +29,7 @@ import com.netmera.mobile.NetmeraService;
 
 public class MainActivity extends ActivityBase implements OnClickListener {
 
-	public static final String KEY_COVER_LEFT = "coverLeft";
-	public static final String KEY_COVER_RIGHT = "coverRight";
-	public static final String KEY_BOOK_TITLE_LEFT = "book_title_left";
-	public static final String KEY_BOOK_TITLE_RIGHT = "book_title_right";
-	public static final String KEY_DESC_LEFT = "descLeft";
-	public static final String KEY_DESC_RIGHT = "descRight";
-	public static final String KEY_BOOK_ADDER_ID_RIGHT = "book_adder_id_right";
-	public static final String KEY_BOOK_ADDER_ID_LEFT = "book_adder_id_left";
+
 
 	ImageButton btn1, btn2, btn3, btn4;
 	public LinearLayout middle;

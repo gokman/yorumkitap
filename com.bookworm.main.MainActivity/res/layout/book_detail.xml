@@ -104,6 +104,33 @@
             android:text=""
             android:textSize="16dip" />
 
+        <LinearLayout
+            android:id="@+id/bookActivitiesBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tags"
+            android:gravity="bottom"
+            android:background="@color/ownGray"
+            android:weightSum="100" >
+
+            <ImageView
+                android:id="@+id/like_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="20"
+                android:src="@drawable/like_button" />
+            
+            <ImageView
+                android:id="@+id/comment_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="20"
+                android:src="@drawable/comment_button" />
+            
+
+        </LinearLayout>        
+        
+        <!-- 
         <ExpandableListView
             android:id="@+id/expandableListView"
             android:layout_width="fill_parent"
@@ -111,7 +138,8 @@
             android:layout_below="@id/tags"
             android:groupIndicator="@drawable/play_expand_background"
             android:listSelector="@drawable/play_expand_seletor"
-            android:scrollbars="none" >
+            android:scrollbars="vertical" 
+            android:transcriptMode="alwaysScroll">
         </ExpandableListView>
 
         <EditText
@@ -133,7 +161,7 @@
             android:layout_below="@+id/comment"
             android:layout_marginTop="10dip"
             android:text="@string/bookDetailAddComment" />
-
+ -->
         <LinearLayout
             android:id="@+id/linearLayoutAltDugmeler"
             android:layout_width="fill_parent"

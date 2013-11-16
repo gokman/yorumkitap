@@ -54,6 +54,8 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 	private TextView bookTags;
 	private TextView userName;
 	private ImageView bookCover;
+	private ImageView likeImage;
+	private ImageView commentImage;
 	private ImageView profileImage;
 	private Bitmap bitmap;
 	private String coverPhotoUrl;
@@ -61,20 +63,12 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 	public ImageLoader imageLoader;
 	private ExpandableListView mExpandableListView;
 	private List<GroupEntity> mGroupCollection;
-	private EditText commentText;
-	private Button addComment;
 	private String book_name;
 	private String adderID;
 	private ExpandableListView commentsArena; // :))
 	private LinearLayout profileLayout;
 	private String currentUser;
-	
-	private Uri fileUri;
-	
-	private ImageView explore_button;
-	private ImageView home_button;
-	private ImageView add_book_button;
-	private ImageView profile_button;
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -93,9 +87,8 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		bookCover = (ImageView) findViewById(R.id.newbookImg);
 		profileImage = (ImageView) findViewById(R.id.profileImg);
 		userName = (TextView) findViewById(R.id.userName);
-		commentText = (EditText) findViewById(R.id.comment);
-		addComment = (Button) findViewById(R.id.btnAddComment);
-		commentsArena = (ExpandableListView) findViewById(R.id.expandableListView);
+		likeImage = (ImageView) findViewById(R.id.like_button);
+		commentImage = (ImageView)findViewById(R.id.comment_button);
 		profileLayout = (LinearLayout) findViewById(R.id.profileLayout);
 		
 		Intent myIntent = getIntent();
@@ -157,61 +150,27 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 				
 				List<NetmeraContent> commentList= new SelectDataTask(BookDetailActivity.this).execute(commentService).get();
 				prepareResource(commentList);
-				initComments();
+//				initComments();
 				
-				addComment.setOnClickListener(new View.OnClickListener() {
+				commentImage.setOnClickListener(new View.OnClickListener() {
 
 					public void onClick(View v) {
-						try {
-
-							NetmeraContent comment = new NetmeraContent(
-									ApplicationConstants.comment);
-							comment.add(ApplicationConstants.comment_edBook,
-									book_name);
-							comment.add(
-									ApplicationConstants.comment_edBookOwner,
-									adderID);
-							comment.add(ApplicationConstants.comment_er,
-									NetmeraUser.getCurrentUser().getEmail());
-							comment.add(ApplicationConstants.comment_text,
-									commentText.getText().toString());
-							new InsertDataTask().execute(comment).get();
-							
-							//comment için action kaydı oluştur
-							NetmeraContent action=new NetmeraContent(ApplicationConstants.action);
-							action.add(ApplicationConstants.ACTION_TYPE, ApplicationConstants.ACTION_TYPE_COMMENT);
-							action.add(ApplicationConstants.action_comment_edBook, book_name);
-							action.add(ApplicationConstants.action_comment_edBookOwner, adderID);
-							action.add(ApplicationConstants.action_comment_er, NetmeraUser.getCurrentUser().getEmail());
-							action.add(ApplicationConstants.action_comment_text, commentText.getText().toString());
-							action.add(ApplicationConstants.ACTION_OWNER, NetmeraUser.getCurrentUser().getEmail());
-							new InsertDataTask().execute(action).get();
-							
-							commentText.setText(ApplicationConstants.comment_write_comment);
-
-							
-							NetmeraService commentService = new NetmeraService(ApplicationConstants.comment);
-							commentService.whereEqual(ApplicationConstants.comment_edBook, book_name);
-							commentService.whereEqual(ApplicationConstants.comment_edBookOwner, adderID);
-							commentService.setSortOrder(SortOrder.ascending);
-							commentService.setSortBy(ApplicationConstants.comment_create_date);
-							
-							List<NetmeraContent> commentList= new SelectDataTask(BookDetailActivity.this).execute(commentService).get();
-							prepareResource(commentList);
-							initComments();
-														
-							commentsArena.expandGroup(0);
-							
-						} catch (NetmeraException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (ExecutionException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						
+				         Intent addCommentIntent = new Intent(getApplicationContext(),AddCommentActivity.class);
+				   		 addCommentIntent.putExtra(ApplicationConstants.book_name,book_name);
+				   		 addCommentIntent.putExtra(ApplicationConstants.book_adderId,adderID);
+				   		 
+						 v.getContext().startActivity(addCommentIntent);
+						
+						
+					}
+				});
+				
+				likeImage.setOnClickListener(new View.OnClickListener() {
+					
+					public void onClick(View v) {
+						//TODO like event
+						
 					}
 				});
 
@@ -296,12 +255,12 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 
 	}
 
-	private void initComments() {
-		mExpandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-		ExpandableListAdapter adapter = new ExpandableListAdapter(this,
-				mExpandableListView, mGroupCollection);
-		mExpandableListView.setAdapter(adapter);
-	}
+//	private void initComments() {
+//		mExpandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+//		ExpandableListAdapter adapter = new ExpandableListAdapter(this,
+//				mExpandableListView, mGroupCollection);
+//		mExpandableListView.setAdapter(adapter);
+//	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
