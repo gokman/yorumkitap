@@ -15,6 +15,15 @@
                 android:dividerHeight="1dp"
             	android:layout_weight="50"
                 android:listSelector="@drawable/list_selector" />
+	        
+	         <TextView
+         android:id="@+id/mainBookListNext_Button"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/linearLayoutAltDugmeler"
+         android:layout_centerHorizontal="true"
+         android:clickable="true"
+         android:text="@string/mainBookListNext" />
 
 	        <LinearLayout
             android:id="@+id/linearLayoutAltDugmeler"
