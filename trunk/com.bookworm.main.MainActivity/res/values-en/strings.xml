@@ -14,6 +14,9 @@
     <string name="populer_books">Popular Books</string>
     <string name="latest_books">New Uploads</string>
     <string name="publisher">From Editor</string>
+    
+    <!-- home page -->
+    <string name="mainBookListNext">Show More</string>
 
     <!-- BookDetail UI Component Details  -->
     <string name="bookDetailComment">Comment</string>
