@@ -19,7 +19,7 @@ public class ApplicationConstants {
 	public static final int item_count_per_page = 12;
 	public static final int item_count_per_page_for_comments = 100;
 	public static final int item_count_per_page_for_explore_page = 15;
-	public static final int item_count_per_page_for_main_page = 3;
+	public static final int item_count_per_page_for_main_page = 2;
 	public static final int item_count_per_page_for_timeline_page = 1;
 	
 	//Tables
@@ -144,6 +144,7 @@ public class ApplicationConstants {
 	
 	//zaman tunelindeki sonraki dugmesinin degerini tutar
 	public static int timelineListStatus=1;
+	public static int mainBookListStatus=1;
 	//zaman tunelinde gosterilen elemanların en geçmiş tarihli olan değeri tutar
 	public static Date timelineLastDate=dateFormat.getCalendar().getTime();
 }
