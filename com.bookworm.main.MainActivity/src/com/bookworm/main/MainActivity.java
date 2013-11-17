@@ -10,15 +10,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bookworm.common.ApplicationConstants;
+import com.bookworm.common.GeneralUseObject;
 import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.common.LazyAdapter;
 import com.bookworm.common.SelectDataTask;
@@ -26,6 +30,7 @@ import com.netmera.mobile.NetmeraClient;
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
 import com.netmera.mobile.NetmeraService;
+import com.netmera.mobile.NetmeraService.SortOrder;
 
 public class MainActivity extends ActivityBase implements OnClickListener {
 
@@ -35,9 +40,11 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 	public LinearLayout middle;
 
 	private ListView latestBooksListView;
-
+    private BaseAdapter adap;
 	private LazyAdapter adapter;
 	private ArrayList<HashMap<String, String>> latestBooksList;
+	private TextView bookListNextButton;
+	List<NetmeraContent> mainBookList;
 	
 
 	/** Called when the activity is first created. */
@@ -51,9 +58,43 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 				R.layout.window_title);
 
 		NetmeraClient.init(getApplicationContext(), apiKey);
+		bookListNextButton=(TextView)findViewById(R.id.mainBookListNext_Button);
+		ApplicationConstants.mainBookListStatus=1;
+		bookListNextButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				//tiklandiginda 
+				NetmeraService service=new NetmeraService(ApplicationConstants.book);
+				service.setMax(ApplicationConstants.item_count_per_page_for_main_page);
+				service.setPage(ApplicationConstants.mainBookListStatus);
+				service.setSortBy(ApplicationConstants.GENERAL_COLUMN_CREATE_DATE);
+		        service.setSortOrder(SortOrder.descending);
+		        
+		        ApplicationConstants.mainBookListStatus+=1;
+		        
+		        try {
+		        	mainBookList=new SelectDataTask(MainActivity.this).execute(service).get();
+					//elimizdeki yeni listeyi actionListToView a ekliyoruz
+					//ArrayList<HashMap<String, String>>  tempMainListToView=new ArrayList<HashMap<String, String>>();
+					new GeneralUseObject().addListToMainBookListView(mainBookList, latestBooksList, MainActivity.this);
+					//adapter i guncelliyoruz
+					latestBooksListView.invalidate();
+				        ((LazyAdapter) latestBooksListView.getAdapter()).notifyDataSetChanged(); 
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
 		
 		NetmeraService servicer = new NetmeraService(ApplicationConstants.book);
 		servicer.setMax(ApplicationConstants.item_count_per_page_for_main_page);
+		servicer.setSortBy(ApplicationConstants.GENERAL_COLUMN_CREATE_DATE);
+        servicer.setSortOrder(SortOrder.descending);
 		List<NetmeraContent> bookList;
 		try {
 			bookList = new SelectDataTask(MainActivity.this).execute(servicer).get();

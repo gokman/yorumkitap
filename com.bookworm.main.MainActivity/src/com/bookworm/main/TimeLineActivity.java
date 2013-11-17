@@ -51,7 +51,7 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	        NetmeraClient.init(this, apiKey);
 	        setNavigationButtons();
 	        actionListView=(ListView)findViewById(R.id.timeline_elements);
-	        timelineNextButton=(TextView)findViewById(R.id.timeline_next_button);
+	        timelineNextButton=(TextView)findViewById(R.id.timeLineList_next_button);
 	        //zaman tuneli sayfası her acildiginda bu deger 1 e donmeli
 	        ApplicationConstants.timelineListStatus=1;
 	        
