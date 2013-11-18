@@ -103,29 +103,24 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		service.whereEqual(ApplicationConstants.book_adderId, adderID);
 		
 		NetmeraService bookLikeService = new NetmeraService(ApplicationConstants.bookLike);
-		//bookLikeService.whereEqual(ApplicationConstants.bookLike_bookID,"tag".toString() );		
-		
-		
+		//bookLikeService.whereEqual(ApplicationConstants.bookLike_bookID,book_name );
 		try {
-			//bookLikeService.whereEqual(ApplicationConstants.bookLike_bookID,"tag".toString() );
 			bookLikeService.whereEqual(ApplicationConstants.bookLike_r_id, NetmeraUser.getCurrentUser().getEmail().toString());
-			
-			likeBook.setText(book_name, null);
-			try{
-			List<NetmeraContent> bookLikeList = new SelectDataInnerTask().execute(bookLikeService).get();
+		} catch (NetmeraException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		//likeBook.setText(book_name, null);
+		try{
+		List<NetmeraContent> bookLikeList = new SelectDataInnerTask().execute(bookLikeService).get();
 			if (bookLikeList.size() > 0){	//Hali hazýrda beðenmiþ eleman.. 
 				NetmeraContent bookLikeElement = bookLikeList.get(0);
 				
 				likeBook.setText(bookLikeElement.get(ApplicationConstants.bookLike_bookID).toString(), null);
 			}
-			}catch (Exception e) {
-				// TODO: handle exception
-			}
-			
-			
-		} catch (NetmeraException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		}catch (Exception e) {
+			// TODO: handle exception
 		} 
 		
 		
@@ -243,8 +238,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 							try {
 								String	bookLikerId = NetmeraUser.getCurrentUser().getEmail();
 								NetmeraContent bookLikeDelete = new NetmeraContent(ApplicationConstants.bookLike);
-								bookLikeDelete.add(ApplicationConstants.bookLike_r_id, bookLikerId);
-								bookLikeDelete.add(ApplicationConstants.bookLike_bookID, bookTitle.getText().toString());
+								bookLikeDelete.add(ApplicationConstants.bookLike_r_id, bookLikerId);								
 								
 								new DeletetDataTask().execute(bookLikeDelete).get();
 							} catch (InterruptedException e) {
