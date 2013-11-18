@@ -30,6 +30,7 @@ public class ApplicationConstants {
 	public static final String netmera_user = "NetmeraUser";
 	public static final String hashtable ="HashTable";
 	public static final String action="Action";
+	public static final String bookLike = "BookLike";
 	
 	
 	//Generic object properties
@@ -52,6 +53,11 @@ public class ApplicationConstants {
 	public static final String comment_edBookOwner ="bookAdderId";
 	public static final String comment_create_date ="Create Date";
 	
+	//BookLike
+	public static final String bookLike_id	= "bookLikeID";
+	public static final String bookLike_r_id = "bookLikerID";
+	public static final String bookLike_bookID = "bookID";
+	public static final String bookLike_date= "bookLikeDate";
 	
 	//Followship
 	public static final String followship_user_id ="userId";
