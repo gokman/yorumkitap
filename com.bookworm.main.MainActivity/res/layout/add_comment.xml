@@ -19,7 +19,7 @@
             android:orientation="horizontal"
             android:weightSum="100" >
                 <!-- Book Name Label -->
-                <TextView
+                <TextView 
                     android:id="@+id/bookNameText"
                     android:layout_width="314dp"
                     android:layout_height="wrap_content"
