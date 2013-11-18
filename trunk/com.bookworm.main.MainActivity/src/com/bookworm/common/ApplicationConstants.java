@@ -140,6 +140,7 @@ public class ApplicationConstants {
 	public static final int ACTION_TYPE_BOOK=1;
 	public static final int ACTION_TYPE_COMMENT=2;
 	public static final int ACTION_TYPE_FOLLOW=3;
+	public static final int  ACTION_TYPE_LIKE=4;
 	
 	
 	
