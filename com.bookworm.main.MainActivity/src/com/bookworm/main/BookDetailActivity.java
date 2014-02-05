@@ -1,45 +1,37 @@
 package com.bookworm.main;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
+import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_GET_BY_ID;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_LIKES;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.hardware.Camera;
-import android.hardware.Camera.Size;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.DeletetDataTask;
-import com.bookworm.common.ExpandableListAdapter;
 import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.common.GroupEntity;
 import com.bookworm.common.GroupEntity.GroupItemEntity;
 import com.bookworm.common.ImageLoader;
 import com.bookworm.common.InsertDataTask;
 import com.bookworm.common.SelectDataTask;
+import com.bookworm.model.Book;
+import com.bookworm.model.BookLike;
+import com.bookworm.ws.book.GetBookInfoHttpAsyncTask;
+import com.bookworm.ws.like.GetBookLikeInfoHttpAsyncTask;
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
 import com.netmera.mobile.NetmeraMedia;
@@ -58,16 +50,13 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 	private ImageView likeImage;
 	private ImageView commentImage;
 	private ImageView profileImage;
-	private Bitmap bitmap;
 	private String coverPhotoUrl;
 	private String profilePhotoUrl;
 	public ImageLoader imageLoader;
-	private ExpandableListView mExpandableListView;
 	private List<GroupEntity> mGroupCollection;
 	private TextView likeBook;
-	private String book_name;
-	private String adderID;
-	private ExpandableListView commentsArena; // :))
+	private Long bookId;
+	private Long adderId;
 	private LinearLayout profileLayout;
 	private String currentUser;
 
@@ -95,29 +84,25 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		likeBook = (TextView) findViewById(R.id.btnLikeBook);
 		
 		Intent myIntent = getIntent();
-		book_name = myIntent.getStringExtra(ApplicationConstants.book_name);
-		adderID = myIntent.getStringExtra(ApplicationConstants.book_adderId);
-
-		NetmeraService service = new NetmeraService(ApplicationConstants.book);
-		service.whereEqual(ApplicationConstants.book_name, book_name);
-		service.whereEqual(ApplicationConstants.book_adderId, adderID);
-		
-		NetmeraService bookLikeService = new NetmeraService(ApplicationConstants.bookLike);
-		//bookLikeService.whereEqual(ApplicationConstants.bookLike_bookID,book_name );
+		bookId = Long.parseLong(myIntent.getStringExtra(ApplicationConstants.book_id));
+		adderId = Long.parseLong(myIntent.getStringExtra(ApplicationConstants.book_adderId));
+		List<BookLike> likes = null;
 		try {
-			bookLikeService.whereEqual(ApplicationConstants.bookLike_r_id, NetmeraUser.getCurrentUser().getEmail().toString());
-		} catch (NetmeraException e1) {
+			likes = new GetBookLikeInfoHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"
+					+WS_OPERATION_LIST_LIKES+"/"+adderId+"/"+bookId).get();
+		} catch (InterruptedException e2) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e2.printStackTrace();
+		} catch (ExecutionException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
-		
-		//likeBook.setText(book_name, null);
+
 		try{
-		List<NetmeraContent> bookLikeList = new SelectDataInnerTask().execute(bookLikeService).get();
-			if (bookLikeList.size() > 0){	//Hali hazýrda beðenmiþ eleman.. 
-				NetmeraContent bookLikeElement = bookLikeList.get(0);
-				
-				likeBook.setText(bookLikeElement.get(ApplicationConstants.bookLike_bookID).toString(), null);
+			if (likes !=null && likes.size() > 0){ 
+				BookLike like  = likes.get(0);
+				//TODO burda napiliyo anlamadým. fyesildal
+				likeBook.setText(like.getBookId());
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -127,27 +112,26 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		
 		try {
 
-			List<NetmeraContent> bookList = new SelectDataInnerTask().execute(service).get();
-			if (bookList.size() == 1) {
-				NetmeraContent book = bookList.get(0);
+			Book addedBook = new GetBookInfoHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"
+					+WS_OPERATION_GET_BY_ID+"/"+bookId).get();
 
-				bookTitle.setText(book.get(ApplicationConstants.book_name)
-						.toString());
-				bookWriter.setText(book.get(ApplicationConstants.book_writer)
-						.toString());
-				bookDescription.setText(book
-						.get(ApplicationConstants.book_desc).toString());
-				bookTags.setText(book.get(ApplicationConstants.book_tags)
-						.toString());
-				userName.setText(adderID);
+			if (addedBook !=null) {
 
-				currentUser = NetmeraUser.getCurrentUser().getEmail().toString();
+				bookTitle.setText(addedBook.getName());
+				bookWriter.setText(addedBook.getWriter());
+				bookDescription.setText(addedBook.getDescription());
+				//TODO tags
+//				bookTags.setText(book.get(ApplicationConstants.book_tags)
+//						.toString());
+//				userName.setText();
+				//TODO current user
+//				currentUser = NetmeraUser.getCurrentUser().getEmail().toString();
 				profileLayout.setOnClickListener(new View.OnClickListener() {
 					
 					public void onClick(View v) {
 
 						 Intent profileIntent = new Intent(v.getContext(),ProfileActivity.class);
-						 profileIntent.putExtra(ApplicationConstants.userEmailParam,adderID );
+//						 profileIntent.putExtra(ApplicationConstants.userEmailParam,adderID );
 						 startActivity(profileIntent);
 						
 					}
@@ -155,7 +139,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 				// bookCover.setImageBitmap(bitmap);
 
 				NetmeraService userService = new NetmeraService(ApplicationConstants.user);
-				userService.whereEqual(ApplicationConstants.user_email, adderID);
+//				userService.whereEqual(ApplicationConstants.user_email, adderID);
 				List<NetmeraContent> usersList = new SelectDataTask(BookDetailActivity.this).execute(userService).get();
 				NetmeraContent user = usersList.get(0);
 				user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
@@ -163,8 +147,8 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 				
 				
 				NetmeraService commentService = new NetmeraService(ApplicationConstants.comment);
-				commentService.whereEqual(ApplicationConstants.comment_edBook, book_name);
-				commentService.whereEqual(ApplicationConstants.comment_edBookOwner, adderID);
+//				commentService.whereEqual(ApplicationConstants.comment_edBook, book_name);
+//				commentService.whereEqual(ApplicationConstants.comment_edBookOwner, adderID);
 				commentService.setSortOrder(SortOrder.ascending);
 				commentService.setSortBy(ApplicationConstants.comment_create_date);
 				imageLoader.DisplayImage(coverPhotoUrl, bookCover);
@@ -180,8 +164,8 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 					public void onClick(View v) {
 						
 				         Intent addCommentIntent = new Intent(getApplicationContext(),AddCommentActivity.class);
-				   		 addCommentIntent.putExtra(ApplicationConstants.book_name,book_name);
-				   		 addCommentIntent.putExtra(ApplicationConstants.book_adderId,adderID);
+//				   		 addCommentIntent.putExtra(ApplicationConstants.book_name,book_name);
+//				   		 addCommentIntent.putExtra(ApplicationConstants.book_adderId,adderID);
 				   		 
 						 v.getContext().startActivity(addCommentIntent);
 						

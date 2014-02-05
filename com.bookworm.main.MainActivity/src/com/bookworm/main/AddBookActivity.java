@@ -1,28 +1,21 @@
 package com.bookworm.main;
 
 
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
+import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_ADD;
+
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
-import android.graphics.Matrix;
-import android.hardware.Camera;
-import android.hardware.Camera.Size;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,17 +26,12 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
-import com.bookworm.common.InsertDataTask;
-import com.bookworm.common.SelectDataTask;
+import com.bookworm.model.Book;
+import com.bookworm.ws.book.AddBookHttpAsyncTask;
 import com.netmera.mobile.NetmeraClient;
-import com.netmera.mobile.NetmeraContent;
-import com.netmera.mobile.NetmeraException;
 import com.netmera.mobile.NetmeraMedia;
-import com.netmera.mobile.NetmeraService;
-import com.netmera.mobile.NetmeraUser;
 
 public class AddBookActivity extends ActivityBase implements OnClickListener{
 
@@ -107,68 +95,64 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 		    		NetmeraMedia coverPhoto = new NetmeraMedia(bos.toByteArray());
 				
 			    try {
-			    	String bookAdderId = NetmeraUser.getCurrentUser().getEmail();
-				    NetmeraContent book = new NetmeraContent(ApplicationConstants.book);
-				    book.add(ApplicationConstants.book_name, bookName.getText().toString());
-				    book.add(ApplicationConstants.book_desc, bookDesc.getText().toString());
-				    book.add(ApplicationConstants.book_tags, bookTags.getText().toString());
-				    book.add(ApplicationConstants.book_writer, bookWriter.getText().toString());
-				    book.add(ApplicationConstants.book_adderId,bookAdderId);
-				    book.add(ApplicationConstants.book_coverPhoto,coverPhoto);
+			    	//TODO adderid will be removed.
+			    	Long bookAdderId = 24L;//NetmeraUser.getCurrentUser().getEmail();
+				    Book book = new Book(bookName.getText().toString(),
+				    						bookDesc.getText().toString(),
+				    						bookAdderId,
+				    						bookWriter.getText().toString(),
+				    						null);
+				    //TODO
+//				    book.add(ApplicationConstants.book_tags, bookTags.getText().toString());
+				    book = new AddBookHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_ADD,book).get();
 
-				    //action tablo kaydı
-				    NetmeraContent action=new NetmeraContent(ApplicationConstants.action);
-				    action.add(ApplicationConstants.ACTION_TYPE, ApplicationConstants.ACTION_TYPE_BOOK);
-				    action.add(ApplicationConstants.action_book_adderId, bookAdderId);
-				    action.add(ApplicationConstants.action_book_coverPhoto, coverPhoto);
-				    action.add(ApplicationConstants.action_book_desc, bookDesc.getText().toString());
-				    action.add(ApplicationConstants.action_book_name, bookName.getText().toString());
-				    action.add(ApplicationConstants.action_book_tags, bookTags.getText().toString());
-				    action.add(ApplicationConstants.action_book_writer, bookWriter.getText().toString());
-				    action.add(ApplicationConstants.ACTION_OWNER, NetmeraUser.getCurrentUser().getEmail());
-				    new InsertDataTask().execute(action).get();
-				    
-			    	new InsertDataTask().execute(book).get();
-			    	/*
-			    	 * Hashtag insertion
-			    	 */
-			    	String bookTagsText = bookTags.getText().toString();
-			    	Matcher matcher = TAG_PATTERN.matcher(bookTagsText);
-			    	while(matcher.find()) {
-			    	    NetmeraContent tag = new NetmeraContent(ApplicationConstants.hashtable);
-			    	    tag.add(ApplicationConstants.hashtable_book_adder_id, bookAdderId);
-			    	    tag.add(ApplicationConstants.hashtable_book_title, bookName.getText().toString());
-			    	    tag.add(ApplicationConstants.hashtable_tag, matcher.group(0).toString());
-			    	    tag.add(ApplicationConstants.hashtable_book_path,book.getPath());
-			    	    
-			    	    new InsertDataTask().execute(tag).get();
-			    	}
-			    	/*kitap adinda gecen kelimeleri de tag olarak aliyoruz.*/
-			    	matcher = TAG_PATTERN.matcher(bookName.getText().toString());
-			    	while(matcher.find()){
-			    	    NetmeraContent tag = new NetmeraContent(ApplicationConstants.hashtable);
-			    	    tag.add(ApplicationConstants.hashtable_book_adder_id, bookAdderId);
-			    	    tag.add(ApplicationConstants.hashtable_book_title, bookName.getText().toString());
-			    	    tag.add(ApplicationConstants.hashtable_tag, matcher.group(0).toString());
-			    		
-			    	}
-			    	
-			    	NetmeraService service = new NetmeraService(ApplicationConstants.book);
-			    	service.whereEqual(ApplicationConstants.book_adderId,NetmeraUser.getCurrentUser().getEmail());
-			    	service.whereEqual(ApplicationConstants.book_name,bookName.getText().toString());
-			    	List<NetmeraContent> bookList = new SelectDataTask(AddBookActivity.this).execute(service).get();
-			    	NetmeraContent addedBook = bookList.get(0);
+
+//				    
+//				    //TODO action tablo kaydı
+//				    NetmeraContent action=new NetmeraContent(ApplicationConstants.action);
+//				    action.add(ApplicationConstants.ACTION_TYPE, ApplicationConstants.ACTION_TYPE_BOOK);
+//				    action.add(ApplicationConstants.action_book_adderId, bookAdderId);
+//				    action.add(ApplicationConstants.action_book_coverPhoto, coverPhoto);
+//				    action.add(ApplicationConstants.action_book_desc, bookDesc.getText().toString());
+//				    action.add(ApplicationConstants.action_book_name, bookName.getText().toString());
+//				    action.add(ApplicationConstants.action_book_tags, bookTags.getText().toString());
+//				    action.add(ApplicationConstants.action_book_writer, bookWriter.getText().toString());
+//				    action.add(ApplicationConstants.ACTION_OWNER, NetmeraUser.getCurrentUser().getEmail());
+//				    new InsertDataTask().execute(action).get();
+//				    
+//			    	/* TODO
+//			    	 * Hashtag insertion
+//			    	 */
+//			    	String bookTagsText = bookTags.getText().toString();
+//			    	Matcher matcher = TAG_PATTERN.matcher(bookTagsText);
+//			    	while(matcher.find()) {
+//			    	    NetmeraContent tag = new NetmeraContent(ApplicationConstants.hashtable);
+//			    	    tag.add(ApplicationConstants.hashtable_book_adder_id, bookAdderId);
+//			    	    tag.add(ApplicationConstants.hashtable_book_title, bookName.getText().toString());
+//			    	    tag.add(ApplicationConstants.hashtable_tag, matcher.group(0).toString());
+//			    	    tag.add(ApplicationConstants.hashtable_book_path,book.getPath());
+//			    	    
+//			    	    new InsertDataTask().execute(tag).get();
+//			    	}
+//			    	/*kitap adinda gecen kelimeleri de tag olarak aliyoruz.*/
+//			    	matcher = TAG_PATTERN.matcher(bookName.getText().toString());
+//			    	while(matcher.find()){
+//			    	    NetmeraContent tag = new NetmeraContent(ApplicationConstants.hashtable);
+//			    	    tag.add(ApplicationConstants.hashtable_book_adder_id, bookAdderId);
+//			    	    tag.add(ApplicationConstants.hashtable_book_title, bookName.getText().toString());
+//			    	    tag.add(ApplicationConstants.hashtable_tag, matcher.group(0).toString());
+//			    		
+//			    	}
+//			    	
 			    	
 			    	Intent bookDetailIntent = new Intent(getApplicationContext(), BookDetailActivity.class);
-			    	bookDetailIntent.putExtra(ApplicationConstants.book_name, addedBook.getString(ApplicationConstants.book_name));
-			    	bookDetailIntent.putExtra(ApplicationConstants.book_adderId, addedBook.getString(ApplicationConstants.book_adderId));
+			    	bookDetailIntent.putExtra(ApplicationConstants.book_id, book.getBookId());
+			    	bookDetailIntent.putExtra(ApplicationConstants.book_adderId, book.getAdderId());
 			    	startActivity(bookDetailIntent);
 			    	
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (ExecutionException e) {
-					e.printStackTrace();
-				} catch (NetmeraException e) {
 					e.printStackTrace();
 				}
 			}

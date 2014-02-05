@@ -25,6 +25,8 @@ public class ApplicationConstants {
 	//Tables
 	public static final String user	= "User";
 	public static final String book	= "Book";
+	public static final String BOOKLET_ITEM_BOOK	= "Book";
+	public static final String BOOKLET_ITEM_BOOKLIKE= "BookLike";
 	public static final String comment = "Comment";
 	public static final String followship = "Followship";
 	public static final String netmera_user = "NetmeraUser";
@@ -45,6 +47,7 @@ public class ApplicationConstants {
 	public static final String book_tags = "tags";
 	public static final String book_create_date = "Create Date";
 	public static final String book_owner="Owner";
+	public static final String book_id="bookId";
 	
 	//Comment
 	public static final String comment_er = "commenterID";
@@ -154,4 +157,14 @@ public class ApplicationConstants {
 	public static int mainBookListStatus=1;
 	//zaman tunelinde gosterilen elemanların en geçmiş tarihli olan değeri tutar
 	public static Date timelineLastDate=dateFormat.getCalendar().getTime();
+
+	public static final String WS_ENDPOINT_ADRESS = "http://192.168.2.148:8080/booklet-ws/services";
+	public static final String WS_OPERATION_GET_BY_ID		="GET_BY_ID";
+	public static final String WS_OPERATION_ADD				="ADD";
+	public static final String WS_OPERATION_LIST	="LIST";
+	public static final String WS_OPERATION_LIST_LIKES	="LIST_LIKES";
+	public static final String WS_OPERATION_SAVE	="SAVE";
+	public static final String WS_OPERATION_UPDATE	="UPDATE";
+	public static final String WS_OPERATION_DELETE	="DELETE";
+	
 }
