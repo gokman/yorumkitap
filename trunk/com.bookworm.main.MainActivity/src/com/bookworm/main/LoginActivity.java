@@ -1,11 +1,11 @@
 package com.bookworm.main;
 
 import java.util.concurrent.ExecutionException;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bookworm.common.ApplicationConstants;
+import static com.bookworm.common.ApplicationConstants.*;
 import com.netmera.mobile.NetmeraClient;
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
@@ -36,8 +36,8 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 	private EditText _password;
 	private CheckBox _rememberMe;
 	private CheckBox _forgotPassword;
-	private String savedUsername = ApplicationConstants.EMPTY_STRING;
-	private String savedPassword = ApplicationConstants.EMPTY_STRING;
+	private String savedUsername = EMPTY_STRING;
+	private String savedPassword = EMPTY_STRING;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -49,10 +49,10 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 		setContentView(R.layout.login);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);
 
-		SP = getSharedPreferences(ApplicationConstants.sharedPrefName, 0);
+		SP = getSharedPreferences(sharedPrefName, 0);
 
-		savedUsername = SP.getString(ApplicationConstants.username,ApplicationConstants.unregistered_username);
-		savedPassword = SP.getString(ApplicationConstants.password,ApplicationConstants.unregistered_password);
+		savedUsername = SP.getString(username,unregistered_username);
+		savedPassword = SP.getString(password,unregistered_password);
 		
 		_rememberMe = (CheckBox) findViewById(R.id.rememberMe);
 		_forgotPassword = (CheckBox) findViewById(R.id.forgotPassword);
@@ -62,10 +62,10 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 		_email = (EditText)findViewById(R.id.emailText);
 		_password = (EditText)findViewById(R.id.passwordText);
 		
-		if(!savedUsername.equals(ApplicationConstants.unregistered_username)){
+		if(!savedUsername.equals(unregistered_username)){
 			_email.setText(savedUsername);
 		}
-		if(!savedPassword.equals(ApplicationConstants.unregistered_password)){
+		if(!savedPassword.equals(unregistered_password)){
 			_password.setText(savedPassword);
 		}		
 		
@@ -108,15 +108,15 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 						String _passwordToStore = _password.getText().toString();
 
 						SharedPreferences.Editor editit = SP.edit();
-						editit.putString(ApplicationConstants.username, _emailToStore);
-						editit.putString(ApplicationConstants.password,_passwordToStore);
+						editit.putString(username, _emailToStore);
+						editit.putString(password,_passwordToStore);
 						editit.commit();
 
 					}else{
 						if(savedUsername.equals(_email.getText().toString())){
 							SharedPreferences.Editor editit = SP.edit();
-							editit.remove(ApplicationConstants.username);
-							editit.remove(ApplicationConstants.password);
+							editit.remove(username);
+							editit.remove(password);
 							editit.commit();
 						}
 					}
@@ -131,7 +131,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 			}
 		});
 		
-		if(!savedUsername.equals(ApplicationConstants.unregistered_username) && !savedPassword.equals(ApplicationConstants.unregistered_password)){
+		if(!savedUsername.equals(unregistered_username) && !savedPassword.equals(unregistered_password)){
 			btnLogin.performClick();
 		}
 		_forgotPassword.setOnClickListener( new OnClickListener() {
