@@ -1,6 +1,7 @@
-package com.bookworm.ws.action;
+package com.bookworm.ws.comment;
 
 import java.io.InputStream;
+import java.util.Date;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -15,25 +16,26 @@ import android.os.AsyncTask;
 import android.util.Base64;
 
 import com.bookworm.common.Utils;
-import com.bookworm.model.Action;
 import com.bookworm.model.Book;
+import com.bookworm.model.Comment;
 import com.google.gson.Gson;
 
-public class AddActionHttpAsyncTask extends AsyncTask<Object, Void, Action> {
+public class AddCommentWS extends AsyncTask<Object, Void, Comment> {
 		
         @Override
-        protected Action doInBackground(Object... args) {
-        	return POST((String)args[0],(Action)args[1]);
+        protected Comment doInBackground(Object... args) {
+        	return POST((String)args[0],(Comment)args[1]);
         }
         
         @Override
-        protected void onPostExecute(Action result) {
+        protected void onPostExecute(Comment result) {
 
 					
        }
-    	public static Action POST(String url,Action action){
+    	public static Comment POST(String url,Comment comment){
 
     	       InputStream inputStream = null;
+    	       Comment resultBook =null;
     	        String result = "";
     	        try {
     	            // create HttpClient
@@ -49,11 +51,13 @@ public class AddActionHttpAsyncTask extends AsyncTask<Object, Void, Action> {
     	            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
     	            post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
     	            
-    	            //TODO Aksiyon bilgileri set edilicek
                     JSONObject jsonum=new JSONObject();
-                    jsonum.put("actionType", action.getActionType());
-                    jsonum.put("userId", action.getUserId());
-                    
+                    jsonum.put("commenterId", comment.getCommenterId());
+                    jsonum.put("commentText", comment.getCommentText());
+                    jsonum.put("commentedBookId", comment.getCommentedBookId());
+                    jsonum.put("commentedBookAdderId", comment.getCommentedBookAdderId());
+                    jsonum.put("creationDate", comment.getCreationDate());
+
     	            StringEntity sampleEntity=new StringEntity(jsonum.toString());
                     sampleEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
@@ -73,7 +77,7 @@ public class AddActionHttpAsyncTask extends AsyncTask<Object, Void, Action> {
     	        }
     	        Gson gson = new Gson();
     	        
-    	        return gson.fromJson(result, Action.class);
+    	        return gson.fromJson(result, Comment.class);
         }
     	public void postExecuteForPost(String result){
             

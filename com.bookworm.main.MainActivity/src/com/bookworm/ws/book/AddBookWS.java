@@ -20,7 +20,7 @@ import com.bookworm.common.Utils;
 import com.bookworm.model.Book;
 import com.google.gson.Gson;
 
-public class AddBookHttpAsyncTask extends AsyncTask<Object, Void, Book> {
+public class AddBookWS extends AsyncTask<Object, Void, Book> {
 		
         @Override
         protected Book doInBackground(Object... args) {

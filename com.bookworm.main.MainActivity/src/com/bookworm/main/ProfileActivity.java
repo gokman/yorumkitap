@@ -222,7 +222,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 			servicer.setPage(0);
 			booksAddedByUser = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
 			
-			servicer = new NetmeraService(ApplicationConstants.comment);
+			servicer = new NetmeraService("ApplicationConstants.comment");
 			servicer.whereEqual(ApplicationConstants.comment_er, userEmail);
 			servicer.setMax(ApplicationConstants.item_count_per_page_for_comments);
 			servicer.setPage(0);

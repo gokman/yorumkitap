@@ -2,6 +2,7 @@ package com.bookworm.main;
 
 
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_ACTION;
 import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_ADD;
 
@@ -28,8 +29,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bookworm.common.ApplicationConstants;
+import com.bookworm.model.Action;
+import com.bookworm.model.ActionType;
 import com.bookworm.model.Book;
-import com.bookworm.ws.book.AddBookHttpAsyncTask;
+import com.bookworm.ws.action.AddActionHttpAsyncTask;
+import com.bookworm.ws.book.AddBookWS;
 import com.netmera.mobile.NetmeraClient;
 import com.netmera.mobile.NetmeraMedia;
 
@@ -104,22 +108,14 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 				    						null);
 				    //TODO
 //				    book.add(ApplicationConstants.book_tags, bookTags.getText().toString());
-				    book = new AddBookHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_ADD,book).get();
+				    book = new AddBookWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_ADD,book).get();
 
 
 //				    
 //				    //TODO action tablo kaydı
-//				    NetmeraContent action=new NetmeraContent(ApplicationConstants.action);
-//				    action.add(ApplicationConstants.ACTION_TYPE, ApplicationConstants.ACTION_TYPE_BOOK);
-//				    action.add(ApplicationConstants.action_book_adderId, bookAdderId);
-//				    action.add(ApplicationConstants.action_book_coverPhoto, coverPhoto);
-//				    action.add(ApplicationConstants.action_book_desc, bookDesc.getText().toString());
-//				    action.add(ApplicationConstants.action_book_name, bookName.getText().toString());
-//				    action.add(ApplicationConstants.action_book_tags, bookTags.getText().toString());
-//				    action.add(ApplicationConstants.action_book_writer, bookWriter.getText().toString());
-//				    action.add(ApplicationConstants.ACTION_OWNER, NetmeraUser.getCurrentUser().getEmail());
-//				    new InsertDataTask().execute(action).get();
-//				    
+				    Action addBookAction = new Action(ActionType.ADD_BOOK, 24); 
+				    addBookAction = new AddActionHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,addBookAction).get();
+
 //			    	/* TODO
 //			    	 * Hashtag insertion
 //			    	 */

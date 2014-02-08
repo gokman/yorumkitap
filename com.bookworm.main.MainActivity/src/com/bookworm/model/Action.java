@@ -8,29 +8,25 @@ package com.bookworm.model;
  */
 public class Action implements java.io.Serializable {
 
-	private int actionSeqId;
+	private ActionType actionType;
 	private Integer userId;
 	private Integer actionId;
 
 	public Action() {
 	}
 
-	public Action(int actionSeqId) {
-		this.actionSeqId = actionSeqId;
-	}
-
-	public Action(int actionSeqId, Integer userId, Integer actionId) {
-		this.actionSeqId = actionSeqId;
+	public Action(ActionType actionType, Integer userId) {
+		this.actionType = actionType;
 		this.userId = userId;
-		this.actionId = actionId;
 	}
 
-	public int getActionSeqId() {
-		return this.actionSeqId;
+
+	public ActionType getActionType() {
+		return actionType;
 	}
 
-	public void setActionSeqId(int actionSeqId) {
-		this.actionSeqId = actionSeqId;
+	public void setActionType(ActionType actionType) {
+		this.actionType = actionType;
 	}
 
 	public Integer getUserId() {
