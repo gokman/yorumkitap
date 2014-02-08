@@ -1,4 +1,4 @@
-package com.bookworm.ws.book;
+package com.bookworm.ws.comment;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -11,29 +11,26 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
 
-import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.Utils;
-import com.bookworm.model.Book;
 import com.bookworm.model.BookLike;
-import com.google.gson.Gson;
+import com.bookworm.model.Comment;
 
-public class GetBookInfoHttpAsyncTask extends
-		AsyncTask<String, Void, Book> {
+public class ListCommentsWS extends
+		AsyncTask<String, Void, List<Comment>> {
 
 	@Override
-	protected Book doInBackground(String... url) {
+	protected List<Comment> doInBackground(String... url) {
 
 		 return GET(url[0]);
 	}
 
 	@Override
-	protected void onPostExecute(Book result) {
+	protected void onPostExecute(List<Comment> result) {
 	}
 
-	public static Book GET(String url) {
+	public static List<Comment> GET(String url) {
 		InputStream inputStream = null;
-		Gson gson = new Gson();
-		String result = ApplicationConstants.EMPTY_STRING;
+		List<Comment> resultList= new ArrayList<Comment>();
 		try {
 
 			// create HttpClient
@@ -44,7 +41,7 @@ public class GetBookInfoHttpAsyncTask extends
 
 			// receive response as inputStream
 			inputStream = httpResponse.getEntity().getContent();
-			
+			String result = "";
 			// convert inputstream to string
 			if (inputStream != null)
 				 Utils.convertInputStreamToString(inputStream);
@@ -55,6 +52,6 @@ public class GetBookInfoHttpAsyncTask extends
 			e.getLocalizedMessage();
 		}
 
-		return gson.fromJson(result, Book.class);
+		return resultList;
 	}
 }

@@ -25,9 +25,10 @@ public class ApplicationConstants {
 	//Tables
 	public static final String user	= "User";
 	public static final String book	= "Book";
+	public static final String BOOKLET_ITEM_ACTION	= "Action";
 	public static final String BOOKLET_ITEM_BOOK	= "Book";
 	public static final String BOOKLET_ITEM_BOOKLIKE= "BookLike";
-	public static final String comment = "Comment";
+	public static final String BOOKLET_ITEM_COMMENT = "Comment";
 	public static final String followship = "Followship";
 	public static final String netmera_user = "NetmeraUser";
 	public static final String hashtable ="HashTable";
@@ -161,10 +162,12 @@ public class ApplicationConstants {
 	public static final String WS_ENDPOINT_ADRESS = "http://192.168.2.148:8080/booklet-ws/services";
 	public static final String WS_OPERATION_GET_BY_ID		="GET_BY_ID";
 	public static final String WS_OPERATION_ADD				="ADD";
-	public static final String WS_OPERATION_LIST	="LIST";
-	public static final String WS_OPERATION_LIST_LIKES	="LIST_LIKES";
-	public static final String WS_OPERATION_SAVE	="SAVE";
-	public static final String WS_OPERATION_UPDATE	="UPDATE";
-	public static final String WS_OPERATION_DELETE	="DELETE";
+	public static final String WS_OPERATION_LIST			="LIST";
+	public static final String WS_OPERATION_LIST_LIKES		="LIST_LIKES";
+	public static final String WS_OPERATION_LIST_COMMENTS	="LIST_COMMENTS";
+	
+	public static final String WS_OPERATION_SAVE			="SAVE";
+	public static final String WS_OPERATION_UPDATE			="UPDATE";
+	public static final String WS_OPERATION_DELETE			="DELETE";
 	
 }

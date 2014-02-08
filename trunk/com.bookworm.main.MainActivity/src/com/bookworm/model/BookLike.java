@@ -9,41 +9,41 @@ import java.util.Date;
  */
 public class BookLike implements java.io.Serializable {
 
-	private Integer bookLikeId;
-	private Integer bookLikerId;
-	private Integer bookId;
+	private Long bookLikeId;
+	private Long bookLikerId;
+	private Long bookId;
 	private Date bookLikeDate;
 
 	public BookLike() {
 	}
 
-	public BookLike(Integer bookLikerId, Integer bookId, Date bookLikeDate) {
+	public BookLike(Long bookLikerId, Long bookId, Date bookLikeDate) {
 		this.bookLikerId = bookLikerId;
 		this.bookId = bookId;
 		this.bookLikeDate = bookLikeDate;
 	}
 
-	public Integer getBookLikeId() {
+	public Long getBookLikeId() {
 		return this.bookLikeId;
 	}
 
-	public void setBookLikeId(Integer bookLikeId) {
+	public void setBookLikeId(Long bookLikeId) {
 		this.bookLikeId = bookLikeId;
 	}
 
-	public Integer getBookLikerId() {
+	public Long getBookLikerId() {
 		return this.bookLikerId;
 	}
 
-	public void setBookLikerId(Integer bookLikerId) {
+	public void setBookLikerId(Long bookLikerId) {
 		this.bookLikerId = bookLikerId;
 	}
 
-	public Integer getBookId() {
+	public Long getBookId() {
 		return this.bookId;
 	}
 
-	public void setBookId(Integer bookId) {
+	public void setBookId(Long bookId) {
 		this.bookId = bookId;
 	}
 

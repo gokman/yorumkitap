@@ -1,57 +1,40 @@
 package com.bookworm.main;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_ACTION;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_COMMENT;
+import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_ADD;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_COMMENTS;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.Matrix;
-import android.hardware.Camera;
-import android.hardware.Camera.Size;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.CommentAdapter;
-import com.bookworm.common.GetNetmerMediaTask;
-import com.bookworm.common.InsertDataTask;
-import com.bookworm.common.LazyAdapter;
-import com.bookworm.common.SelectDataTask;
+import com.bookworm.model.Action;
+import com.bookworm.model.ActionType;
+import com.bookworm.model.Comment;
+import com.bookworm.so.CommentSCR;
+import com.bookworm.ws.action.AddActionHttpAsyncTask;
+import com.bookworm.ws.comment.AddCommentWS;
+import com.bookworm.ws.comment.ListCommentsWS;
 import com.netmera.mobile.NetmeraClient;
-import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
-import com.netmera.mobile.NetmeraMedia;
-import com.netmera.mobile.NetmeraService;
-import com.netmera.mobile.NetmeraUser;
-import com.netmera.mobile.NetmeraService.SortOrder;
 
 public class AddCommentActivity extends ActivityBase implements OnClickListener {
 
@@ -73,8 +56,8 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 				R.layout.window_title);
 		NetmeraClient.init(this, apiKey);
 		Intent myIntent = getIntent();
-		final String book_name = myIntent.getStringExtra(ApplicationConstants.book_name);
-		final String adderID = myIntent.getStringExtra(ApplicationConstants.book_adderId);
+		final Long book_id = myIntent.getLongExtra(ApplicationConstants.book_id,0);
+		final Long adderID = myIntent.getLongExtra(ApplicationConstants.book_adderId,0);
 
 		commentText = (EditText) findViewById(R.id.comment);
 		addCommentButton = (Button)findViewById(R.id.btnAddComment);
@@ -86,46 +69,25 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 
 				try {
 
-					NetmeraContent comment = new NetmeraContent(
-							ApplicationConstants.comment);
-					comment.add(ApplicationConstants.comment_edBook, book_name);
-					comment.add(ApplicationConstants.comment_edBookOwner,
-							adderID);
-					comment.add(ApplicationConstants.comment_er, NetmeraUser
-							.getCurrentUser().getEmail());
-					comment.add(ApplicationConstants.comment_text, commentText.getText().toString());
-					new InsertDataTask().execute(comment).get();
+					Comment comment = new Comment();
+					comment.setCommentedBookId(book_id);
+					comment.setCommentedBookAdderId(adderID);
+					//TODO get Current User
+					comment.setCommenterId(24L);
+					comment.setCommentText(commentText.getText().toString());
+					comment.setCreationDate(new Date());
+					comment = new AddCommentWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"+WS_OPERATION_ADD,comment).get();
 
 					// comment icin action kaydi olustur
-					NetmeraContent action = new NetmeraContent(
-							ApplicationConstants.action);
-					action.add(ApplicationConstants.ACTION_TYPE,
-							ApplicationConstants.ACTION_TYPE_COMMENT);
-					action.add(ApplicationConstants.action_comment_edBook,
-							book_name);
-					action.add(ApplicationConstants.action_comment_edBookOwner,
-							adderID);
-					action.add(ApplicationConstants.action_comment_er,
-							NetmeraUser.getCurrentUser().getEmail());
-					action.add(ApplicationConstants.action_comment_text,
-							commentText.getText().toString());
-					action.add(ApplicationConstants.ACTION_OWNER, NetmeraUser
-							.getCurrentUser().getEmail());
-					new InsertDataTask().execute(action).get();
+					//TODO commenter userid will be replaced with 24 
+					Action addBookAction = new Action(ActionType.ADD_COMMENT, 24); 
+				    addBookAction = new AddActionHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,addBookAction).get();
 
-					commentText
-							.setText(getString(R.string.commentLabel));
+					commentText.setText(getString(R.string.commentLabel));
 
-					NetmeraService commentService = new NetmeraService(
-							ApplicationConstants.comment);
-					commentService.whereEqual(
-							ApplicationConstants.comment_edBook, book_name);
-					commentService.whereEqual(
-							ApplicationConstants.comment_edBookOwner, adderID);
-					commentService.setSortOrder(SortOrder.ascending);
-					commentService
-							.setSortBy(ApplicationConstants.comment_create_date);
-
+					
+					//List comments after last comment added.
+					listComments(book_id, adderID);
 
 					//TODO call list methods to show.
 				} catch (NetmeraException e) {
@@ -143,7 +105,7 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 		
 		commentsListView = (ListView) findViewById(R.id.comments_on_book);
 		try {
-			listComments(book_name, adderID);
+			listComments(book_id, adderID);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,59 +119,53 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 
 	}
 
-	public void listComments(String book_name, String adderID) throws InterruptedException, ExecutionException, NetmeraException{
+	public void listComments(Long bookId, Long adderID) throws InterruptedException, ExecutionException, NetmeraException{
 		//TODO list comments to show
 		
-		NetmeraService commentService = new NetmeraService(ApplicationConstants.comment);
-		commentService.whereEqual(ApplicationConstants.comment_edBook, book_name);
-		commentService.whereEqual(ApplicationConstants.comment_edBookOwner, adderID);
-		commentService.setSortOrder(SortOrder.ascending);
-		commentService.setSortBy(ApplicationConstants.comment_create_date);
-		
-		List<NetmeraContent> commentList= new SelectDataTask(AddCommentActivity.this).execute(commentService).get();
+		List<Comment> commentList = new ListCommentsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"
+				+WS_OPERATION_LIST_COMMENTS+"/"+bookId).get();
 
 		comments = new ArrayList<HashMap<String, String>>();
 		for (int i = 0; i < commentList.size(); i += 2) {
 			HashMap<String, String> map = new HashMap<String, String>();
-			NetmeraContent tempComment1 = commentList.get(i);
-//			String tem= tempBook1.get("Path").toString();
-//			String tem2 = tempBook1.get("path").toString();
-			tempComment1.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
+			CommentSCR commentScr = new CommentSCR(commentList.get(i));
 
-			NetmeraService servicer = new NetmeraService(ApplicationConstants.user);
-			servicer.whereEqual(ApplicationConstants.user_email,tempComment1.get(ApplicationConstants.comment_er).toString());
-			List<NetmeraContent> usersList = new SelectDataTask(AddCommentActivity.this).execute(servicer).get();
-			NetmeraContent user = usersList.get(0);
-			user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
+			
+			//TODO retrieve user
+//			NetmeraService servicer = new NetmeraService(ApplicationConstants.user);
+//			servicer.whereEqual(ApplicationConstants.user_email,tempComment1.get(ApplicationConstants.comment_er).toString());
+//			List<NetmeraContent> usersList = new SelectDataTask(AddCommentActivity.this).execute(servicer).get();
+//			NetmeraContent user = usersList.get(0);
+//			user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
 
 //			String userProfileImageURLLeft = new GetNetmerMediaTask().execute(user).get();
 //						
 //
 //			
 //			map.put(KEY_COVER_LEFT, userProfileImageURLLeft);
-			map.put(KEY_DESC_LEFT, tempComment1.get(ApplicationConstants.comment_text).toString());
-			map.put(KEY_BOOK_ADDER_ID_LEFT, tempComment1.get(ApplicationConstants.comment_er).toString());
+			map.put(KEY_DESC_LEFT, commentScr.getComment().getCommentText());
+			map.put(KEY_BOOK_ADDER_ID_LEFT, commentScr.getComment().getCommenterId().toString());
 			
 
 			
-			NetmeraContent tempComment2 = null;
+			CommentSCR commentSCRRight = null;
 			if (i != commentList.size() - 1) {
-				tempComment2 = commentList.get(i + 1);
-				tempComment2.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
+				commentSCRRight = new CommentSCR(commentList.get(i + 1));
 			}			
-			if (tempComment2 != null) {
+			if (commentSCRRight != null) {
 
-				servicer = new NetmeraService(ApplicationConstants.user);
-				servicer.whereEqual(ApplicationConstants.user_email,tempComment2.get(ApplicationConstants.comment_er).toString());
-				usersList = new SelectDataTask(AddCommentActivity.this).execute(servicer).get();
-				user = usersList.get(0);
-				user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
-//				String userProfileImageURLRight = new GetNetmerMediaTask().execute(user).get();
+				//TODO retrieve user
+//				servicer = new NetmeraService(ApplicationConstants.user);
+//				servicer.whereEqual(ApplicationConstants.user_email,tempComment2.get(ApplicationConstants.comment_er).toString());
+//				usersList = new SelectDataTask(AddCommentActivity.this).execute(servicer).get();
+//				user = usersList.get(0);
+//				user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
+////				String userProfileImageURLRight = new GetNetmerMediaTask().execute(user).get();
 				
 
 //				map.put(KEY_COVER_RIGHT, userProfileImageURLRight);
-				map.put(KEY_DESC_RIGHT, tempComment2.get(ApplicationConstants.comment_text).toString());
-				map.put(KEY_BOOK_ADDER_ID_RIGHT, tempComment2.get(ApplicationConstants.comment_er).toString());
+				map.put(KEY_DESC_RIGHT, commentScr.getComment().getCommentText());
+				map.put(KEY_BOOK_ADDER_ID_RIGHT, commentScr.getComment().getCommenterId().toString());
 			}
 
 			comments.add(map);

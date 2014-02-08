@@ -67,7 +67,8 @@
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
-                android:layout_weight="65" />
+                android:layout_weight="65" 
+                android:src="@drawable/profile_button"/>
         </LinearLayout>
 
         <TextView
