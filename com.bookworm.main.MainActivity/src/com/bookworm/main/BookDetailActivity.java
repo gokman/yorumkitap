@@ -2,8 +2,10 @@ package com.bookworm.main;
 
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_COMMENT;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_HASHTAG;
 import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_GET_BY_ID;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_COMMENTS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_LIKES;
 
@@ -32,13 +34,14 @@ import com.bookworm.common.SelectDataTask;
 import com.bookworm.model.Book;
 import com.bookworm.model.BookLike;
 import com.bookworm.model.Comment;
+import com.bookworm.model.Hashtag;
 import com.bookworm.ws.book.GetBookInfoWS;
 import com.bookworm.ws.comment.ListCommentsWS;
+import com.bookworm.ws.hashtag.ListHashtagsWS;
 import com.bookworm.ws.like.GetBookLikeInfoHttpAsyncTask;
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
 import com.netmera.mobile.NetmeraService;
-import com.netmera.mobile.NetmeraService.SortOrder;
 import com.netmera.mobile.NetmeraUser;
 
 public class BookDetailActivity extends ActivityBase implements OnClickListener {
@@ -119,8 +122,13 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 				bookWriter.setText(addedBook.getWriter());
 				bookDescription.setText(addedBook.getDescription());
 				//TODO tags
-//				bookTags.setText(book.get(ApplicationConstants.book_tags)
-//						.toString());
+				List<Hashtag> tags = new ListHashtagsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_HASHTAG+"/"
+						+WS_OPERATION_LIST +"/"+bookId).get();
+				String tagString = ApplicationConstants.EMPTY_STRING;
+				for(Hashtag tag : tags){
+					tagString += ApplicationConstants.SPACE + tag.getTag();
+				}
+				bookTags.setText(tagString);
 				userName.setText("f2");
 				//TODO current user
 				currentUser = NetmeraUser.getCurrentUser().getEmail().toString();

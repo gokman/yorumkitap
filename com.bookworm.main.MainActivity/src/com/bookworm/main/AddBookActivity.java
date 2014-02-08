@@ -1,15 +1,19 @@
 package com.bookworm.main;
 
 
-import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_ACTION;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_HASHTAG;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
 import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_ADD;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Intent;
@@ -32,8 +36,10 @@ import com.bookworm.common.ApplicationConstants;
 import com.bookworm.model.Action;
 import com.bookworm.model.ActionType;
 import com.bookworm.model.Book;
+import com.bookworm.model.Hashtag;
 import com.bookworm.ws.action.AddActionHttpAsyncTask;
 import com.bookworm.ws.book.AddBookWS;
+import com.bookworm.ws.hashtag.AddHashtagWS;
 import com.netmera.mobile.NetmeraClient;
 import com.netmera.mobile.NetmeraMedia;
 
@@ -116,30 +122,27 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 				    Action addBookAction = new Action(ActionType.ADD_BOOK, 24); 
 				    addBookAction = new AddActionHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,addBookAction).get();
 
-//			    	/* TODO
-//			    	 * Hashtag insertion
-//			    	 */
-//			    	String bookTagsText = bookTags.getText().toString();
-//			    	Matcher matcher = TAG_PATTERN.matcher(bookTagsText);
-//			    	while(matcher.find()) {
-//			    	    NetmeraContent tag = new NetmeraContent(ApplicationConstants.hashtable);
-//			    	    tag.add(ApplicationConstants.hashtable_book_adder_id, bookAdderId);
-//			    	    tag.add(ApplicationConstants.hashtable_book_title, bookName.getText().toString());
-//			    	    tag.add(ApplicationConstants.hashtable_tag, matcher.group(0).toString());
-//			    	    tag.add(ApplicationConstants.hashtable_book_path,book.getPath());
-//			    	    
-//			    	    new InsertDataTask().execute(tag).get();
-//			    	}
-//			    	/*kitap adinda gecen kelimeleri de tag olarak aliyoruz.*/
-//			    	matcher = TAG_PATTERN.matcher(bookName.getText().toString());
-//			    	while(matcher.find()){
-//			    	    NetmeraContent tag = new NetmeraContent(ApplicationConstants.hashtable);
-//			    	    tag.add(ApplicationConstants.hashtable_book_adder_id, bookAdderId);
-//			    	    tag.add(ApplicationConstants.hashtable_book_title, bookName.getText().toString());
-//			    	    tag.add(ApplicationConstants.hashtable_tag, matcher.group(0).toString());
-//			    		
-//			    	}
-//			    	
+			    	String bookTagsText = bookTags.getText().toString();
+			    	Matcher matcher = TAG_PATTERN.matcher(bookTagsText);
+			    	List<Hashtag> tagList = new ArrayList<Hashtag>();
+			    	while(matcher.find()) {
+			    		Hashtag hashTag = new Hashtag();
+			    		hashTag.setTag(matcher.group(0).toString());
+			    		hashTag.setBookId(book.getBookId());
+			    		tagList.add(hashTag);
+			    	}
+			    	/*kitap adinda gecen kelimeleri de tag olarak aliyoruz.*/
+			    	matcher = TAG_PATTERN.matcher(bookName.getText().toString());
+			    	while(matcher.find()){
+			    		Hashtag hashTag = new Hashtag();
+			    		hashTag.setTag(matcher.group(0).toString());
+			    		hashTag.setBookId(book.getBookId());
+			    		tagList.add(hashTag);
+			    	}
+			    	if(tagList.size()>0){
+			    		new AddHashtagWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_HASHTAG+"/"+WS_OPERATION_ADD,tagList).get();
+			    	}
+
 			    	
 			    	Intent bookDetailIntent = new Intent(getApplicationContext(), BookDetailActivity.class);
 			    	bookDetailIntent.putExtra(ApplicationConstants.book_id, book.getBookId());
