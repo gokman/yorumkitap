@@ -10,6 +10,7 @@ public class ApplicationConstants {
 	public static final String GENERAL_COLUMN_UPDATE_DATE="updatedate";
 
 	public static final String EMPTY_STRING ="";
+	public static final String SPACE =" ";
 	public static final String DIESIS_SIGN = "#";
 	public static final String AT_SIGN = "@";
 	public static final String userEmailParam = "useremail";
@@ -29,6 +30,7 @@ public class ApplicationConstants {
 	public static final String BOOKLET_ITEM_BOOK	= "Book";
 	public static final String BOOKLET_ITEM_BOOKLIKE= "BookLike";
 	public static final String BOOKLET_ITEM_COMMENT = "Comment";
+	public static final String BOOKLET_ITEM_HASHTAG = "Hashtag";
 	public static final String followship = "Followship";
 	public static final String netmera_user = "NetmeraUser";
 	public static final String hashtable ="HashTable";
