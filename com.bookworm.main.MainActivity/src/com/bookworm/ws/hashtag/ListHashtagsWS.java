@@ -8,12 +8,14 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.os.AsyncTask;
 
 import com.bookworm.common.Utils;
-import com.bookworm.model.Comment;
 import com.bookworm.model.Hashtag;
+import com.google.gson.Gson;
 
 public class ListHashtagsWS extends
 		AsyncTask<String, Void, List<Hashtag>> {
@@ -30,6 +32,7 @@ public class ListHashtagsWS extends
 
 	public static List<Hashtag> GET(String url) {
 		InputStream inputStream = null;
+		String result = "";
 		List<Hashtag> resultList= new ArrayList<Hashtag>();
 		try {
 
@@ -41,17 +44,28 @@ public class ListHashtagsWS extends
 
 			// receive response as inputStream
 			inputStream = httpResponse.getEntity().getContent();
-			String result = "";
+
 			// convert inputstream to string
 			if (inputStream != null)
-				 Utils.convertInputStreamToString(inputStream);
+				 result = Utils.convertInputStreamToString(inputStream);
 			else
 				 result = "Did not work!";
+
+			JSONArray resultArray = new JSONArray(result);
+			for (int k = 0 ; k < resultArray.length(); k++){
+				JSONObject obj = resultArray.getJSONObject(k);
+				Hashtag tag = new Hashtag();
+				tag.setBookId(obj.getLong("bookId"));
+				tag.setHashTagId(obj.getLong("hashTagId"));
+				tag.setTag(obj.getString("tag"));
+				resultList.add(tag);
+			}
 
 		} catch (Exception e) {
 			e.getLocalizedMessage();
 		}
-
+		
+		
 		return resultList;
 	}
 }

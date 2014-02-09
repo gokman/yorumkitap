@@ -1,25 +1,23 @@
 package com.bookworm.util;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
-import com.netmera.mobile.NetmeraContent;
-import com.netmera.mobile.NetmeraException;
+
+import com.bookworm.model.Hashtag;
 
 public class ApplicationUtil {
 
-    public static String[] convertObjectListToInputList(List <NetmeraContent> netmeraContentList,String inputField ){
-    	String [] outputList = new String[netmeraContentList.size()];
+    public static List<Long> getIdList(List <Hashtag> list,String inputField ){
+    	List<Long> outputList = new ArrayList<Long>();
     	
-    	if(netmeraContentList!=null && netmeraContentList.size()>=0){
-    		for(int i = 0 ; i < netmeraContentList.size(); i++){
-    			try {
-					outputList[i] = (netmeraContentList.get(i).get(inputField).toString());
-				} catch (NetmeraException e) {
-					e.printStackTrace();
-				}
-    		
+    	if(list!=null && list.size()>=0){
+    		for(int i = 0 ; i < list.size(); i++){
+					outputList.add(list.get(i).getBookId());
     		}
     		
     	}
     	return outputList;
     }	
+    
 }

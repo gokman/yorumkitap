@@ -1,9 +1,11 @@
 package com.bookworm.util;
 
+import java.util.List;
+
 public class SearchCriteria {
 	private String bookId;
 	private String bookLikerId;
-	
+	private List<Long> bookIdList;
 	
 	public String getBookId() {
 		return bookId;
@@ -16,6 +18,12 @@ public class SearchCriteria {
 	}
 	public void setBookLikerId(String bookLikerId) {
 		this.bookLikerId = bookLikerId;
+	}
+	public List<Long> getBookIdList() {
+		return bookIdList;
+	}
+	public void setBookIdList(List<Long> bookIdList) {
+		this.bookIdList = bookIdList;
 	}
 	
 	
