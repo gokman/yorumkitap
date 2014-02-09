@@ -121,7 +121,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 				bookTitle.setText(addedBook.getName());
 				bookWriter.setText(addedBook.getWriter());
 				bookDescription.setText(addedBook.getDescription());
-				//TODO tags
+
 				List<Hashtag> tags = new ListHashtagsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_HASHTAG+"/"
 						+WS_OPERATION_LIST +"/"+bookId).get();
 				String tagString = ApplicationConstants.EMPTY_STRING;

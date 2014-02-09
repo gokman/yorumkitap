@@ -298,7 +298,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 						NetmeraService followerListService = new NetmeraService(ApplicationConstants.followship);
 						followerListService.whereEqual(ApplicationConstants.followship_follows,userEmail);
 						followersTransactionList = new SelectDataTask(ProfileActivity.this).execute(followerListService).get();
-						String[] userEmailList = ApplicationUtil.convertObjectListToInputList(followersTransactionList,ApplicationConstants.followship_user_id);
+						String[] userEmailList = new String[5];//ApplicationUtil.convertObjectListToInputList(followersTransactionList,ApplicationConstants.followship_user_id);
 						
 						/*TODO 
 						 * profile image will be kept in User table unavailable in NetmeraUser.(todo)
@@ -326,7 +326,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 						NetmeraService followingListService = new NetmeraService(ApplicationConstants.followship);
 						followingListService.whereEqual(ApplicationConstants.followship_user_id, userEmail);
 						followingTransactionList = new SelectDataTask(ProfileActivity.this).execute(followingListService).get();
-						String[] userEmailList = ApplicationUtil.convertObjectListToInputList(followingTransactionList, ApplicationConstants.followship_follows);
+						String[] userEmailList = new String[5];//ApplicationUtil.convertObjectListToInputList(followingTransactionList, ApplicationConstants.followship_follows);
 
 						/*TODO 
 						 * profile image will be kept in User table unavailable in NetmeraUser.(todo)
