@@ -1,12 +1,12 @@
-package com.bookworm.ws.book;
+package com.bookworm.ws.action;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -19,27 +19,27 @@ import android.os.AsyncTask;
 import android.util.Base64;
 
 import com.bookworm.common.Utils;
-import com.bookworm.model.Book;
-import com.bookworm.model.Hashtag;
+import com.bookworm.model.Action;
+import com.bookworm.model.ActionType;
 import com.bookworm.util.SearchCriteria;
 
-public class ListBooksWS extends
-		AsyncTask<Object, Void, List<Book>> {
+public class ListActionsWS extends
+		AsyncTask<Object, Void, List<Action>> {
 
 	@Override
-	protected List<Book> doInBackground(Object... url) {
+	protected List<Action> doInBackground(Object... url) {
 
 		 return GET((String)url[0],(SearchCriteria)url[1]);
 	}
 
 	@Override
-	protected void onPostExecute(List<Book> result) {
+	protected void onPostExecute(List<Action> result) {
 	}
 
-	public static List<Book> GET(String url,SearchCriteria sc) {
+	public static List<Action> GET(String url,SearchCriteria sc) {
 		InputStream inputStream = null;
 		String result = "";
-		List<Book> resultList= new ArrayList<Book>();
+		List<Action> resultList= new ArrayList<Action>();
 		try {
 
             // create HttpClient
@@ -57,13 +57,7 @@ public class ListBooksWS extends
             
         	JSONObject inputObj = new JSONObject();
             
-            if(sc.getBookIdList()!=null && sc.getBookIdList().size()>0){
-            	JSONArray bookIds = new JSONArray();
-            	for(Long bookId : sc.getBookIdList()){
-	            	bookIds.put(bookId);
-	            }
-	        	inputObj.put("bookIdList", bookIds);            
-            }
+        	inputObj.put("userId", sc.getUserId());
             inputObj.put("orderByDrc", sc.getOrderByDrc());
             inputObj.put("orderByCrit", sc.getOrderByCrit());
             inputObj.put("pageNumber", sc.getPageNumber());
@@ -88,14 +82,11 @@ public class ListBooksWS extends
 			JSONArray resultArray = new JSONArray(result);
 			for (int k = 0 ; k < resultArray.length(); k++){
 				JSONObject obj = resultArray.getJSONObject(k);
-				Book book = new Book();
-				book.setAdderId(obj.getLong("adderId"));
-				book.setBookId(obj.getLong("bookId"));
-				book.setCoverPhoto(obj.getString("coverPhoto"));
-				book.setDescription(obj.getString("description"));
-				book.setName(obj.getString("name"));
-				book.setWriter(obj.getString("writer"));
-				resultList.add(book);
+				Action action = new Action();
+				action.setActionId(obj.getLong("actionId"));
+				action.setActionDate(new Date(obj.getString("actionDate")));
+				action.setActionType(ActionType.getAction(obj.getInt("actionType")));
+				resultList.add(action);
 			}
 
 		} catch (Exception e) {

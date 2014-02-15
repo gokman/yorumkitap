@@ -1,23 +1,12 @@
 package com.bookworm.main;
 
-import java.util.ArrayList;
+import static com.bookworm.common.ApplicationConstants.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import com.bookworm.common.ApplicationConstants;
-import com.bookworm.common.DatabaseProcess;
-import com.bookworm.common.GeneralUseObject;
-import com.bookworm.common.GetNetmerMediaTask;
-import com.bookworm.common.SelectDataTask;
-import com.bookworm.common.TimeLineAdapter;
-import com.netmera.mobile.NetmeraClient;
-import com.netmera.mobile.NetmeraContent;
-import com.netmera.mobile.NetmeraException;
-import com.netmera.mobile.NetmeraService;
-import com.netmera.mobile.NetmeraService.SortOrder;
-import com.netmera.mobile.NetmeraUser;
 
 import android.os.Bundle;
 import android.view.View;
@@ -26,68 +15,44 @@ import android.view.Window;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bookworm.common.ApplicationConstants;
+import com.bookworm.common.DatabaseProcess;
+import com.bookworm.common.GetNetmerMediaTask;
+import com.bookworm.common.SelectDataTask;
+import com.bookworm.common.TimeLineAdapter;
+import com.bookworm.model.Action;
+import com.bookworm.util.ApplicationUtil;
+import com.bookworm.util.SearchCriteria;
+import com.bookworm.ws.action.ListActionsWS;
+import com.netmera.mobile.NetmeraClient;
+import com.netmera.mobile.NetmeraContent;
+import com.netmera.mobile.NetmeraException;
+import com.netmera.mobile.NetmeraService;
+import com.netmera.mobile.NetmeraService.SortOrder;
+import com.netmera.mobile.NetmeraUser;
+
 
 public class TimeLineActivity extends ActivityBase implements OnClickListener{
-	//listelenen elemanların tipini tutacak
-	public static final String ListElementType="TYPE";
+
 	private TimeLineAdapter adapter;
-	//tablodaki kitapları satır satır olduğu gibi tutar
 	List<NetmeraContent> actionList;
-	//viewda gösterilecek olan satırları tutar  --book
 	private ArrayList<HashMap<String, String>>  actionListToView=new ArrayList<HashMap<String, String>>();
 	private ListView actionListView;
 	private TextView timelineNextButton;
-	//viewda gösterilecek olan satırları tutar --comment
-
+	private int pageNumber = 0;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		    super.onCreate(savedInstanceState);
 	        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 	        setContentView(R.layout.timeline_page);
 	        
-	        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-					R.layout.window_title);
+	        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.window_title);
 
 	        NetmeraClient.init(this, apiKey);
 	        setNavigationButtons();
 	        actionListView=(ListView)findViewById(R.id.timeline_elements);
 	        timelineNextButton=(TextView)findViewById(R.id.timeLineList_next_button);
-	        //zaman tuneli sayfası her acildiginda bu deger 1 e donmeli
-	        ApplicationConstants.timelineListStatus=1;
 	        
-	        timelineNextButton.setOnClickListener(new OnClickListener() {
-	
-				public void onClick(View v) {
-					List<NetmeraContent> actionList;
-					//tiklandiginda 
-					NetmeraService service=new NetmeraService(ApplicationConstants.action);
-					service.setMax(ApplicationConstants.item_count_per_page_for_timeline_page);
-					service.setPage(ApplicationConstants.timelineListStatus);
-					service.setSortBy(ApplicationConstants.GENERAL_COLUMN_CREATE_DATE);
-			        service.setSortOrder(SortOrder.descending);
-			        
-			        ApplicationConstants.timelineListStatus+=1;
-			        
-			        try {
-						actionList=new SelectDataTask(TimeLineActivity.this).execute(service).get();
-						//elimizdeki yeni listeyi actionListToView a ekliyoruz
-						ArrayList<HashMap<String, String>>  tempActionListToView=new ArrayList<HashMap<String, String>>();
-						new GeneralUseObject().addListToTimeLineListView(actionList, tempActionListToView, TimeLineActivity.this);
-						//adapter i guncelliyoruz
-						adapter.add(tempActionListToView);
-						adapter.notifyDataSetChanged();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ExecutionException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-			        
-				}
-			});
-	       
-	        //kitap için bize yardımcı olacak servisimiz
 	        NetmeraService servicer = new NetmeraService(ApplicationConstants.action);
 	        try {
 				servicer.whereEqual(ApplicationConstants.ACTION_OWNER, NetmeraUser.getCurrentUser().getEmail());
@@ -167,37 +132,41 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 				e.printStackTrace();
 			}
 			adapter=new TimeLineAdapter(getApplicationContext(),this, actionListToView);
+
+			actionListView.setAdapter(adapter);
 			
-			//elimizdeki listviewı ekliyoruz
-	        actionListView.setAdapter(adapter);
-	        
-	        
-	        //listedeki elemanlara t�kland���nda yap�lacak i�lemler
-	      /*  actionListView.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
+	        timelineNextButton.setOnClickListener(new OnClickListener() {
+	        	
+				public void onClick(View v) {
+					List<Action> actionList = Collections.emptyList();
+					SearchCriteria sc = new SearchCriteria();
+					sc.setPageNumber(pageNumber);
+					sc.setPageSize(item_count_per_page_for_timeline_page);
+					//TODO current user id 
+					sc.setUserId(1L);
+					sc.setOrderByCrit(GENERAL_COLUMN_ACTION_DATE);
+					sc.setOrderByDrc(ORDER_BY_DIRECTION_DESCENDING);
+					try {
+						actionList = new ListActionsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_LIST+"/",sc).get();
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (ExecutionException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+			        ApplicationConstants.timelineListStatus+=1;
+			        
+					ArrayList<HashMap<String, String>>  tempActionListToView=new ArrayList<HashMap<String, String>>();
+					ApplicationUtil.addListToTimeLineListView(actionList, tempActionListToView);
+					adapter.add(tempActionListToView);
+					adapter.notifyDataSetChanged();
+			        
+				}
+			});			
 			
-				if(view.getTag().toString().equals(ApplicationConstants.TYPE_BOOK)){
-							
-					Intent bookDetailIntent = new Intent(getApplicationContext(), BookDetailActivity.class);
-			    	bookDetailIntent.putExtra(ApplicationConstants.book_name, ((TextView)view.findViewById(R.id.timeline_book_title)).getText().toString());
-			    	bookDetailIntent.putExtra(ApplicationConstants.book_adderId, ((TextView)view.findViewById(R.id.timeline_book_adderId)).getText().toString());
-			    	startActivity(bookDetailIntent);
-					
-				}else if(view.getTag().toString().equals(ApplicationConstants.TYPE_COMMENT)){
-					
-					Intent bookDetailIntent = new Intent(getApplicationContext(), BookDetailActivity.class);
-			    	bookDetailIntent.putExtra(ApplicationConstants.book_name, ((TextView)view.findViewById(R.id.commentedBookName)).getText().toString());
-			    	bookDetailIntent.putExtra(ApplicationConstants.book_adderId, ((TextView)view.findViewById(R.id.timeline_follow_book_adderId)).getText().toString());
-			    	startActivity(bookDetailIntent);
-					
-				}else if(view.getTag().toString().equals(ApplicationConstants.TYPE_FOLLOW)){
-					
-				}
-					
-				}
-			});*/
-	                
+			
 	}
 
 	public void onClick(View v) {
