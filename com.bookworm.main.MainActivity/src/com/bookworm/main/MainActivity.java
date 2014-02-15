@@ -1,6 +1,14 @@
 package com.bookworm.main;
 
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
+import static com.bookworm.common.ApplicationConstants.GENERAL_COLUMN_CREATE_DATE;
+import static com.bookworm.common.ApplicationConstants.ORDER_BY_DIRECTION_DESCENDING;
+import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST;
+import static com.bookworm.common.ApplicationConstants.item_count_per_page_for_main_page;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -10,41 +18,30 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bookworm.common.ApplicationConstants;
-import com.bookworm.common.GeneralUseObject;
-import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.common.LazyAdapter;
-import com.bookworm.common.SelectDataTask;
-import com.netmera.mobile.NetmeraClient;
-import com.netmera.mobile.NetmeraContent;
-import com.netmera.mobile.NetmeraException;
-import com.netmera.mobile.NetmeraService;
-import com.netmera.mobile.NetmeraService.SortOrder;
+import com.bookworm.model.Book;
+import com.bookworm.util.ApplicationUtil;
+import com.bookworm.util.SearchCriteria;
+import com.bookworm.ws.book.ListBooksWS;
 
 public class MainActivity extends ActivityBase implements OnClickListener {
 
 
 
-	ImageButton btn1, btn2, btn3, btn4;
-	public LinearLayout middle;
-
+	private int pageNumber = 0;
 	private ListView latestBooksListView;
-    private BaseAdapter adap;
 	private LazyAdapter adapter;
-	private ArrayList<HashMap<String, String>> latestBooksList;
+	private ArrayList<HashMap<String, String>> latestBooksList = new ArrayList<HashMap<String,String>>();
 	private TextView bookListNextButton;
-	List<NetmeraContent> mainBookList;
+	List<Book> latestBooks = Collections.emptyList();
 	
 
 	/** Called when the activity is first created. */
@@ -54,104 +51,57 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.home_page);
 
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-				R.layout.window_title);
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.window_title);
 
-		NetmeraClient.init(getApplicationContext(), apiKey);
 		bookListNextButton=(TextView)findViewById(R.id.mainBookListNext_Button);
-		ApplicationConstants.mainBookListStatus=1;
-		bookListNextButton.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				//tiklandiginda 
-				NetmeraService service=new NetmeraService(ApplicationConstants.book);
-				service.setMax(ApplicationConstants.item_count_per_page_for_main_page);
-				service.setPage(ApplicationConstants.mainBookListStatus);
-				service.setSortBy(ApplicationConstants.GENERAL_COLUMN_CREATE_DATE);
-		        service.setSortOrder(SortOrder.descending);
-		        
-		        ApplicationConstants.mainBookListStatus+=1;
-		        
-		        try {
-		        	mainBookList=new SelectDataTask(MainActivity.this).execute(service).get();
-					//elimizdeki yeni listeyi actionListToView a ekliyoruz
-					//ArrayList<HashMap<String, String>>  tempMainListToView=new ArrayList<HashMap<String, String>>();
-					new GeneralUseObject().addListToMainBookListView(mainBookList, latestBooksList, MainActivity.this);
-					//adapter i guncelliyoruz
-					latestBooksListView.invalidate();
-				        ((LazyAdapter) latestBooksListView.getAdapter()).notifyDataSetChanged(); 
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-		});
-		
-		NetmeraService servicer = new NetmeraService(ApplicationConstants.book);
-		servicer.setMax(ApplicationConstants.item_count_per_page_for_main_page);
-		servicer.setSortBy(ApplicationConstants.GENERAL_COLUMN_CREATE_DATE);
-        servicer.setSortOrder(SortOrder.descending);
-		List<NetmeraContent> bookList;
+
+		SearchCriteria sc = new SearchCriteria();
+		sc.setPageSize(item_count_per_page_for_main_page);
+		sc.setPageNumber(pageNumber);
+		sc.setOrderByCrit(GENERAL_COLUMN_CREATE_DATE);
+        sc.setOrderByDrc(ORDER_BY_DIRECTION_DESCENDING);
 		try {
-			bookList = new SelectDataTask(MainActivity.this).execute(servicer).get();
-
-		latestBooksList = new ArrayList<HashMap<String, String>>();
-		for (int i = 0; i < bookList.size(); i += 2) {
-			HashMap<String, String> map = new HashMap<String, String>();
-			NetmeraContent tempBook1 = bookList.get(i);
-//			String tem= tempBook1.get("Path").toString();
-//			String tem2 = tempBook1.get("path").toString();
-			tempBook1.add(ApplicationConstants.generic_property, ApplicationConstants.book_coverPhoto);
-			NetmeraContent tempBook2 = null;
-			if (i != bookList.size() - 1) {
-				tempBook2 = bookList.get(i + 1);
-				tempBook2.add(ApplicationConstants.generic_property, ApplicationConstants.book_coverPhoto);
-			}
-			
-			String tempBook1CoverURL = new GetNetmerMediaTask().execute(tempBook1).get();//.getNetmeraMedia(ApplicationConstants.book_coverPhoto);
-			
-			map.put(KEY_COVER_LEFT, tempBook1CoverURL);
-			map.put(KEY_BOOK_TITLE_LEFT, tempBook1.get(ApplicationConstants.book_name).toString());
-			map.put(KEY_DESC_LEFT, tempBook1.get(ApplicationConstants.book_desc).toString());
-			map.put(KEY_BOOK_ADDER_ID_LEFT, tempBook1.get(ApplicationConstants.book_adderId).toString());
-			if (tempBook2 != null) {
-				String tempBook2CoverURL = new GetNetmerMediaTask().execute(tempBook2).get();//getNetmeraMedia(ApplicationConstants.book_coverPhoto);
-
-				map.put(KEY_COVER_RIGHT, tempBook2CoverURL);
-				map.put(KEY_BOOK_TITLE_RIGHT, tempBook2.get(ApplicationConstants.book_name).toString());
-				map.put(KEY_DESC_RIGHT, tempBook2.get(ApplicationConstants.book_desc).toString());
-				map.put(KEY_BOOK_ADDER_ID_RIGHT, tempBook2.get(ApplicationConstants.book_adderId).toString());
-			}
-
-			latestBooksList.add(map);
-		}
+			latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST+"/",sc).get();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (NetmeraException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}							
+        pageNumber++;
+
+		ApplicationUtil.addListToMainBookListView(latestBooks, latestBooksList);
 
 		latestBooksListView = (ListView) findViewById(R.id.latest_books);
 
 		adapter = new LazyAdapter(this, latestBooksList);
 		latestBooksListView.setAdapter(adapter);
 
+		bookListNextButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				SearchCriteria sc = new SearchCriteria();
+				sc.setPageSize(item_count_per_page_for_main_page);
+				sc.setPageNumber(pageNumber);
+				sc.setOrderByCrit(GENERAL_COLUMN_CREATE_DATE);
+		        sc.setOrderByDrc(ORDER_BY_DIRECTION_DESCENDING);
+				try {
+					latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST+"/",sc).get();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}							
+		        pageNumber++;
+				ApplicationUtil.addListToMainBookListView(latestBooks, latestBooksList);
+				latestBooksListView.invalidate();
+			        ((LazyAdapter) latestBooksListView.getAdapter()).notifyDataSetChanged(); 
+			}
+		});		
+		
 		// Click event for single list row
 		latestBooksListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Object o = latestBooksListView.getItemAtPosition(position);
-				System.out.println("damn it");
-				
 			}
 		});
 		setNavigationButtons();

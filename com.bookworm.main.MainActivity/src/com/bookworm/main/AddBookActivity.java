@@ -119,7 +119,7 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 
 //				    
 //				    //TODO action tablo kaydı
-				    Action addBookAction = new Action(ActionType.ADD_BOOK, 24); 
+				    Action addBookAction = new Action(ActionType.ADD_BOOK, 24L); 
 				    addBookAction = new AddActionHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,addBookAction).get();
 
 			    	String bookTagsText = bookTags.getText().toString();

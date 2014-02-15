@@ -28,6 +28,7 @@ import com.bookworm.common.SelectDataTask;
 import com.bookworm.model.Book;
 import com.bookworm.model.Hashtag;
 import com.bookworm.util.ApplicationUtil;
+import com.bookworm.util.SearchCriteria;
 import com.bookworm.ws.book.ListBooksWS;
 import com.bookworm.ws.hashtag.ListHashtagsWS;
 import com.netmera.mobile.NetmeraClient;
@@ -126,10 +127,11 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 						
 						if (hashtagList != null && hashtagList.size() > 0) {
 							List<Long> bookIdList = ApplicationUtil.getIdList(hashtagList,"bookId");
-							
-							bookList = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"
-									+WS_OPERATION_LIST+"/",bookIdList).get();							
+							SearchCriteria sc = new SearchCriteria();
+							sc.setBookIdList(bookIdList);
+							bookList = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST+"/",sc).get();							
 						}
+						
 						makeAllInvisible();
 						applyDataToTable(bookList,ApplicationConstants.book_name,ApplicationConstants.book_coverPhoto);
 						if(bookList.size()==0){

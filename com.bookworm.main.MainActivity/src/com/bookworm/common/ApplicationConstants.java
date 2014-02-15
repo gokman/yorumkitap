@@ -7,6 +7,7 @@ public class ApplicationConstants {
 
 	//general table columns
 	public static final String GENERAL_COLUMN_CREATE_DATE="creationdate";
+	public static final String GENERAL_COLUMN_ACTION_DATE="actionDate";
 	public static final String GENERAL_COLUMN_UPDATE_DATE="updatedate";
 
 	public static final String EMPTY_STRING ="";
@@ -157,7 +158,6 @@ public class ApplicationConstants {
 	
 	//zaman tunelindeki sonraki dugmesinin degerini tutar
 	public static int timelineListStatus=1;
-	public static int mainBookListStatus=1;
 	//zaman tunelinde gosterilen elemanların en geçmiş tarihli olan değeri tutar
 	public static Date timelineLastDate=dateFormat.getCalendar().getTime();
 
@@ -172,5 +172,9 @@ public class ApplicationConstants {
 	public static final String WS_OPERATION_SAVE			="SAVE";
 	public static final String WS_OPERATION_UPDATE			="UPDATE";
 	public static final String WS_OPERATION_DELETE			="DELETE";
+	
+	public static final String ORDER_BY_DIRECTION_ASCENDING  ="ASC";
+	public static final String ORDER_BY_DIRECTION_DESCENDING ="DESC";
+	
 	
 }
