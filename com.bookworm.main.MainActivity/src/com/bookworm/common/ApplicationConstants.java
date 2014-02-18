@@ -161,7 +161,7 @@ public class ApplicationConstants {
 	//zaman tunelinde gosterilen elemanların en geçmiş tarihli olan değeri tutar
 	public static Date timelineLastDate=dateFormat.getCalendar().getTime();
 
-	public static final String WS_ENDPOINT_ADRESS = "http://192.168.2.148:8080/booklet-ws/services";
+	public static final String WS_ENDPOINT_ADRESS = "http://10.0.2.2:8080/booklet-ws/services";
 	public static final String WS_OPERATION_GET_BY_ID		="GET_BY_ID";
 	public static final String WS_OPERATION_ADD				="ADD";
 	public static final String WS_OPERATION_LIST			="LIST";
@@ -175,6 +175,10 @@ public class ApplicationConstants {
 	
 	public static final String ORDER_BY_DIRECTION_ASCENDING  ="ASC";
 	public static final String ORDER_BY_DIRECTION_DESCENDING ="DESC";
+	
+	//giris yapan kullanici adi ve email
+	public static String signed_in_username="";
+	public static String signed_in_email="";
 	
 	
 }
