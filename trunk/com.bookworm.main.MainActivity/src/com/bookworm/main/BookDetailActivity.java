@@ -104,7 +104,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		try{
 			if (likes !=null && likes.size() > 0){ 
 				BookLike like  = likes.get(0);
-				//TODO burda napiliyo anlamadým. fyesildal
+				//TODO burda napiliyo anlamadï¿½m. fyesildal
 				likeBook.setText(like.getBookId().toString());
 			}
 		}catch (Exception e) {
@@ -183,8 +183,8 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 					public void onClick(View v) {
 						
 						
-						if (likeBook.getText().toString().equals("Beðen")) {
-							likeBook.setText("Beðenmekten Vazgeç", null);		
+						if (likeBook.getText().toString().equals("Beï¿½en")) {
+							likeBook.setText("Beï¿½enmekten Vazgeï¿½", null);		
 						
 							try {
 							String	bookLikerId = NetmeraUser.getCurrentUser().getEmail();
