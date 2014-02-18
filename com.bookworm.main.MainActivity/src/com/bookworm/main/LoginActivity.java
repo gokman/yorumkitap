@@ -18,8 +18,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import static com.bookworm.common.ApplicationConstants.*;
+
+import com.bookworm.common.ApplicationConstants;
+import com.bookworm.ws.user.LoginWS;
 import com.netmera.mobile.NetmeraClient;
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
@@ -38,6 +40,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 	private CheckBox _forgotPassword;
 	private String savedUsername = EMPTY_STRING;
 	private String savedPassword = EMPTY_STRING;
+	private String loginResult="a";
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -79,19 +82,21 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 			}
 		});
 
-		NetmeraClient.init(this, apiKey);
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				try {
 					String credentials []= {_email.getText().toString(),_password.getText().toString()};
-					new LoginUserDataTask().execute(credentials).get();
+					//new LoginUserDataTask().execute(credentials).get();
+					loginResult=new LoginWS().execute("http://10.0.2.2:8080/booklet-ws/services/user/login",
+							_email.getText().toString(),_password.getText().toString()).get();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (ExecutionException e) {
 					e.printStackTrace();
 				}
-				if (!registered) {
+				//if (!registered) {
+				if(!loginResult.substring(0, 3).equals("200")){
 					getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 					Toast.makeText(getApplicationContext(),
 							getString(R.string.wrongEmailPassword), Toast.LENGTH_LONG)
@@ -122,7 +127,9 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 					}
 					SharedPreferences.Editor editit = SP.edit();
 					editit.clear();
-					
+					//email ve kullanici adi kaydedilir
+					ApplicationConstants.signed_in_email=loginResult.substring(loginResult.indexOf(":")+1, loginResult.lastIndexOf(":"));
+					ApplicationConstants.signed_in_username=loginResult.substring(loginResult.lastIndexOf(":")+1);
 					
 					Intent mainPageIntent = new Intent(getApplicationContext(),
 							MainActivity.class);
@@ -168,6 +175,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 	public void onClick(View v) {
 	}
 
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
@@ -190,29 +198,4 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 		super.onRestoreInstanceState(b);
 	}
 
-	private class LoginUserDataTask extends AsyncTask<String , Void, String> {
-		protected void onPreExecute() {
-		}
-		protected String doInBackground(final String... credentials) {
-			String email = credentials[0];
-			String pword = credentials[1];
-			try {
-			    NetmeraUser.login(email,pword);
-			} catch (NetmeraException e) {
-			} 
-			try {
-				if(NetmeraUser.getCurrentUser()!=null){
-					LoginActivity.this.registered=true;
-				}else{
-					LoginActivity.this.registered=false;
-				}
-			} catch (NetmeraException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		protected void onPostExecute(final String result) {
-		}
-	}
 }
