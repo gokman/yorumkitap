@@ -1,10 +1,16 @@
 package com.bookworm.main;
 
+import static com.bookworm.common.ApplicationConstants.EMPTY_STRING;
+import static com.bookworm.common.ApplicationConstants.password;
+import static com.bookworm.common.ApplicationConstants.sharedPrefName;
+import static com.bookworm.common.ApplicationConstants.unregistered_password;
+import static com.bookworm.common.ApplicationConstants.unregistered_username;
+import static com.bookworm.common.ApplicationConstants.username;
+
 import java.util.concurrent.ExecutionException;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,19 +26,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import static com.bookworm.common.ApplicationConstants.*;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.util.Validation;
 import com.bookworm.ws.user.LoginWS;
-import com.netmera.mobile.NetmeraClient;
-import com.netmera.mobile.NetmeraContent;
-import com.netmera.mobile.NetmeraException;
-import com.netmera.mobile.NetmeraUser;
 public class LoginActivity extends ActivityBase implements OnClickListener {
 
 	static String resultEmail;
-	static NetmeraContent temp;
 	boolean registered = false;
 
 	private SharedPreferences SP;

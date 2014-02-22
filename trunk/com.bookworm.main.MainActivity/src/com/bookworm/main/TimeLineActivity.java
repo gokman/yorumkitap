@@ -23,7 +23,6 @@ import com.bookworm.model.Action;
 import com.bookworm.util.ApplicationUtil;
 import com.bookworm.util.SearchCriteria;
 import com.bookworm.ws.action.ListActionsWS;
-import com.netmera.mobile.NetmeraClient;
 
 
 public class TimeLineActivity extends ActivityBase implements OnClickListener{
@@ -42,7 +41,6 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 	        
 	        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.window_title);
 
-	        NetmeraClient.init(this, apiKey);
 	        setNavigationButtons();
 	        actionListView=(ListView)findViewById(R.id.timeline_elements);
 	        timelineNextButton=(TextView)findViewById(R.id.timeLineList_next_button);

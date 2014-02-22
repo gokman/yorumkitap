@@ -30,11 +30,9 @@ import com.bookworm.model.Action;
 import com.bookworm.model.ActionType;
 import com.bookworm.model.Comment;
 import com.bookworm.so.CommentSCR;
-import com.bookworm.ws.action.AddActionHttpAsyncTask;
+import com.bookworm.ws.action.AddActionWS;
 import com.bookworm.ws.comment.AddCommentWS;
 import com.bookworm.ws.comment.ListCommentsWS;
-import com.netmera.mobile.NetmeraClient;
-import com.netmera.mobile.NetmeraException;
 
 public class AddCommentActivity extends ActivityBase implements OnClickListener {
 
@@ -54,7 +52,6 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
 				R.layout.window_title);
-		NetmeraClient.init(this, apiKey);
 		Intent myIntent = getIntent();
 		final Long book_id = myIntent.getLongExtra(ApplicationConstants.book_id,0);
 		final Long adderID = myIntent.getLongExtra(ApplicationConstants.book_adderId,0);
@@ -81,7 +78,7 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 					// comment icin action kaydi olustur
 					//TODO commenter userid will be replaced with 24 
 					Action addBookAction = new Action(ActionType.ADD_COMMENT, 24L,comment.getCommentId()); 
-				    addBookAction = new AddActionHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,addBookAction).get();
+				    addBookAction = new AddActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,addBookAction).get();
 
 					commentText.setText(getString(R.string.commentLabel));
 
@@ -90,9 +87,6 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 					listComments(book_id, adderID);
 
 					//TODO call list methods to show.
-				} catch (NetmeraException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -112,14 +106,11 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (NetmeraException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 	}
 
-	public void listComments(Long bookId, Long adderID) throws InterruptedException, ExecutionException, NetmeraException{
+	public void listComments(Long bookId, Long adderID) throws InterruptedException, ExecutionException{
 		//TODO list comments to show
 		
 		List<Comment> commentList = new ListCommentsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"
