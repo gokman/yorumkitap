@@ -23,8 +23,8 @@ public class ApplicationConstants {
 	public static final int item_count_per_page = 12;
 	public static final int item_count_per_page_for_comments = 100;
 	public static final int item_count_per_page_for_explore_page = 15;
-	public static final int item_count_per_page_for_main_page = 10;
-	public static final int item_count_per_page_for_timeline_page = 10;
+	public static final int item_count_per_page_for_main_page = 2;
+	public static final int item_count_per_page_for_timeline_page = 1;
 	
 	//Tables
 	public static final String user	= "User";
@@ -163,7 +163,6 @@ public class ApplicationConstants {
 	public static int timelineListStatus=1;
 	//zaman tunelinde gosterilen elemanların en geçmiş tarihli olan değeri tutar
 	public static Date timelineLastDate=dateFormat.getCalendar().getTime();
-	public static java.sql.Date timelineLastDateSql=new java.sql.Date(dateFormat.getCalendar().getTime().getTime());
 
 	public static final String WS_ENDPOINT_ADRESS = "http://10.0.2.2:8080/booklet-ws/services";
 	public static final String WS_OPERATION_GET_BY_ID		="GET_BY_ID";
