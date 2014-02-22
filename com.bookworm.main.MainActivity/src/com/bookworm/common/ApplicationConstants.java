@@ -1,6 +1,7 @@
 package com.bookworm.common;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ApplicationConstants {
@@ -160,6 +161,7 @@ public class ApplicationConstants {
 	public static int timelineListStatus=1;
 	//zaman tunelinde gosterilen elemanların en geçmiş tarihli olan değeri tutar
 	public static Date timelineLastDate=dateFormat.getCalendar().getTime();
+	public static java.sql.Date timelineLastDateSql=new java.sql.Date(dateFormat.getCalendar().getTime().getTime());
 
 	public static final String WS_ENDPOINT_ADRESS = "http://10.0.2.2:8080/booklet-ws/services";
 	public static final String WS_OPERATION_GET_BY_ID		="GET_BY_ID";

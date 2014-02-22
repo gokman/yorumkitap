@@ -4,19 +4,19 @@ import java.util.concurrent.ExecutionException;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
-import com.bookworm.common.InsertDataTask;
-import com.bookworm.common.InsertUserTask;
-import com.netmera.mobile.NetmeraClient;
-import com.netmera.mobile.NetmeraContent;
-import com.netmera.mobile.NetmeraException;
-import com.netmera.mobile.NetmeraUser;
+import com.bookworm.model.User;
+import com.bookworm.util.Validation;
+import com.bookworm.ws.user.RegisterWS;
 
 public class RegisterActivity extends ActivityBase {
     /*
@@ -28,12 +28,12 @@ public class RegisterActivity extends ActivityBase {
 	private TextView loginScreen; 
 	private Button registerButton;
 	private boolean isRegSuccessfull;
+	private String result;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.register);
-		NetmeraClient.init(this, apiKey);
 		
 		//Initialize variables
         loginScreen = (TextView) findViewById(R.id.link_to_login);
@@ -50,43 +50,80 @@ public class RegisterActivity extends ActivityBase {
 			}
 		});
         
+        usernameTextView.addTextChangedListener(new TextWatcher() {
+            // after every change has been made to this editText, we would like to check validity
+            public void afterTextChanged(Editable s) {
+                Validation.isUserNameValid(usernameTextView);
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
+        
+        emailTextView.addTextChangedListener(new TextWatcher() {
+            // after every change has been made to this editText, we would like to check validity
+            public void afterTextChanged(Editable s) {
+                Validation.isEmailValid(emailTextView);
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
+        
+        passwordTextView.addTextChangedListener(new TextWatcher() {
+            // after every change has been made to this editText, we would like to check validity
+            public void afterTextChanged(Editable s) {
+                Validation.isPasswordValid(passwordTextView);
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
+        
 		registerButton = (Button) findViewById(R.id.btnRegister);
-		registerButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View paramView) {
-
-				//TODO User already exists and form validation
-				try {
+			registerButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View paramView) {
 					
-				NetmeraUser user = new NetmeraUser();
-		    	  user.setEmail(emailTextView.getText().toString());
-		    	  user.setPassword(passwordTextView.getText().toString());
-		    	  user.setNickname(usernameTextView.getText().toString());
-
-		    	NetmeraContent userContent = new NetmeraContent(ApplicationConstants.user);
-		    	userContent.add(ApplicationConstants.user_email, emailTextView.getText().toString());
-		    	userContent.add(ApplicationConstants.user_username, usernameTextView.getText().toString());
-		    	
-				
-					new InsertUserTask().execute(user).get();
-					new InsertDataTask().execute(userContent).get();
-					
-				}catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					e.printStackTrace();
-				} catch (NetmeraException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				Toast.makeText(getApplicationContext(),getString(R.string.completionRegister), Toast.LENGTH_LONG)
-						.show();
-
-				Intent i = new Intent(getApplicationContext(),LoginActivity.class);
-				startActivity(i);
-				
-			}
-		});
+	                
+					//TODO User already exists and form validation
+					if(checkValidation()){
+						try {
+							
+						User user = new User(usernameTextView.getText().toString(),
+								             emailTextView.getText().toString(),
+								             passwordTextView.getText().toString(),
+								             ApplicationConstants.timelineLastDateSql,
+								             ApplicationConstants.timelineLastDateSql,
+								             0);		
+		
+						result=new RegisterWS().execute("http://10.0.2.2:8080/booklet-ws/services/user/register",user).get();
+							
+						}catch (InterruptedException e) {
+							e.printStackTrace();
+						} catch (ExecutionException e) {
+							e.printStackTrace();
+						} 
+		
+						Toast.makeText(getApplicationContext(),getString(R.string.completionRegister), Toast.LENGTH_LONG)
+								.show();
+		
+						Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+						startActivity(i);
+						
+					    }
+				    }
+			});
+			
+	}
+	
+	private boolean checkValidation(){
+		if(!Validation.isUserNameValid(usernameTextView))
+		return false;
+		
+		if(!Validation.isEmailValid(emailTextView))
+		return false;
+		
+		if(!Validation.isPasswordValid(passwordTextView))
+		return false;
+		
+		return true;
 	}
 	
 }
