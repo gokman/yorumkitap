@@ -8,6 +8,7 @@ public class ApplicationConstants {
 
 	//general table columns
 	public static final String GENERAL_COLUMN_CREATE_DATE="creationdate";
+	public static final String GENERAL_COLUMN_NAME="name";
 	public static final String GENERAL_COLUMN_ACTION_DATE="actionDate";
 	public static final String GENERAL_COLUMN_UPDATE_DATE="updatedate";
 
@@ -22,8 +23,8 @@ public class ApplicationConstants {
 	public static final int item_count_per_page = 12;
 	public static final int item_count_per_page_for_comments = 100;
 	public static final int item_count_per_page_for_explore_page = 15;
-	public static final int item_count_per_page_for_main_page = 2;
-	public static final int item_count_per_page_for_timeline_page = 1;
+	public static final int item_count_per_page_for_main_page = 10;
+	public static final int item_count_per_page_for_timeline_page = 10;
 	
 	//Tables
 	public static final String user	= "User";
@@ -33,6 +34,7 @@ public class ApplicationConstants {
 	public static final String BOOKLET_ITEM_BOOKLIKE= "BookLike";
 	public static final String BOOKLET_ITEM_COMMENT = "Comment";
 	public static final String BOOKLET_ITEM_HASHTAG = "Hashtag";
+	public static final String BOOKLET_ITEM_FOLLOWSHIP = "Followship";
 	public static final String followship = "Followship";
 	public static final String netmera_user = "NetmeraUser";
 	public static final String hashtable ="HashTable";

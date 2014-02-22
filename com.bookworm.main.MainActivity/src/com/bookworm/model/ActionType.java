@@ -28,5 +28,14 @@ public enum ActionType{
 		}
 		return type;
 	}
-	
+	public static ActionType getActionFromString(String actionTypeCode){
+		ActionType type = null;
+		for(ActionType actionType : ActionType.values()){
+			if(actionType.toString().equals(actionTypeCode)){
+				type=actionType;
+				break;
+			}
+		}
+		return type;
+	}	
 }

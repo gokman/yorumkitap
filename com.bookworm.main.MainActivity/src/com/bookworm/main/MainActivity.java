@@ -1,12 +1,6 @@
 package com.bookworm.main;
 
-import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
-
-import static com.bookworm.common.ApplicationConstants.GENERAL_COLUMN_CREATE_DATE;
-import static com.bookworm.common.ApplicationConstants.ORDER_BY_DIRECTION_DESCENDING;
-import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
-import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST;
-import static com.bookworm.common.ApplicationConstants.item_count_per_page_for_main_page;
+import static com.bookworm.common.ApplicationConstants.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +17,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -59,10 +52,10 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 		SearchCriteria sc = new SearchCriteria();
 		sc.setPageSize(item_count_per_page_for_main_page);
 		sc.setPageNumber(pageNumber);
-		sc.setOrderByCrit(GENERAL_COLUMN_CREATE_DATE);
+		sc.setOrderByCrit(GENERAL_COLUMN_NAME);
         sc.setOrderByDrc(ORDER_BY_DIRECTION_DESCENDING);
 		try {
-			latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST+"/",sc).get();
+			latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST,sc).get();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -82,7 +75,7 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 				SearchCriteria sc = new SearchCriteria();
 				sc.setPageSize(item_count_per_page_for_main_page);
 				sc.setPageNumber(pageNumber);
-				sc.setOrderByCrit(GENERAL_COLUMN_CREATE_DATE);
+				sc.setOrderByCrit(GENERAL_COLUMN_NAME);
 		        sc.setOrderByDrc(ORDER_BY_DIRECTION_DESCENDING);
 				try {
 					latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST+"/",sc).get();

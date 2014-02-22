@@ -84,8 +84,10 @@ public class ListActionsWS extends
 				JSONObject obj = resultArray.getJSONObject(k);
 				Action action = new Action();
 				action.setActionId(obj.getLong("actionId"));
-				action.setActionDate(new Date(obj.getString("actionDate")));
-				action.setActionType(ActionType.getAction(obj.getInt("actionType")));
+				action.setActionDate(new Date());
+				action.setActionType(ActionType.getActionFromString(obj.getString("actionType")));
+				action.setUserId(obj.getLong("userId"));
+				action.setActionDetailId(obj.getLong("actionDetailId"));
 				resultList.add(action);
 			}
 

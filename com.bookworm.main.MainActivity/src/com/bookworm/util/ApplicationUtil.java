@@ -1,5 +1,7 @@
 package com.bookworm.util;
 
+import static com.bookworm.common.ApplicationConstants.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,12 +9,16 @@ import java.util.List;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.DatabaseProcess;
-import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.main.ActivityBase;
 import com.bookworm.model.Action;
 import com.bookworm.model.ActionType;
 import com.bookworm.model.Book;
+import com.bookworm.model.Comment;
+import com.bookworm.model.Followship;
 import com.bookworm.model.Hashtag;
+import com.bookworm.ws.book.GetBookInfoWS;
+import com.bookworm.ws.comment.GetCommentWS;
+import com.bookworm.ws.followship.GetFollowshipWS;
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
 
@@ -47,42 +53,49 @@ public class ApplicationUtil {
 			HashMap<String,String> tempMap=new HashMap<String, String>();
 			for(int i=0;i<actionList.size();i++){
 				if(actionList.get(i).getActionType().equals(ActionType.ADD_BOOK)){
-
-					Action tempAction1=actionList.get(i);
+					
+					Action addBookAction =actionList.get(i);
+					Book book  = new GetBookInfoWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"
+							+WS_OPERATION_GET_BY_ID+"/"+addBookAction.getActionDetailId()).get();
+					
 					HashMap<String,String> map=new HashMap<String,String>();
 //					tempBook1.add(ApplicationConstants.generic_property, ApplicationConstants.book_coverPhoto);
 //					String tempBook1CoverURL = new GetNetmerMediaTask().execute(tempBook1).get();
-					
 					map.put(ApplicationConstants.TYPE, ApplicationConstants.TYPE_BOOK);
 //					map.put(ApplicationConstants.TYPE_COVER_URL, tempBook1CoverURL);
-//					map.put(ApplicationConstants.TYPE_BOOK_NAME, tempBook1.get(ApplicationConstants.action_book_name).toString());
-//					map.put(ApplicationConstants.TYPE_BOOK_DESC, tempBook1.get(ApplicationConstants.action_book_desc).toString());
-//					map.put(ApplicationConstants.TYPE_BOOK_OWNER, new DatabaseProcess().getUserName(tempBook1.get(ApplicationConstants.action_book_adderId).toString(),activity));
-//					map.put(ApplicationConstants.book_adderId, tempBook1.get(ApplicationConstants.action_book_adderId).toString());
-//					map.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(tempBook1.getCreateDate()).toString());
+					map.put(ApplicationConstants.TYPE_BOOK_NAME, book.getName());
+					map.put(ApplicationConstants.TYPE_BOOK_DESC, book.getDescription());
+					map.put(ApplicationConstants.TYPE_BOOK_OWNER, book.getAdderId().toString());
+					map.put(ApplicationConstants.book_adderId, book.getAdderId().toString());
+					map.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(addBookAction.getActionDate()).toString());
 					actionListToView.add(map);
+					
 				}else if (actionList.get(i).getActionType().equals(ActionType.ADD_COMMENT)){
 
-					Action tempAction2=actionList.get(i);
+					Action addCommentAction =actionList.get(i);
+					Comment comment = new GetCommentWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"
+							+WS_OPERATION_GET_BY_ID+"/"+addCommentAction.getActionDetailId()).get();
+					Book commentedBook = new GetBookInfoWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"
+							+WS_OPERATION_GET_BY_ID+"/"+comment.getCommentedBookId()).get();
+					
 					tempMap=new HashMap<String, String>();
 					tempMap.put(ApplicationConstants.TYPE, ApplicationConstants.TYPE_COMMENT);
-//					tempMap.put(ApplicationConstants.TYPE_COMMENDATOR, new DatabaseProcess().getUserName(tempComment.get(ApplicationConstants.action_comment_er).toString(),activity));
-//					tempMap.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(tempComment.getCreateDate()).toString());
-//					tempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKNAME, 
-//							tempComment.get(ApplicationConstants.action_comment_edBook).toString());
-//					tempMap.put(ApplicationConstants.book_adderId, tempComment.get(ApplicationConstants.action_comment_edBookOwner).toString());
-//					tempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKOWNER, 
-//							new DatabaseProcess().getUserName(tempComment.get(ApplicationConstants.action_comment_edBookOwner).toString(),activity));
+					tempMap.put(ApplicationConstants.TYPE_COMMENDATOR,comment.getCommenterId().toString());
+					tempMap.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(addCommentAction.getActionDate()));
+					tempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKNAME, commentedBook.getName());
+					tempMap.put(ApplicationConstants.book_adderId, commentedBook.getAdderId().toString());
+					tempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKOWNER,commentedBook.getAdderId().toString());
 					actionListToView.add(tempMap);
 
 				}else if (actionList.get(i).getActionType().equals(ActionType.FOLLOW)){
 					Action action =actionList.get(i);
+					Followship followship = new GetFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"
+							+WS_OPERATION_GET_BY_ID+"/"+action.getActionDetailId()).get();
 					tempMap=new HashMap<String, String>();
 					tempMap.put(ApplicationConstants.TYPE, ApplicationConstants.TYPE_FOLLOW);
-//					tempMap.put(ApplicationConstants.TYPE_FOLLOWER, new DatabaseProcess().getUserName(tempFollow.get(ApplicationConstants.action_follower_id).toString(),activity));
-//					tempMap.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(tempFollow.getCreateDate()).toString());
-//					tempMap.put(ApplicationConstants.TYPE_FOLLOWED, 
-//							new DatabaseProcess().getUserName(tempFollow.get(ApplicationConstants.action_followed_id).toString(),activity));
+					tempMap.put(ApplicationConstants.TYPE_FOLLOWER, followship.getFollowerUserId().toString());
+					tempMap.put(ApplicationConstants.CREATE_DATE, dateFormat.format(action.getActionDate()).toString());
+					tempMap.put(ApplicationConstants.TYPE_FOLLOWED,followship.getFollowedUserId().toString());
 					actionListToView.add(tempMap);
 				}
 			

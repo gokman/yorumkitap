@@ -1,8 +1,5 @@
 package com.bookworm.model;
 
-import java.util.Date;
-// default package
-// Generated Jan 13, 2014 10:33:06 PM by Hibernate Tools 3.4.0.CR1
 
 
 /**
@@ -16,7 +13,6 @@ public class Book implements java.io.Serializable {
 	private Long adderId;
 	private String writer;
 	private String coverPhoto;
-	private Date creationDate;
 	
 	public Book() {
 	}
@@ -76,14 +72,6 @@ public class Book implements java.io.Serializable {
 
 	public void setCoverPhoto(String coverPhoto) {
 		this.coverPhoto = coverPhoto;
-	}
-
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
 	}
 
 }
