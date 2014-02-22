@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import static com.bookworm.common.ApplicationConstants.*;
 
 import com.bookworm.common.ApplicationConstants;
+import com.bookworm.util.Validation;
 import com.bookworm.ws.user.LoginWS;
 import com.netmera.mobile.NetmeraClient;
 import com.netmera.mobile.NetmeraContent;
@@ -81,10 +84,32 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 				startActivity(i);
 			}
 		});
+		
+		 _email.addTextChangedListener(new TextWatcher() {
+	            // after every change has been made to this editText, we would like to check validity
+	            public void afterTextChanged(Editable s) {
+	                Validation.isEmailValid(_email);
+	            }
+	            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+	            public void onTextChanged(CharSequence s, int start, int before, int count){}
+	        });
+	        
+	        _password.addTextChangedListener(new TextWatcher() {
+	            // after every change has been made to this editText, we would like to check validity
+	            public void afterTextChanged(Editable s) {
+	                Validation.isPasswordValid(_password);
+	            }
+	            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+	            public void onTextChanged(CharSequence s, int start, int before, int count){}
+	        });
 
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(new View.OnClickListener() {
+			
 			public void onClick(View v) {
+				
+				if(checkValidation()){
+				
 				try {
 					String credentials []= {_email.getText().toString(),_password.getText().toString()};
 					//new LoginUserDataTask().execute(credentials).get();
@@ -134,7 +159,8 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 					Intent mainPageIntent = new Intent(getApplicationContext(),
 							MainActivity.class);
 					startActivity(mainPageIntent);
-				}		
+				}
+				}
 			}
 		});
 		
@@ -198,4 +224,14 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 		super.onRestoreInstanceState(b);
 	}
 
+	private boolean checkValidation(){
+		
+		if(!Validation.isEmailValid(_email))
+		return false;
+		
+		if(!Validation.isPasswordValid(_password))
+		return false;
+		
+		return true;
+	}
 }
