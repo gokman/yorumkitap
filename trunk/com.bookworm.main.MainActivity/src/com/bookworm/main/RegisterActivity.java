@@ -89,8 +89,8 @@ public class RegisterActivity extends ActivityBase {
 						User user = new User(usernameTextView.getText().toString(),
 								             emailTextView.getText().toString(),
 								             passwordTextView.getText().toString(),
-								             ApplicationConstants.timelineLastDateSql,
-								             ApplicationConstants.timelineLastDateSql,
+								             new java.sql.Date(ApplicationConstants.dateFormat.getCalendar().getTime().getTime()),
+								             new java.sql.Date(ApplicationConstants.dateFormat.getCalendar().getTime().getTime()),
 								             0);		
 		
 						result=new RegisterWS().execute("http://10.0.2.2:8080/booklet-ws/services/user/register",user).get();
