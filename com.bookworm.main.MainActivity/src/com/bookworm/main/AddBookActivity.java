@@ -2,8 +2,8 @@ package com.bookworm.main;
 
 
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_ACTION;
-import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_HASHTAG;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_HASHTAG;
 import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_ADD;
 
@@ -37,11 +37,9 @@ import com.bookworm.model.Action;
 import com.bookworm.model.ActionType;
 import com.bookworm.model.Book;
 import com.bookworm.model.Hashtag;
-import com.bookworm.ws.action.AddActionHttpAsyncTask;
+import com.bookworm.ws.action.AddActionWS;
 import com.bookworm.ws.book.AddBookWS;
 import com.bookworm.ws.hashtag.AddHashtagWS;
-import com.netmera.mobile.NetmeraClient;
-import com.netmera.mobile.NetmeraMedia;
 
 public class AddBookActivity extends ActivityBase implements OnClickListener{
 
@@ -68,7 +66,6 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);        
     	addBookButton = (Button)findViewById(R.id.btnAddBook);
-    	NetmeraClient.init(this, apiKey);
 		
     	Intent myIntent = getIntent();
         imageURIString = myIntent.getStringExtra("newBookImageURI");
@@ -102,8 +99,6 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 		    		bitmap.compress(CompressFormat.PNG, 0, bos);
 		    		bos.toByteArray();
 
-		    		NetmeraMedia coverPhoto = new NetmeraMedia(bos.toByteArray());
-				
 			    try {
 			    	//TODO adderid will be removed.
 			    	Long bookAdderId = 24L;//NetmeraUser.getCurrentUser().getEmail();
@@ -120,7 +115,7 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 //				    
 //				    //TODO action tablo kaydı
 				    Action addBookAction = new Action(ActionType.ADD_BOOK, 24L,book.getBookId()); 
-				    addBookAction = new AddActionHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,addBookAction).get();
+				    addBookAction = new AddActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,addBookAction).get();
 
 			    	String bookTagsText = bookTags.getText().toString();
 			    	Matcher matcher = TAG_PATTERN.matcher(bookTagsText);

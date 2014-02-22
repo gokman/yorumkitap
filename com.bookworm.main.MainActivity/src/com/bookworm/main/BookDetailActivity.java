@@ -38,7 +38,7 @@ import com.bookworm.model.Hashtag;
 import com.bookworm.ws.book.GetBookInfoWS;
 import com.bookworm.ws.comment.ListCommentsWS;
 import com.bookworm.ws.hashtag.ListHashtagsWS;
-import com.bookworm.ws.like.GetBookLikeInfoHttpAsyncTask;
+import com.bookworm.ws.like.GetBookLikeWS;
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
 import com.netmera.mobile.NetmeraService;
@@ -94,7 +94,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		List<BookLike> likes = null;
 
 		try {
-			likes = new GetBookLikeInfoHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"
+			likes = new GetBookLikeWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"
 					+WS_OPERATION_LIST_LIKES+"/"+adderId+"/"+bookId).get();
 		} catch (InterruptedException e2) {
 			e2.printStackTrace();
