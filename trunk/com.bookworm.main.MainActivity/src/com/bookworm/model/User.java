@@ -2,6 +2,8 @@ package com.bookworm.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+
 public class User{
 
 	private Long userId;
@@ -12,6 +14,7 @@ public class User{
 	private Date creationDate;
 	private Date lastUpdateDate;
 	private Integer enabled;
+	private String activationToken;
 
 	public User() {
 	}
@@ -119,6 +122,14 @@ public class User{
 
 	public void setEnabled(Integer enabled) {
 		this.enabled = enabled;
+	}
+	
+	public String getactivationToken() {
+		return activationToken;
+	}
+
+	public void setactivationToken(String activationToken) {
+		this.activationToken = activationToken;
 	}
 
 }
