@@ -80,7 +80,7 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 
 					// comment icin action kaydi olustur
 					//TODO commenter userid will be replaced with 24 
-					Action addBookAction = new Action(ActionType.ADD_COMMENT, 24L); 
+					Action addBookAction = new Action(ActionType.ADD_COMMENT, 24L,comment.getCommentId()); 
 				    addBookAction = new AddActionHttpAsyncTask().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,addBookAction).get();
 
 					commentText.setText(getString(R.string.commentLabel));

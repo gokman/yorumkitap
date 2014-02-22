@@ -1,7 +1,6 @@
-package com.bookworm.ws.action;
+package com.bookworm.ws.followship;
 
 import java.io.InputStream;
-import java.util.Date;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -10,34 +9,32 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.util.Base64;
 
 import com.bookworm.common.Utils;
-import com.bookworm.model.Action;
-import com.bookworm.model.ActionType;
+import com.bookworm.model.Followship;
 import com.google.gson.Gson;
 
-public class AddActionHttpAsyncTask extends AsyncTask<Object, Void, Action> {
+public class AddFollowshipWS extends AsyncTask<Object, Void, Followship> {
 		
         @Override
-        protected Action doInBackground(Object... args) {
-        	return POST((String)args[0],(Action)args[1]);
+        protected Followship doInBackground(Object... args) {
+        	return POST((String)args[0],(Followship)args[1]);
         }
         
         @Override
-        protected void onPostExecute(Action result) {
+        protected void onPostExecute(Followship result) {
 
 					
        }
-    	public static Action POST(String url,Action action){
+    	public static Followship POST(String url,Followship followship){
 
-    	       InputStream inputStream = null;
+    	        InputStream inputStream = null;
+    	        Followship resultFollowship =null;
     	        String result = "";
-    	        Action actionReturned = null;
     	        try {
     	            // create HttpClient
     	            HttpClient httpclient = new DefaultHttpClient();
@@ -52,12 +49,11 @@ public class AddActionHttpAsyncTask extends AsyncTask<Object, Void, Action> {
     	            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
     	            post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
     	            
-    	            //TODO Aksiyon bilgileri set edilicek
                     JSONObject jsonum=new JSONObject();
-                    jsonum.put("actionType", action.getActionType());
-                    jsonum.put("userId", action.getUserId());
-                    jsonum.put("actionDate", action.getActionDate());
-                    jsonum.put("actionDetailId", action.getActionDetailId());
+                    jsonum.put("followerUserId", followship.getFollowerUserId());
+                    jsonum.put("followedUserId", followship.getFollowedUserId());
+                    jsonum.put("creationDate", followship.getCreationDate());
+                    
     	            StringEntity sampleEntity=new StringEntity(jsonum.toString());
                     sampleEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
@@ -72,18 +68,12 @@ public class AddActionHttpAsyncTask extends AsyncTask<Object, Void, Action> {
     	            else
     	                result = "Did not work!";
     	 
-    					JSONObject obj = new JSONObject(result);
-    					actionReturned = new Action();
-    					actionReturned.setActionId(obj.getLong("actionId"));
-    					actionReturned.setActionDate(new Date(obj.getLong("actionDate")));
-    					actionReturned.setActionType(ActionType.getActionFromString(obj.getString("actionType")));
-    					actionReturned.setUserId(obj.getLong("userId"));
-    					actionReturned.setActionDetailId(obj.getLong("actionDetailId"));
-    	            
     	        } catch (Exception e) {
     	            e.getLocalizedMessage();
     	        }
-    	        return actionReturned;
+    	        Gson gson = new Gson();
+    	        
+    	        return gson.fromJson(result, Followship.class);
         }
     	public void postExecuteForPost(String result){
             
