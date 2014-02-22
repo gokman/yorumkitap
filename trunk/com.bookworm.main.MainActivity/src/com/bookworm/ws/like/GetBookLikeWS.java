@@ -14,7 +14,7 @@ import android.os.AsyncTask;
 import com.bookworm.common.Utils;
 import com.bookworm.model.BookLike;
 
-public class GetBookLikeInfoHttpAsyncTask extends
+public class GetBookLikeWS extends
 		AsyncTask<String, Void, List<BookLike>> {
 
 	@Override

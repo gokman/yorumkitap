@@ -21,7 +21,7 @@ import com.bookworm.model.Action;
 import com.bookworm.model.ActionType;
 import com.google.gson.Gson;
 
-public class AddActionHttpAsyncTask extends AsyncTask<Object, Void, Action> {
+public class AddActionWS extends AsyncTask<Object, Void, Action> {
 		
         @Override
         protected Action doInBackground(Object... args) {
