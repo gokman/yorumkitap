@@ -2,8 +2,6 @@ package com.bookworm.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-
 public class User{
 
 	private Long userId;
