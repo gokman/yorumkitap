@@ -1,5 +1,9 @@
 package com.bookworm.main;
 
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_USER;
+import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_REGISTER;
+
 import java.util.concurrent.ExecutionException;
 
 import android.content.Intent;
@@ -7,7 +11,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -93,7 +96,7 @@ public class RegisterActivity extends ActivityBase {
 								             new java.sql.Date(ApplicationConstants.dateFormat.getCalendar().getTime().getTime()),
 								             0);		
 		
-						result=new RegisterWS().execute("http://10.0.2.2:8080/booklet-ws/services/user/register",user).get();
+						result=new RegisterWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_REGISTER,user).get();
 							
 						}catch (InterruptedException e) {
 							e.printStackTrace();

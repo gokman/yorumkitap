@@ -1,10 +1,6 @@
 package com.bookworm.main;
 
-import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
-import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_HASHTAG;
-import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
-import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST;
-import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_BY_TEXT;
+import static com.bookworm.common.ApplicationConstants.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,25 +20,19 @@ import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.ImageLoader;
-import com.bookworm.common.SelectDataTask;
 import com.bookworm.model.Book;
 import com.bookworm.model.Hashtag;
+import com.bookworm.model.User;
 import com.bookworm.util.ApplicationUtil;
 import com.bookworm.util.SearchCriteria;
 import com.bookworm.ws.book.ListBooksWS;
 import com.bookworm.ws.hashtag.ListHashtagsWS;
-import com.netmera.mobile.NetmeraClient;
-import com.netmera.mobile.NetmeraContent;
-import com.netmera.mobile.NetmeraException;
-import com.netmera.mobile.NetmeraService;
-import com.netmera.mobile.NetmeraUser;
+import com.bookworm.ws.user.ListUsersWS;
 
 public class ExploreActivity extends ActivityBase implements OnClickListener{
 
 	
     public ImageLoader imageLoader;
-    
-    NetmeraUser user;
     
 	private Button btnExploreBooks;
 	private Button btnExploreUsers;
@@ -56,13 +46,6 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);        
 
-		NetmeraClient.init(this, apiKey);
-		try {
-			user = NetmeraUser.getCurrentUser();
-		} catch (NetmeraException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
         imageLoader=new ImageLoader(this.getApplicationContext());
         
 		btnExploreBooks = (Button)findViewById(R.id.exploreBooks);
@@ -76,22 +59,20 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 			
 			public void onClick(View v) {
 				String searchKey = searchText.getText().toString();
-				NetmeraService service = new NetmeraService(ApplicationConstants.user);
+
 				if(searchKey!=null && !searchKey.equals(ApplicationConstants.EMPTY_STRING)){
-					
-				if (searchKey.substring(0, 1).equals(
-						ApplicationConstants.AT_SIGN)) {
-					searchKey = searchKey.substring(1);
+					if (searchKey.substring(0, 1).equals(ApplicationConstants.AT_SIGN)){
+						searchKey = searchKey.substring(1);
+					}
 				}
-					
-					service.whereMatches(ApplicationConstants.user_username, ".*"+searchKey+".*");
-				}
-				service.setMax(ApplicationConstants.item_count_per_page_for_explore_page);
+				SearchCriteria sc = new SearchCriteria();
+				sc.setPageSize(item_count_per_page_for_explore_page);
+				sc.setUserName(searchKey);
 				try{
-					List<NetmeraContent> usersList = new SelectDataTask(ExploreActivity.this).execute(service).get();
+					List<User> usersList = new ListUsersWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_LIST+"/",sc).get();
 					makeAllInvisible();
 					//TODO user search 
-//					applyDataToTable(usersList,ApplicationConstants.user_username,ApplicationConstants.user_userProfile);
+					applyDataToTable(usersList,ApplicationConstants.user_userProfile);
 					
 					if(usersList.size()==0){
 						getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -133,7 +114,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 						}
 						
 						makeAllInvisible();
-						applyDataToTable(bookList,ApplicationConstants.book_name,ApplicationConstants.book_coverPhoto);
+						applyDataToTable(bookList,ApplicationConstants.book_coverPhoto);
 						if(bookList.size()==0){
 							getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -184,112 +165,117 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
     }
 
     
-    private void applyDataToTable(List <Book> dataList,String fieldName,String imageProperty){
+    private void applyDataToTable(List dataList,String imageProperty){
     	for(int k = 0 ; k < dataList.size() ; k++){
-			Book book= dataList.get(k);
 //			content.add(ApplicationConstants.generic_property, imageProperty);
-			
+			String textProperty = EMPTY_STRING;
+			if(dataList.get(k) instanceof Book){
+				textProperty = ((Book)dataList.get(k)).getName();
+			}else if(dataList.get(k) instanceof User){
+				textProperty = ((User)dataList.get(k)).getUserName();
+			}
+
 			switch (k) {
 			case 0:
 				exp_1_1.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_1_1);
 				text_1_1.setVisibility(View.VISIBLE);
-				text_1_1.setText(book.getName());
+				text_1_1.setText(textProperty);
 				break;
 			case 1:
 				exp_1_2.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_1_2);					
 				text_1_2.setVisibility(View.VISIBLE);
-				text_1_2.setText(book.getName());
+				text_1_2.setText(textProperty);
 				break;
 
 			case 2:
 				exp_1_3.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_1_3);
 				text_1_3.setVisibility(View.VISIBLE);
-				text_1_3.setText(book.getName());
+				text_1_3.setText(textProperty);
 				break;
 
 			case 3:
 				exp_2_1.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_2_1);
 				text_2_1.setVisibility(View.VISIBLE);
-				text_2_1.setText(book.getName());
+				text_2_1.setText(textProperty);
 				break;
 
 			case 4:
 				exp_2_2.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_2_2);
 				text_2_2.setVisibility(View.VISIBLE);
-				text_2_2.setText(book.getName());
+				text_2_2.setText(textProperty);
 				break;
 
 			case 5:
 				exp_2_3.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_2_3);
 				text_2_3.setVisibility(View.VISIBLE);
-				text_2_3.setText(book.getName());
+				text_2_3.setText(textProperty);
 				break;
 
 			case 6:
 				exp_3_1.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_3_1);
 				text_3_1.setVisibility(View.VISIBLE);
-				text_3_1.setText(book.getName());
+				text_3_1.setText(textProperty);
 				break;
 
 			case 7:
 				exp_3_2.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_3_2);
 				text_3_2.setVisibility(View.VISIBLE);
-				text_3_2.setText(book.getName());
+				text_3_2.setText(textProperty);
 				break;
 
 			case 8:
 				exp_3_3.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_3_3);
 				text_3_3.setVisibility(View.VISIBLE);
-				text_3_3.setText(book.getName());
+				text_3_3.setText(textProperty);
 				break;
 			case 9:
 				exp_4_1.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_4_1);
 				text_4_1.setVisibility(View.VISIBLE);
-				text_4_1.setText(book.getName());
+				text_4_1.setText(textProperty);
 				break;
 
 			case 10:
 				exp_4_2.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_4_2);
 				text_4_2.setVisibility(View.VISIBLE);
-				text_4_2.setText(book.getName());
+				text_4_2.setText(textProperty);
 				break;
 
 			case 11:
 				exp_4_3.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_4_3);
 				text_4_3.setVisibility(View.VISIBLE);
-				text_4_3.setText(book.getName());
+				text_4_3.setText(textProperty);
 				break;
 			case 12:
 				exp_5_1.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_5_1);
 				text_5_1.setVisibility(View.VISIBLE);
-				text_5_1.setText(book.getName());
+				text_5_1.setText(textProperty);
 				break;
 
 			case 13:
 				exp_5_2.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_5_2);
 				text_5_2.setVisibility(View.VISIBLE);
-				text_5_2.setText(book.getName());
+				text_5_2.setText(textProperty);
 				break;
 
 			case 14:
 				exp_5_3.setVisibility(View.VISIBLE);
 //				imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), exp_5_3);
 				text_5_3.setVisibility(View.VISIBLE);
-				text_5_3.setText(book.getName());
+				text_5_3.setText(textProperty);
 				break;
 
 			default:
