@@ -171,6 +171,8 @@ public class ApplicationConstants {
 	public static final String WS_OPERATION_LIST_LIKES		="LIST_LIKES";
 	public static final String WS_OPERATION_LIST_COMMENTS	="LIST_COMMENTS";
 	public static final String WS_OPERATION_LIST_BY_TEXT	="LIST_BY_TEXT";
+	public static final String WS_OPERATION_GET_FOLLOWINGS	="GET_FOLLOWING_LIST";
+	public static final String WS_OPERATION_GET_FOLLOWERS	="GET_FOLLOWER_LIST";
 	
 	public static final String WS_OPERATION_SAVE			="SAVE";
 	public static final String WS_OPERATION_UPDATE			="UPDATE";
