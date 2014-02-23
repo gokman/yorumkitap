@@ -1,11 +1,6 @@
 package com.bookworm.main;
 
-import static com.bookworm.common.ApplicationConstants.EMPTY_STRING;
-import static com.bookworm.common.ApplicationConstants.password;
-import static com.bookworm.common.ApplicationConstants.sharedPrefName;
-import static com.bookworm.common.ApplicationConstants.unregistered_password;
-import static com.bookworm.common.ApplicationConstants.unregistered_username;
-import static com.bookworm.common.ApplicationConstants.username;
+import static com.bookworm.common.ApplicationConstants.*;
 
 import java.util.concurrent.ExecutionException;
 
@@ -113,7 +108,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 				try {
 					String credentials []= {_email.getText().toString(),_password.getText().toString()};
 					//new LoginUserDataTask().execute(credentials).get();
-					loginResult=new LoginWS().execute("http://10.0.2.2:8080/booklet-ws/services/user/login",
+					loginResult=new LoginWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_LOGIN,
 							_email.getText().toString(),_password.getText().toString()).get();
 				} catch (InterruptedException e) {
 					e.printStackTrace();

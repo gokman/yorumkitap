@@ -1,6 +1,11 @@
 package com.bookworm.util;
 
-import static com.bookworm.common.ApplicationConstants.*;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_COMMENT;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_FOLLOWSHIP;
+import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_GET_BY_ID;
+import static com.bookworm.common.ApplicationConstants.dateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bookworm.common.ApplicationConstants;
-import com.bookworm.common.DatabaseProcess;
 import com.bookworm.main.ActivityBase;
 import com.bookworm.model.Action;
 import com.bookworm.model.ActionType;
@@ -19,8 +23,6 @@ import com.bookworm.model.Hashtag;
 import com.bookworm.ws.book.GetBookInfoWS;
 import com.bookworm.ws.comment.GetCommentWS;
 import com.bookworm.ws.followship.GetFollowshipWS;
-import com.netmera.mobile.NetmeraContent;
-import com.netmera.mobile.NetmeraException;
 
 public class ApplicationUtil {
 
@@ -35,19 +37,6 @@ public class ApplicationUtil {
     }	
 
     
-	public static Date getMinDate(List<NetmeraContent> content) throws NetmeraException{
-		Date tempDate=new Date();
-		for(int i=0;i<content.size();i++){
-			if(i==0){
-				tempDate=content.get(i).getCreateDate();
-			}
-			if(content.get(i).getCreateDate().before(tempDate)){
-				tempDate=content.get(i).getCreateDate();
-			}
-		}
-		return tempDate;
-	}
-	
 	public static void addListToTimeLineListView(List<Action> actionList,ArrayList<HashMap<String, String>> actionListToView){
          try{
 			HashMap<String,String> tempMap=new HashMap<String, String>();

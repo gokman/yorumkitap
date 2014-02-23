@@ -6,6 +6,7 @@ public class SearchCriteria {
 	private String bookId;
 	private String bookLikerId;
 	private Long userId;
+	private String userName;
 	private List<Long> bookIdList;
 	private int pageSize;
 	private int pageNumber;
@@ -59,6 +60,12 @@ public class SearchCriteria {
 	}
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

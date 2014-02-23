@@ -1,13 +1,16 @@
 package com.bookworm.main;
 
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOKLIKE;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_COMMENT;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_HASHTAG;
 import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_ADD;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_GET_BY_ID;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_COMMENTS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_LIKES;
+import static com.bookworm.common.ApplicationConstants.book;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,25 +27,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bookworm.common.ApplicationConstants;
-import com.bookworm.common.DeletetDataTask;
-import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.common.GroupEntity;
 import com.bookworm.common.GroupEntity.GroupItemEntity;
 import com.bookworm.common.ImageLoader;
-import com.bookworm.common.InsertDataTask;
-import com.bookworm.common.SelectDataTask;
 import com.bookworm.model.Book;
 import com.bookworm.model.BookLike;
 import com.bookworm.model.Comment;
 import com.bookworm.model.Hashtag;
 import com.bookworm.ws.book.GetBookInfoWS;
+import com.bookworm.ws.booklike.AddBookLikeActionWS;
 import com.bookworm.ws.comment.ListCommentsWS;
 import com.bookworm.ws.hashtag.ListHashtagsWS;
 import com.bookworm.ws.like.GetBookLikeWS;
-import com.netmera.mobile.NetmeraContent;
-import com.netmera.mobile.NetmeraException;
-import com.netmera.mobile.NetmeraService;
-import com.netmera.mobile.NetmeraUser;
 
 public class BookDetailActivity extends ActivityBase implements OnClickListener {
 
@@ -94,36 +90,20 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		List<BookLike> likes = null;
 
 		try {
-			likes = new GetBookLikeWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"
-					+WS_OPERATION_LIST_LIKES+"/"+adderId+"/"+bookId).get();
-		} catch (InterruptedException e2) {
-			e2.printStackTrace();
-		} catch (ExecutionException e2) {
-			e2.printStackTrace();
-		}
-		try{
+			likes = new GetBookLikeWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST_LIKES+"/"+adderId+"/"+bookId).get();
 			if (likes !=null && likes.size() > 0){ 
 				BookLike like  = likes.get(0);
 				//TODO burda napiliyo anlamad�m. fyesildal
 				likeBook.setText(like.getBookId().toString());
 			}
-		}catch (Exception e) {
-
-		} 
-		
-		try {
-
-			addedBook  = new GetBookInfoWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"
-					+WS_OPERATION_GET_BY_ID+"/"+bookId).get();
-
+			addedBook  = new GetBookInfoWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_GET_BY_ID+"/"+bookId).get();
+	
 			if (addedBook !=null) {
-
 				bookTitle.setText(addedBook.getName());
 				bookWriter.setText(addedBook.getWriter());
 				bookDescription.setText(addedBook.getDescription());
-
-				List<Hashtag> tags = new ListHashtagsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_HASHTAG+"/"
-						+WS_OPERATION_LIST +"/"+bookId).get();
+	
+				List<Hashtag> tags = new ListHashtagsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_HASHTAG+"/"+WS_OPERATION_LIST +"/"+bookId).get();
 				String tagString = ApplicationConstants.EMPTY_STRING;
 				for(Hashtag tag : tags){
 					tagString += ApplicationConstants.SPACE + tag.getTag();
@@ -131,34 +111,31 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 				bookTags.setText(tagString);
 				userName.setText("f2");
 				//TODO current user
-				currentUser = NetmeraUser.getCurrentUser().getEmail().toString();
 				profileLayout.setOnClickListener(new View.OnClickListener() {
-					
 					public void onClick(View v) {
-
 						 Intent profileIntent = new Intent(v.getContext(),ProfileActivity.class);
 						 profileIntent.putExtra(ApplicationConstants.userEmailParam,addedBook.getAdderId());
 						 startActivity(profileIntent);
 						
 					}
 				});
-//				 bookCover.setImageBitmap(bitmap);
-
-				NetmeraService userService = new NetmeraService(ApplicationConstants.user);
-				userService.whereEqual(ApplicationConstants.user_email, "f2@f2.com");
-				List<NetmeraContent> usersList = new SelectDataTask(BookDetailActivity.this).execute(userService).get();
-				NetmeraContent user = usersList.get(0);
-				user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
-				profilePhotoUrl  = new GetNetmerMediaTask().execute(user).get();
+	//				 bookCover.setImageBitmap(bitmap);
+	
+	//			NetmeraService userService = new NetmeraService(ApplicationConstants.user);
+	//			userService.whereEqual(ApplicationConstants.user_email, "f2@f2.com");
+	//			List<NetmeraContent> usersList = new SelectDataTask(BookDetailActivity.this).execute(userService).get();
+	//			NetmeraContent user = usersList.get(0);
+	//			user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
+	//			profilePhotoUrl  = new GetNetmerMediaTask().execute(user).get();
 				
 				List<Comment> comments = new ListCommentsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"
 						+WS_OPERATION_LIST_COMMENTS+"/"+bookId).get();
-
+	
 				imageLoader.DisplayImage(coverPhotoUrl, bookCover);
 				imageLoader.DisplayImage(profilePhotoUrl, profileImage);
-
+	
 				prepareResource(comments);
-//				initComments();
+	//				initComments();
 				
 				commentImage.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
@@ -174,33 +151,23 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 					public void onClick(View v) {
 						//TODO like event
 						
+						
 					}
 				});
 				
 				
 				likeBook.setOnClickListener(new View.OnClickListener() {
-
+	
 					public void onClick(View v) {
-						
-						
+	
 						if (likeBook.getText().toString().equals("Be�en")) {
 							likeBook.setText("Be�enmekten Vazge�", null);		
-						
-							try {
-							String	bookLikerId = NetmeraUser.getCurrentUser().getEmail();
-
-							NetmeraContent bookLike = new NetmeraContent(ApplicationConstants.bookLike);
-						    bookLike.add(ApplicationConstants.bookLike_id, "1".toString());
-						    bookLike.add(ApplicationConstants.bookLike_r_id, bookLikerId);
-						    bookLike.add(ApplicationConstants.bookLike_bookID, bookTitle.getText().toString());
-						    bookLike.add(ApplicationConstants.bookLike_date, new Date());
-						   
-						    
-					    	new InsertDataTask().execute(bookLike).get();
-					    	
-							} catch (NetmeraException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+							BookLike  bookLike = new BookLike();
+							bookLike.setBookLikeDate(new Date());
+						    bookLike.setBookId(addedBook.getBookId());
+						    bookLike.setBookLikerId(1L);
+						    try {
+								bookLike = new AddBookLikeActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOKLIKE+"/"+WS_OPERATION_ADD,book).get();
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -208,46 +175,21 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-						
 						}else{
-							
-							try {
-								String	bookLikerId = NetmeraUser.getCurrentUser().getEmail();
-								NetmeraContent bookLikeDelete = new NetmeraContent(ApplicationConstants.bookLike);
-								bookLikeDelete.add(ApplicationConstants.bookLike_r_id, bookLikerId);								
-								
-								new DeletetDataTask().execute(bookLikeDelete).get();
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (ExecutionException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							
-								catch (NetmeraException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							
-							
+							//TODO unlike
 						}
 					}
 				});
-
+	
 			}
-
-			setNavigationButtons();
-			
-		} catch (NetmeraException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	
+				setNavigationButtons();
+		} catch (InterruptedException e2) {
+			e2.printStackTrace();
+		} catch (ExecutionException e2) {
+			e2.printStackTrace();
 		}
+			
 
 	}
 
