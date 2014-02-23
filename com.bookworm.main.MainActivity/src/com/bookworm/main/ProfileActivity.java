@@ -1,5 +1,7 @@
 package com.bookworm.main;
 
+import static com.bookworm.common.ApplicationConstants.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -35,7 +37,13 @@ import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.common.ImageLoader;
 import com.bookworm.common.InsertDataTask;
 import com.bookworm.common.SelectDataTask;
+import com.bookworm.model.Book;
+import com.bookworm.model.Followship;
+import com.bookworm.model.User;
 import com.bookworm.util.ApplicationUtil;
+import com.bookworm.util.SearchCriteria;
+import com.bookworm.ws.book.ListBooksWS;
+import com.bookworm.ws.followship.GetFollowshipWS;
 import com.netmera.mobile.NetmeraClient;
 import com.netmera.mobile.NetmeraContent;
 import com.netmera.mobile.NetmeraException;
@@ -106,21 +114,40 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 	        
 			getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);        
 	    	NetmeraClient.init(this, apiKey);
+	    	//TODO get Current User
+	    	long mss = 1;//getCurrentUser();
+	    	SearchCriteria sc = new SearchCriteria();
+	    	sc.setUserId(mss);
 	    	
-	    	
+	    	List <Book> bookList =  (List<Book>) new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST,sc).get();
+	    	Long addedBookCount = (long)bookList.size();
+	    
+	    	/* Yukarýdaki Satýrlar eklendi.
+	    	 * Current user bulunmasý olayýndan sonra düzenlenmesi gerekecek.
 	    	NetmeraService servicer = new NetmeraService(ApplicationConstants.book);
 	    	servicer.whereEqual(ApplicationConstants.book_adderId, userEmail);
 			Long addedBookCount = new CountDataTask().execute(servicer).get();
-			
+			*/
+	    	@SuppressWarnings("unchecked")
+			List <User> followingsList = (List<User>) new GetFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_GET_FOLLOWINGS+"/"+mss).get();
+	    	Long followingsCount = (long)followingsList.size();
+	    	
+	    	/*
 			servicer = new NetmeraService(ApplicationConstants.followship);
 			servicer.whereEqual(ApplicationConstants.followship_user_id,userEmail);
 			Long followingsCount = new CountDataTask().execute(servicer).get();
-			
+			*/
+	    	@SuppressWarnings("unchecked")
+			List <User> followerList = (List<User>) new GetFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_GET_FOLLOWERS+"/"+mss).get();
+	    	Long followersCount = (long)followerList.size();
+	    	
+	    	/*
 			servicer = new NetmeraService(ApplicationConstants.followship);
 			servicer.whereEqual(ApplicationConstants.followship_follows,userEmail);
 			Long followersCount = new CountDataTask().execute(servicer).get();			
-			
-			servicer = new NetmeraService(ApplicationConstants.user);
+			*/
+	    	/*-------------AÞAÐIDAKÝ BÖLÜM NE YAPILACAK?------------------------------*/
+	    	NetmeraService servicer = new NetmeraService(ApplicationConstants.user);
 			servicer.whereEqual(ApplicationConstants.user_email,userEmail);
 			List<NetmeraContent> usersList = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
 			NetmeraContent user = usersList.get(0);
