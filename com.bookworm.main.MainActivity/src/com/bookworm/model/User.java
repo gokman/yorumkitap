@@ -2,6 +2,7 @@ package com.bookworm.model;
 
 import java.util.Date;
 
+
 public class User{
 
 	private Long userId;
@@ -21,8 +22,7 @@ public class User{
 		this.userId = id;
 	}
 	
-	public User(String userName,String userEmail,String password,
-			     Integer enabled){
+	public User(String userName,String userEmail,String password,Integer enabled){
 		this.userName=userName;
 		this.userEmail=userEmail;
 		this.password=password;
@@ -122,11 +122,11 @@ public class User{
 		this.enabled = enabled;
 	}
 	
-	public String getactivationToken() {
+	public String getActivationToken() {
 		return activationToken;
 	}
 
-	public void setactivationToken(String activationToken) {
+	public void setActivationToken(String activationToken) {
 		this.activationToken = activationToken;
 	}
 
