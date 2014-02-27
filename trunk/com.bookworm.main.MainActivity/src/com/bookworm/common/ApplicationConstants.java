@@ -34,6 +34,7 @@ public class ApplicationConstants {
 	public static final String BOOKLET_ITEM_BOOKLIKE= "BookLike";
 	public static final String BOOKLET_ITEM_COMMENT = "Comment";
 	public static final String BOOKLET_ITEM_HASHTAG = "Hashtag";
+	public static final String BOOKLET_ITEM_USER = "user";
 	public static final String BOOKLET_ITEM_FOLLOWSHIP = "Followship";
 	public static final String followship = "Followship";
 	public static final String netmera_user = "NetmeraUser";
@@ -173,7 +174,8 @@ public class ApplicationConstants {
 	public static final String WS_OPERATION_LIST_BY_TEXT	="LIST_BY_TEXT";
 	public static final String WS_OPERATION_GET_FOLLOWINGS	="GET_FOLLOWING_LIST";
 	public static final String WS_OPERATION_GET_FOLLOWERS	="GET_FOLLOWER_LIST";
-	
+	public static final String WS_OPERATION_REGISTER = "register";
+	public static final String WS_OPERATION_LOGIN = "login";
 	public static final String WS_OPERATION_SAVE			="SAVE";
 	public static final String WS_OPERATION_UPDATE			="UPDATE";
 	public static final String WS_OPERATION_DELETE			="DELETE";
