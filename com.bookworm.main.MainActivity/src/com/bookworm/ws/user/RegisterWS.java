@@ -54,10 +54,9 @@ public class RegisterWS extends AsyncTask<Object, Void, String> {
                     jsonum.put("userEmail", user.getUserEmail());
                     jsonum.put("password", user.getPassword());
                    // jsonum.put("about", user.getAbout());
-                    jsonum.put("creationDate", user.getCreationDate());
-    	            jsonum.put("lastUpdateDate", user.getLastUpdateDate());
+                   // jsonum.put("creationDate", user.getCreationDate());
+    	           // jsonum.put("lastUpdateDate", user.getLastUpdateDate());
     	            jsonum.put("enabled", user.getEnabled());
-    	       
 
     	            StringEntity sampleEntity=new StringEntity(jsonum.toString());
                     sampleEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
