@@ -10,7 +10,6 @@ import static com.bookworm.common.ApplicationConstants.WS_OPERATION_GET_BY_ID;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_COMMENTS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_LIKES;
-import static com.bookworm.common.ApplicationConstants.book;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -167,7 +166,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 						    bookLike.setBookId(addedBook.getBookId());
 						    bookLike.setBookLikerId(1L);
 						    try {
-								bookLike = new AddBookLikeActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOKLIKE+"/"+WS_OPERATION_ADD,book).get();
+								bookLike = new AddBookLikeActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOKLIKE+"/"+WS_OPERATION_ADD,bookLike).get();
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

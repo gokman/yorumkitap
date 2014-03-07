@@ -27,25 +27,14 @@ public class ApplicationConstants {
 	public static final int item_count_per_page_for_timeline_page = 1;
 	
 	//Tables
-	public static final String user	= "User";
-	public static final String book	= "Book";
-	public static final String BOOKLET_ITEM_ACTION	= "Action";
-	public static final String BOOKLET_ITEM_BOOK	= "Book";
-	public static final String BOOKLET_ITEM_BOOKLIKE= "BookLike";
-	public static final String BOOKLET_ITEM_COMMENT = "Comment";
-	public static final String BOOKLET_ITEM_HASHTAG = "Hashtag";
-	public static final String BOOKLET_ITEM_USER = "user";
-	public static final String BOOKLET_ITEM_FOLLOWSHIP = "Followship";
-	public static final String followship = "Followship";
-	public static final String netmera_user = "NetmeraUser";
-	public static final String hashtable ="HashTable";
-	public static final String action="Action";
-	public static final String bookLike = "BookLike";
+	public static final String BOOKLET_ITEM_ACTION		= "Action";
+	public static final String BOOKLET_ITEM_BOOK		= "Book";
+	public static final String BOOKLET_ITEM_BOOKLIKE	= "BookLike";
+	public static final String BOOKLET_ITEM_COMMENT 	= "Comment";
+	public static final String BOOKLET_ITEM_HASHTAG 	= "Hashtag";
+	public static final String BOOKLET_ITEM_USER 		= "User";
+	public static final String BOOKLET_ITEM_FOLLOWSHIP 	= "Followship";
 	
-	
-	//Generic object properties
-	public static final String generic_property ="getter_prop";
-	//Fields By tables
 	//Book
 	public static final String book_name = "bookName";
 	public static final String book_desc = "desc";
@@ -75,10 +64,6 @@ public class ApplicationConstants {
 	public static final String followship_follows ="follows";
 	
 	
-	
-	//NetmeraUser
-	public static final String netmera_user_email="email";
-	public static final String netmera_user_username="username";
 	
 	//User
 	public static final String user_userProfile ="profilePhoto";
@@ -157,15 +142,13 @@ public class ApplicationConstants {
 	
 	public static final String CREATE_DATE="CREATE_DATE";
 	
-	//zaman t�nelinde listelenen elemanlarda bulunan tarih b�l�m�n�n format�n� tutar
 	public final static SimpleDateFormat dateFormat=new SimpleDateFormat("hh:mm dd-MM-yyyy");
 	
 	//zaman tunelindeki sonraki dugmesinin degerini tutar
 	public static int timelineListStatus=1;
-	//zaman tunelinde gosterilen elemanların en geçmiş tarihli olan değeri tutar
 	public static Date timelineLastDate=dateFormat.getCalendar().getTime();
 
-	public static final String WS_ENDPOINT_ADRESS = "http://10.0.2.2:8080/booklet-ws/services";
+	public static final String WS_ENDPOINT_ADRESS = "http://192.168.2.148:8080/booklet-ws/services";
 	public static final String WS_OPERATION_GET_BY_ID		="GET_BY_ID";
 	public static final String WS_OPERATION_ADD				="ADD";
 	public static final String WS_OPERATION_LIST			="LIST";
@@ -174,8 +157,8 @@ public class ApplicationConstants {
 	public static final String WS_OPERATION_LIST_BY_TEXT	="LIST_BY_TEXT";
 	public static final String WS_OPERATION_GET_FOLLOWINGS	="GET_FOLLOWING_LIST";
 	public static final String WS_OPERATION_GET_FOLLOWERS	="GET_FOLLOWER_LIST";
-	public static final String WS_OPERATION_REGISTER = "register";
-	public static final String WS_OPERATION_LOGIN = "login";
+	public static final String WS_OPERATION_REGISTER 		="REGISTER";
+	public static final String WS_OPERATION_LOGIN 			="LOGIN";
 	public static final String WS_OPERATION_SAVE			="SAVE";
 	public static final String WS_OPERATION_UPDATE			="UPDATE";
 	public static final String WS_OPERATION_DELETE			="DELETE";
