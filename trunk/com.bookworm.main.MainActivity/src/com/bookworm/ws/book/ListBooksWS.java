@@ -51,7 +51,7 @@ public class ListBooksWS extends
             post.setHeader("Content-Type", "application/json");
             
             //credentials
-            String credentials = "gokman" + ":" + "kocaman";  
+            String credentials = "gokhankcmn@gmail.com" + ":" + "12345678";  
             String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
             post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
             
