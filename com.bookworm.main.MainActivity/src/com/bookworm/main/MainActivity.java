@@ -19,7 +19,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.LazyAdapter;
 import com.bookworm.model.Book;
 import com.bookworm.util.ApplicationUtil;
@@ -47,6 +49,8 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.window_title);
 
+		
+		
 		bookListNextButton=(TextView)findViewById(R.id.mainBookListNext_Button);
 
 		SearchCriteria sc = new SearchCriteria();
