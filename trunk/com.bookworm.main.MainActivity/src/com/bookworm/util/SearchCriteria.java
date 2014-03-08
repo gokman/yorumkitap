@@ -12,6 +12,8 @@ public class SearchCriteria {
 	private int pageNumber;
 	private String orderByCrit;
 	private String orderByDrc;
+	private Long followerId;
+	private Long followingId;
 	
 	public String getBookId() {
 		return bookId;
@@ -66,6 +68,18 @@ public class SearchCriteria {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public Long getFollowerId() {
+		return followerId;
+	}
+	public void setFollowerId(Long followerId) {
+		this.followerId = followerId;
+	}
+	public Long getFollowingId() {
+		return followingId;
+	}
+	public void setFollowingId(Long followingId) {
+		this.followingId = followingId;
 	}
 	
 	
