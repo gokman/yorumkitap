@@ -148,8 +148,9 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 					SharedPreferences.Editor editit = SP.edit();
 					editit.clear();
 					//email ve kullanici adi kaydedilir
-					ApplicationConstants.signed_in_email=loginResult.substring(loginResult.indexOf(":")+1, loginResult.lastIndexOf(":"));
-					ApplicationConstants.signed_in_username=loginResult.substring(loginResult.lastIndexOf(":")+1);
+					ApplicationConstants.signed_in_email=loginResult.substring(loginResult.indexOf(":")+1,loginResult.indexOf(":",loginResult.indexOf(":")+1));
+					ApplicationConstants.signed_in_username=loginResult.substring(loginResult.indexOf(":",loginResult.indexOf(":")+1)+1,loginResult.lastIndexOf(":"));
+					ApplicationConstants.signed_in_userid=Long.parseLong(loginResult.substring(loginResult.lastIndexOf(":")+1));
 					
 					Intent mainPageIntent = new Intent(getApplicationContext(),
 							MainActivity.class);
