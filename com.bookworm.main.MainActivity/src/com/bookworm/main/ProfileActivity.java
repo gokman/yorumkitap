@@ -2,6 +2,7 @@ package com.bookworm.main;
 
 import static com.bookworm.common.ApplicationConstants.*;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -31,12 +32,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
-import com.bookworm.common.CountDataTask;
-import com.bookworm.common.DeletetDataTask;
-import com.bookworm.common.GetNetmerMediaTask;
+//import com.bookworm.common.CountDataTask;
+//import com.bookworm.common.DeletetDataTask;
+//import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.common.ImageLoader;
-import com.bookworm.common.InsertDataTask;
-import com.bookworm.common.SelectDataTask;
+//import com.bookworm.common.InsertDataTask;
+//import com.bookworm.common.SelectDataTask;
 import com.bookworm.model.Book;
 import com.bookworm.model.Followship;
 import com.bookworm.model.User;
@@ -44,12 +45,12 @@ import com.bookworm.util.ApplicationUtil;
 import com.bookworm.util.SearchCriteria;
 import com.bookworm.ws.book.ListBooksWS;
 import com.bookworm.ws.followship.GetFollowshipWS;
-import com.netmera.mobile.NetmeraClient;
-import com.netmera.mobile.NetmeraContent;
-import com.netmera.mobile.NetmeraException;
-import com.netmera.mobile.NetmeraMedia;
-import com.netmera.mobile.NetmeraService;
-import com.netmera.mobile.NetmeraUser;
+//import com.netmera.mobile.NetmeraClient;
+//import com.netmera.mobile.NetmeraContent;
+//import com.netmera.mobile.NetmeraException;
+//import com.netmera.mobile.NetmeraMedia;
+//import com.netmera.mobile.NetmeraService;
+//import com.netmera.mobile.NetmeraUser;
 
 public class ProfileActivity extends ActivityBase implements OnClickListener{
 
@@ -64,22 +65,21 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 	private ImageView imgProfileImage;
 	private Button btnAddedBooks;
 	private Button btnCommentedBooks;
-	private List<NetmeraContent> commentedBooks;
-	private List<NetmeraContent> followersTransactionList;
-	private List<NetmeraContent> followingTransactionList;
-	private List<NetmeraContent> followersList;
-	private List<NetmeraContent> booksAddedByUser;
-	private List<NetmeraContent> followedUsers; 
-	private List<NetmeraContent> followingUsers;
-	private ImageView statusView;
+//	private List<NetmeraContent> commentedBooks;
+//	private List<NetmeraContent> followersTransactionList;
+//	private List<NetmeraContent> followingTransactionList;
+//	private List<NetmeraContent> followersList;
+//	private List<NetmeraContent> booksAddedByUser;
+//	private List<NetmeraContent> followedUsers; 
+//	private List<NetmeraContent> followingUsers;
+//	private ImageView statusView;
 
 	private Long followshipStatus; 
 	public ImageLoader imageLoader;
 	
-	    /** Called when the activity is first created. */
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
-
+/*
 	        super.onCreate(savedInstanceState);
 	        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 	        setContentView(R.layout.profile_page);
@@ -122,31 +122,31 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 	    	List <Book> bookList =  (List<Book>) new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST,sc).get();
 	    	Long addedBookCount = (long)bookList.size();
 	    
-	    	/* Yukarýdaki Satýrlar eklendi.
-	    	 * Current user bulunmasý olayýndan sonra düzenlenmesi gerekecek.
-	    	NetmeraService servicer = new NetmeraService(ApplicationConstants.book);
-	    	servicer.whereEqual(ApplicationConstants.book_adderId, userEmail);
-			Long addedBookCount = new CountDataTask().execute(servicer).get();
-			*/
+	    	// Yukarï¿½daki Satï¿½rlar eklendi.
+	    	 // Current user bulunmasï¿½ olayï¿½ndan sonra dï¿½zenlenmesi gerekecek.
+	    	//NetmeraService servicer = new NetmeraService(ApplicationConstants.book);
+	    	//servicer.whereEqual(ApplicationConstants.book_adderId, userEmail);
+			//Long addedBookCount = new CountDataTask().execute(servicer).get();
+			//
 	    	@SuppressWarnings("unchecked")
 			List <User> followingsList = (List<User>) new GetFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_GET_FOLLOWINGS+"/"+mss).get();
 	    	Long followingsCount = (long)followingsList.size();
 	    	
-	    	/*
-			servicer = new NetmeraService(ApplicationConstants.followship);
-			servicer.whereEqual(ApplicationConstants.followship_user_id,userEmail);
-			Long followingsCount = new CountDataTask().execute(servicer).get();
-			*/
+	    	//
+			//servicer = new NetmeraService(ApplicationConstants.followship);
+			//servicer.whereEqual(ApplicationConstants.followship_user_id,userEmail);
+			//Long followingsCount = new CountDataTask().execute(servicer).get();
+			//
 	    	@SuppressWarnings("unchecked")
 			List <User> followerList = (List<User>) new GetFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_GET_FOLLOWERS+"/"+mss).get();
 	    	Long followersCount = (long)followerList.size();
 	    	
-	    	/*
-			servicer = new NetmeraService(ApplicationConstants.followship);
-			servicer.whereEqual(ApplicationConstants.followship_follows,userEmail);
-			Long followersCount = new CountDataTask().execute(servicer).get();			
-			*/
-	    	/*-------------AÞAÐIDAKÝ BÖLÜM NE YAPILACAK?------------------------------*/
+	    	//
+			//servicer = new NetmeraService(ApplicationConstants.followship);
+			//servicer.whereEqual(ApplicationConstants.followship_follows,userEmail);
+			//Long followersCount = new CountDataTask().execute(servicer).get();			
+			//
+	    	//-------------Aï¿½Aï¿½IDAKï¿½ Bï¿½Lï¿½M NE YAPILACAK?------------------------------
 	    	NetmeraService servicer = new NetmeraService(ApplicationConstants.user);
 			servicer.whereEqual(ApplicationConstants.user_email,userEmail);
 			List<NetmeraContent> usersList = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
@@ -327,9 +327,9 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 						followersTransactionList = new SelectDataTask(ProfileActivity.this).execute(followerListService).get();
 						String[] userEmailList = new String[5];//ApplicationUtil.convertObjectListToInputList(followersTransactionList,ApplicationConstants.followship_user_id);
 						
-						/*TODO 
-						 * profile image will be kept in User table unavailable in NetmeraUser.(todo)
-						 */
+						//TODO 
+						 // profile image will be kept in User table unavailable in NetmeraUser.(todo)
+						 
 						followerListService = new NetmeraService(ApplicationConstants.user);
 						followerListService.whereContainedIn(ApplicationConstants.netmera_user_email, Arrays.asList(userEmailList));
 						followersList = new SelectDataTask(ProfileActivity.this).execute(followerListService).get();
@@ -355,9 +355,9 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 						followingTransactionList = new SelectDataTask(ProfileActivity.this).execute(followingListService).get();
 						String[] userEmailList = new String[5];//ApplicationUtil.convertObjectListToInputList(followingTransactionList, ApplicationConstants.followship_follows);
 
-						/*TODO 
-						 * profile image will be kept in User table unavailable in NetmeraUser.(todo)
-						 */
+						//TODO 
+						 // profile image will be kept in User table unavailable in NetmeraUser.(todo)
+						 
 						followingListService = new NetmeraService(ApplicationConstants.user);
 						followingListService.whereContainedIn(ApplicationConstants.netmera_user_email, Arrays.asList(userEmailList));
 						followingUsers = new SelectDataTask(ProfileActivity.this).execute(followingListService).get();
@@ -385,7 +385,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			setNavigationButtons();
+			setNavigationButtons();*/
 	    	
 	    }
 
@@ -410,7 +410,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 	    public void onClick(View v) {
 		}
 
-	    private void applyDataToTable(List <NetmeraContent> dataList,String fieldName,String imageProperty) throws NetmeraException{
+	   /* private void applyDataToTable(List <NetmeraContent> dataList,String fieldName,String imageProperty) throws NetmeraException{
 	    	try {
 	    	for(int k = 0 ; k < dataList.size() ; k++){
 				NetmeraContent content = dataList.get(k);
@@ -510,7 +510,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
 		@Override
 		protected void onActivityResult(int requestCode, int resultCode,
 				Intent intent) {

@@ -1,6 +1,7 @@
 package com.bookworm.main;
 
 import java.io.ByteArrayOutputStream;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,17 +31,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
-import com.bookworm.common.DeletetDataTask;
-import com.bookworm.common.GetNetmerMediaTask;
+//import com.bookworm.common.DeletetDataTask;
+//import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.common.ImageLoader;
-import com.bookworm.common.InsertDataTask;
-import com.bookworm.common.SelectDataTask;
-import com.bookworm.common.UpdateDataTask;
-import com.netmera.mobile.NetmeraClient;
-import com.netmera.mobile.NetmeraContent;
-import com.netmera.mobile.NetmeraMedia;
-import com.netmera.mobile.NetmeraService;
-import com.netmera.mobile.util.HttpUtils;
+//import com.bookworm.common.InsertDataTask;
+//import com.bookworm.common.SelectDataTask;
+//import com.bookworm.common.UpdateDataTask;
+//import com.netmera.mobile.NetmeraClient;
+//import com.netmera.mobile.NetmeraContent;
+//import com.netmera.mobile.NetmeraMedia;
+//import com.netmera.mobile.NetmeraService;
+//import com.netmera.mobile.util.HttpUtils;
 
 public class ProfileEditActivity extends ActivityBase implements OnClickListener{
 
@@ -56,17 +57,18 @@ public class ProfileEditActivity extends ActivityBase implements OnClickListener
 	private Button btnUpdate;
     private static final int REQUEST_ID = 1;
     private static final int HALF = 2;
-    private NetmeraContent user;
+   // private NetmeraContent user;
     private Uri profilePhotoUri; 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	/*
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.profile_edit);
 
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);        
 
-		NetmeraClient.init(this, apiKey);
+		//NetmeraClient.init(this, apiKey);
 
 		imageLoader=new ImageLoader(this.getApplicationContext());
 
@@ -144,7 +146,7 @@ public class ProfileEditActivity extends ActivityBase implements OnClickListener
 				
 			}
 		});
-        
+        */
         
         /**
          * footer buttons
