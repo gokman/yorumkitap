@@ -1,8 +1,6 @@
 package com.bookworm.ws.booklike;
 
 import java.io.InputStream;
-import java.util.Date;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -19,19 +17,19 @@ import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.Utils;
 import com.bookworm.model.BookLike;
 
-public class AddBookLikeActionWS extends AsyncTask<Object, Void, BookLike> {
+public class DeleteBookLikeActionWS extends AsyncTask<Object, Void, String> {
 		
         @Override
-        protected BookLike doInBackground(Object... args) {
+        protected String doInBackground(Object... args) {
         	return POST((String)args[0],(BookLike)args[1]);
         }
         
         @Override
-        protected void onPostExecute(BookLike result) {
+        protected void onPostExecute(String result) {
 
 					
        }
-    	public static BookLike POST(String url,BookLike bookLike){
+    	public static String POST(String url,BookLike bookLike){
 
     	       InputStream inputStream = null;
     	        String result = "";
@@ -51,7 +49,7 @@ public class AddBookLikeActionWS extends AsyncTask<Object, Void, BookLike> {
     	            post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
     	            
     	            //TODO Aksiyon bilgileri set edilicek
-                    JSONObject jsonum=new JSONObject();
+    	            JSONObject jsonum=new JSONObject();
                     jsonum.put("bookId", bookLike.getBookId());
                     jsonum.put("bookLikeDate", bookLike.getBookLikeDate());
                     jsonum.put("bookLikerId", bookLike.getBookLikerId());
@@ -68,18 +66,11 @@ public class AddBookLikeActionWS extends AsyncTask<Object, Void, BookLike> {
     	                result = Utils.convertInputStreamToString(inputStream);
     	            else
     	                result = "Did not work!";
-    	 
-    					JSONObject obj = new JSONObject(result);
-    					bookLike = new BookLike();
-    					bookLike.setBookId(obj.getLong("bookId"));
-    					bookLike.setBookLikeDate(new Date(obj.getLong("bookLikeDate")));
-    					bookLike.setBookLikeId(obj.getLong("bookLikeId"));
-    					bookLike.setBookLikerId(obj.getLong("bookLikerId"));
     	            
     	        } catch (Exception e) {
     	            e.getLocalizedMessage();
     	        }
-    	        return bookLike;
+    	        return result;
         }
     	public void postExecuteForPost(String result){
             
