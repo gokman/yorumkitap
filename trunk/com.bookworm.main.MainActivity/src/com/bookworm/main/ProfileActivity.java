@@ -2,7 +2,6 @@ package com.bookworm.main;
 
 import static com.bookworm.common.ApplicationConstants.*;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -32,25 +31,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
-//import com.bookworm.common.CountDataTask;
-//import com.bookworm.common.DeletetDataTask;
-//import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.common.ImageLoader;
-//import com.bookworm.common.InsertDataTask;
-//import com.bookworm.common.SelectDataTask;
+import com.bookworm.model.Action;
+import com.bookworm.model.ActionType;
 import com.bookworm.model.Book;
 import com.bookworm.model.Followship;
 import com.bookworm.model.User;
 import com.bookworm.util.ApplicationUtil;
 import com.bookworm.util.SearchCriteria;
+import com.bookworm.ws.action.AddActionWS;
 import com.bookworm.ws.book.ListBooksWS;
+import com.bookworm.ws.followship.AddFollowshipWS;
+import com.bookworm.ws.followship.CheckFollowshipWS;
+import com.bookworm.ws.followship.DeleteFollowshipWS;
 import com.bookworm.ws.followship.GetFollowshipWS;
-//import com.netmera.mobile.NetmeraClient;
-//import com.netmera.mobile.NetmeraContent;
-//import com.netmera.mobile.NetmeraException;
-//import com.netmera.mobile.NetmeraMedia;
-//import com.netmera.mobile.NetmeraService;
-//import com.netmera.mobile.NetmeraUser;
+import com.bookworm.ws.user.ListUsersWS;
+
 
 public class ProfileActivity extends ActivityBase implements OnClickListener{
 
@@ -65,21 +61,16 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 	private ImageView imgProfileImage;
 	private Button btnAddedBooks;
 	private Button btnCommentedBooks;
-//	private List<NetmeraContent> commentedBooks;
-//	private List<NetmeraContent> followersTransactionList;
-//	private List<NetmeraContent> followingTransactionList;
-//	private List<NetmeraContent> followersList;
-//	private List<NetmeraContent> booksAddedByUser;
-//	private List<NetmeraContent> followedUsers; 
-//	private List<NetmeraContent> followingUsers;
-//	private ImageView statusView;
+	private ImageView statusView;
 
 	private Long followshipStatus; 
 	public ImageLoader imageLoader;
+	private Long mss;
 	
+	    /** Called when the activity is first created. */
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
-/*
+
 	        super.onCreate(savedInstanceState);
 	        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 	        setContentView(R.layout.profile_page);
@@ -106,59 +97,82 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 	        btnCommentedBooks = (Button)findViewById(R.id.commentedBooks);
 
 	        try {
-	        	currentUserEmail = NetmeraUser.getCurrentUser().getEmail();
+	        	currentUserEmail = signed_in_email;
 	        
 	        if(userEmail==null || userEmail.equals("")){
 	        	userEmail = currentUserEmail;
 	        }
 	        
 			getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);        
-	    	NetmeraClient.init(this, apiKey);
+	    	//NetmeraClient.init(this, apiKey);
 	    	//TODO get Current User
-	    	long mss = 1;//getCurrentUser();
-	    	SearchCriteria sc = new SearchCriteria();
-	    	sc.setUserId(mss);
 	    	
-	    	List <Book> bookList =  (List<Book>) new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST,sc).get();
+	    	SearchCriteria sc1 = new SearchCriteria();
+	    	sc1.setUserId(signed_in_userid);
+	    	
+	    	List <Book> bookList =  (List<Book>) new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST,sc1).get();
 	    	Long addedBookCount = (long)bookList.size();
 	    
-	    	// Yukarï¿½daki Satï¿½rlar eklendi.
-	    	 // Current user bulunmasï¿½ olayï¿½ndan sonra dï¿½zenlenmesi gerekecek.
-	    	//NetmeraService servicer = new NetmeraService(ApplicationConstants.book);
-	    	//servicer.whereEqual(ApplicationConstants.book_adderId, userEmail);
-			//Long addedBookCount = new CountDataTask().execute(servicer).get();
-			//
+	    	/* Yukarýdaki Satýrlar eklendi.
+	    	 * Current user bulunmasý olayýndan sonra düzenlenmesi gerekecek.
+	    	NetmeraService servicer = new NetmeraService(ApplicationConstants.book);
+	    	servicer.whereEqual(ApplicationConstants.book_adderId, userEmail);
+			Long addedBookCount = new CountDataTask().execute(servicer).get();
+			*/
 	    	@SuppressWarnings("unchecked")
 			List <User> followingsList = (List<User>) new GetFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_GET_FOLLOWINGS+"/"+mss).get();
 	    	Long followingsCount = (long)followingsList.size();
 	    	
-	    	//
-			//servicer = new NetmeraService(ApplicationConstants.followship);
-			//servicer.whereEqual(ApplicationConstants.followship_user_id,userEmail);
-			//Long followingsCount = new CountDataTask().execute(servicer).get();
-			//
+	    	/*
+			servicer = new NetmeraService(ApplicationConstants.followship);
+			servicer.whereEqual(ApplicationConstants.followship_user_id,userEmail);
+			Long followingsCount = new CountDataTask().execute(servicer).get();
+			*/
 	    	@SuppressWarnings("unchecked")
 			List <User> followerList = (List<User>) new GetFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_GET_FOLLOWERS+"/"+mss).get();
 	    	Long followersCount = (long)followerList.size();
 	    	
-	    	//
-			//servicer = new NetmeraService(ApplicationConstants.followship);
-			//servicer.whereEqual(ApplicationConstants.followship_follows,userEmail);
-			//Long followersCount = new CountDataTask().execute(servicer).get();			
-			//
-	    	//-------------Aï¿½Aï¿½IDAKï¿½ Bï¿½Lï¿½M NE YAPILACAK?------------------------------
+	    	/*
+			servicer = new NetmeraService(ApplicationConstants.followship);
+			servicer.whereEqual(ApplicationConstants.followship_follows,userEmail);
+			Long followersCount = new CountDataTask().execute(servicer).get();			
+			*/
+	    	/*-------------AÞAÐIDAKÝ BÖLÜM NE YAPILACAK?------------------------------*/
+	    	SearchCriteria sc = new SearchCriteria();
+	    	sc.setUserId(signed_in_userid);
+	    	List <User> usersList = (List<User>) new ListUsersWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_LIST,sc).get();
+	    	User user = usersList.get(0);
+	    	
+	    	/*
 	    	NetmeraService servicer = new NetmeraService(ApplicationConstants.user);
 			servicer.whereEqual(ApplicationConstants.user_email,userEmail);
 			List<NetmeraContent> usersList = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
 			NetmeraContent user = usersList.get(0);
-			String userProfileImageURL = new GetNetmerMediaTask().execute(user).get();
-			
+			*/
+	    	
+	    	/*TODO Adamýn profil fotosuna baþka bir ayar geçeceðiz. Dizin-Url çözümünü kullanabiliriz.*/
+			String userProfileImageURL = "OlaylarOlaylar.com";//getUserProfileImageUrl
+			/*TODO Adamýn profil fotosuna baþka bir ayar geçeceðiz. Dizin-Url çözümünü kullanabiliriz.*/
 			imageLoader.DisplayImage(userProfileImageURL,imgProfileImage);
 			
 	    	if(currentUserEmail.equals(userEmail)){
 	    		statusView.setImageResource(R.drawable.edit_icon);
 	    	}else{
-				servicer = new NetmeraService(ApplicationConstants.followship);
+	    		SearchCriteria scFollow = new SearchCriteria();
+	    		scFollow.setFollowerId(signed_in_userid);
+	    		//Bu ikincisinde profilinde olduðum kullanýcýnýn id sini vermem lazým.-MSS-
+	    		scFollow.setFollowingId(mss);
+
+	    		List <Followship> followshipList = (List<Followship>) new CheckFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_CHECK_FOLLOWSHIP,scFollow).get();
+				
+	    		if(followshipList.size()>0){
+	    			statusView.setImageResource(R.drawable.following);
+	    		}else{
+	    			statusView.setImageResource(R.drawable.follow);
+	    		}
+	    		
+	    		/*
+	    		servicer = new NetmeraService(ApplicationConstants.);
 				servicer.whereEqual(ApplicationConstants.followship_user_id,currentUserEmail);
 				servicer.whereEqual(ApplicationConstants.followship_follows,userEmail);
 				followshipStatus = new CountDataTask().execute(servicer).get();
@@ -167,6 +181,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 				}else{
 					statusView.setImageResource(R.drawable.follow);
 				}
+				*/
 	    		
 	    	}
 	    	statusView.setOnClickListener(new View.OnClickListener() {
@@ -177,18 +192,32 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 					 paramView.getContext().startActivity(bookDetailIntent);
 
 			    	}else{
+			    		SearchCriteria sc = new SearchCriteria();
+			    		sc.setFollowerId(signed_in_userid);
+			    		//Bu ikincisinde profilinde olduðum kullanýcýnýn id sini vermem lazým.-MSS-
+			    		sc.setFollowingId((long)3);
+
+			    		List <Followship> followshipList = (List<Followship>) new CheckFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_CHECK_FOLLOWSHIP,sc).get();
+			    		
+			    		followshipStatus = (long) followshipList.size();
+			    		/*
 						NetmeraService countService = new NetmeraService(ApplicationConstants.followship);
 						countService.whereEqual(ApplicationConstants.followship_user_id,currentUserEmail);
 						countService.whereEqual(ApplicationConstants.followship_follows,userEmail);
+						
 						try {
 							followshipStatus = new CountDataTask().execute(countService).get();
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
+						*/
 
 			    		if(followshipStatus > 0){ 						//Unfollow Action
 							try {
-								NetmeraService servicer = new NetmeraService(ApplicationConstants.followship);
+								
+								//aþaðýda ikinci parametreyi bu activity ye parametre olarak geçeceðiz.Oradan alýp kullanýrýz.
+								Followship followship = new DeleteFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_UNFOLLOW+"/"+signed_in_userid+"/"+mss).get();
+								/*NetmeraService servicer = new NetmeraService(ApplicationConstants.followship);
 								servicer.whereEqual(ApplicationConstants.followship_user_id, currentUserEmail);
 								servicer.whereEqual(ApplicationConstants.followship_follows, userEmail);
 								followedUsers = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
@@ -196,18 +225,28 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 									NetmeraContent content = followedUsers.get(k);
 									new DeletetDataTask().execute(content).get();
 								}
+								*/
+								//BU ALTTAKÝ ACTION SÝLME BÖLÜMÜ GÖKMAN ÝLE KONUÞULDU.AKSÝYON SÝLMENÝN GEREKSÝZ OLDUÐUNA KARAR
+								//VERÝLDÝ.DÝREK KODDAN KALDIRILDI.
 								//action sil
+								/*
 								NetmeraService servicerAction=new NetmeraService(ApplicationConstants.action);
 								servicerAction.whereEqual(ApplicationConstants.action_follower_id, currentUserEmail);
 								servicerAction.whereEqual(ApplicationConstants.action_followed_id, userEmail);
 								NetmeraContent contentAction=new SelectDataTask(ProfileActivity.this).execute(servicerAction).get().get(0);
 								new DeletetDataTask().execute(contentAction).get();
-								
+								*/
 								statusView.setImageResource(R.drawable.follow);	
-								
+								//Ýlgili profildeki takipçi sayýsýný güncelliyorum.Takibi býrakýnca adamýn takipçi sayýsý 1 azalýr.
+								@SuppressWarnings("unchecked")
+								List <User> followerList = (List<User>) new GetFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_GET_FOLLOWERS+"/"+mss).get();
+						    	Long followersCount = (long)followerList.size();
+						    	
+								/*
 								servicer = new NetmeraService(ApplicationConstants.followship);
 								servicer.whereEqual(ApplicationConstants.followship_follows,userEmail);
-								Long followersCount = new CountDataTask().execute(servicer).get();			
+								Long followersCount = new CountDataTask().execute(servicer).get();
+								*/			
 								txtFollowersCount.setText(followersCount.toString());
 								
 							} catch (Exception e) {
@@ -215,22 +254,43 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 							}
 						
 						}else{											//Follow Action
+							Followship followshipToAdd = new Followship();
+							followshipToAdd.setFollowerUserId(signed_in_userid);
+							//aþaðýda ikinci parametreyi bu activity ye parametre olarak geçeceðiz.Oradan alýp kullanýrýz.
+							followshipToAdd.setFollowedUserId((long)3);
+							Followship flw = new AddFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_ADD,followshipToAdd).get();
+							/*
 							NetmeraContent followship = new NetmeraContent(ApplicationConstants.followship);
+							*/
+							Action followAction = new Action(ActionType.FOLLOW, 24L,flw.getFollowshipId()); 
+							followAction = new AddActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,followAction).get();
+
+							/*
 							NetmeraContent action=new NetmeraContent(ApplicationConstants.action);
+							*/
 							try {
+								/*
 								followship.add(ApplicationConstants.followship_user_id,currentUserEmail);
 								followship.add(ApplicationConstants.followship_follows,userEmail);
 								new InsertDataTask().execute(followship).get();
-								
+								Insert iþini yukarýda yaptýk*/
+								/*
 								action.add(ApplicationConstants.ACTION_TYPE, ApplicationConstants.ACTION_TYPE_FOLLOW);
 								action.add(ApplicationConstants.action_follower_id, currentUserEmail);
 								action.add(ApplicationConstants.action_followed_id, userEmail);
 								action.add(ApplicationConstants.ACTION_OWNER, NetmeraUser.getCurrentUser().getEmail());
 								new InsertDataTask().execute(action).get();
+								Action insert iþini de yukarýda hallettik.
+								*/
 
+						    	@SuppressWarnings("unchecked")
+								List <User> followerList = (List<User>) new GetFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_GET_FOLLOWERS+"/"+mss).get();
+						    	Long followersCount = (long)followerList.size();
+						    	/*
 								NetmeraService servicer = new NetmeraService(ApplicationConstants.followship);
 								servicer.whereEqual(ApplicationConstants.followship_follows,userEmail);
-								Long followersCount = new CountDataTask().execute(servicer).get();			
+								Long followersCount = new CountDataTask().execute(servicer).get();
+								*/			
 								txtFollowersCount.setText(followersCount.toString());
 								
 								statusView.setImageResource(R.drawable.following);	
@@ -327,9 +387,9 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 						followersTransactionList = new SelectDataTask(ProfileActivity.this).execute(followerListService).get();
 						String[] userEmailList = new String[5];//ApplicationUtil.convertObjectListToInputList(followersTransactionList,ApplicationConstants.followship_user_id);
 						
-						//TODO 
-						 // profile image will be kept in User table unavailable in NetmeraUser.(todo)
-						 
+						/*TODO 
+						 * profile image will be kept in User table unavailable in NetmeraUser.(todo)
+						 */
 						followerListService = new NetmeraService(ApplicationConstants.user);
 						followerListService.whereContainedIn(ApplicationConstants.netmera_user_email, Arrays.asList(userEmailList));
 						followersList = new SelectDataTask(ProfileActivity.this).execute(followerListService).get();
@@ -355,9 +415,9 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 						followingTransactionList = new SelectDataTask(ProfileActivity.this).execute(followingListService).get();
 						String[] userEmailList = new String[5];//ApplicationUtil.convertObjectListToInputList(followingTransactionList, ApplicationConstants.followship_follows);
 
-						//TODO 
-						 // profile image will be kept in User table unavailable in NetmeraUser.(todo)
-						 
+						/*TODO 
+						 * profile image will be kept in User table unavailable in NetmeraUser.(todo)
+						 */
 						followingListService = new NetmeraService(ApplicationConstants.user);
 						followingListService.whereContainedIn(ApplicationConstants.netmera_user_email, Arrays.asList(userEmailList));
 						followingUsers = new SelectDataTask(ProfileActivity.this).execute(followingListService).get();
@@ -385,7 +445,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			setNavigationButtons();*/
+			setNavigationButtons();
 	    	
 	    }
 
@@ -410,7 +470,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 	    public void onClick(View v) {
 		}
 
-	   /* private void applyDataToTable(List <NetmeraContent> dataList,String fieldName,String imageProperty) throws NetmeraException{
+	    private void applyDataToTable(List <NetmeraContent> dataList,String fieldName,String imageProperty) throws NetmeraException{
 	    	try {
 	    	for(int k = 0 ; k < dataList.size() ; k++){
 				NetmeraContent content = dataList.get(k);
@@ -510,7 +570,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}*/
+		}
 		@Override
 		protected void onActivityResult(int requestCode, int resultCode,
 				Intent intent) {
