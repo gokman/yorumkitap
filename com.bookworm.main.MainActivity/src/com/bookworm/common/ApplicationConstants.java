@@ -169,7 +169,7 @@ public class ApplicationConstants {
 	//giris yapan kullanici adi ve email
 	public static String signed_in_username="";
 	public static String signed_in_email="";
-	public static String signed_in_userid="";
+	public static long signed_in_userid="";
 	
 	
 }
