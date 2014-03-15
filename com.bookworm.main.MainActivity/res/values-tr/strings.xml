@@ -21,6 +21,8 @@
     <!-- BookDetail UI Component Details  -->
     <string name="bookDetailComment">Yorum</string>
     <string name="bookDetailAddComment">Yorum Ekle</string>
+    <string name="like">Beğen</string>
+    <string name="unlike">Beğenmekten Vazgeç</string>
     
     
     <!--  ExplorePage UI Component Details -->
@@ -98,5 +100,18 @@
 	<string name="comments">Yorumlar</string>
 	<string name="btnCommentAdd">Ekle</string>
 	<string name="commentLabel">Yorum Ekle</string>
+	
+	<!-- Send Email for Reset Password -->
+	<string name="explainEmailForResetPassword">Şifrenizi yenilemeniz için email adresinize bir şifre gönderilecek</string>
+	<string name="SendButton">Gönder</string>
+	
+    <!-- Reset Password Page -->
+	<string name="ResetButton">Yenile</string>
+	
+	<!-- hints for editTexts -->
+	<string name="hint_email">Email</string>
+    <string name="hint_reset_token">Sıfırlama Şifresi</string>
+	<string name="hint_new_password">Yeni Şifre</string>
+	<string name="hint_retype_new_password">Tekrar Yeni Şifre</string>
 	
 </resources>

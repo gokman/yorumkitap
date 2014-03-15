@@ -21,6 +21,8 @@
     <!-- BookDetail UI Component Details  -->
     <string name="bookDetailComment">Comment</string>
     <string name="bookDetailAddComment">Add Comment</string>
+    <string name="like">Like</string>
+    <string name="unlike">Unlike</string>
     
     
     <!--  ExplorePage UI Component Details -->
@@ -98,4 +100,18 @@
 	<string name="comments">Comments</string>
 	<string name="btnCommentAdd">Add</string>
 	<string name="commentLabel">Add Comment</string>	
+	
+	<!-- Send Email for Reset Password -->
+	<string name="explainEmailForResetPassword">A password reset token will send your email address</string>
+	<string name="SendButton">Send</string>
+	
+	<!-- Reset Password Page -->
+	<string name="ResetButton">Reset</string>
+	
+	<!-- hints for editTexts -->
+	<string name="hint_email">Email</string>
+	<string name="hint_reset_token">Reset Token</string>
+	<string name="hint_new_password">New Password</string>
+	<string name="hint_retype_new_password">Retype new password</string>
+	
 </resources>
