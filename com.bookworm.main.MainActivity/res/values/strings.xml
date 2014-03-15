@@ -21,7 +21,8 @@
     <!-- BookDetail UI Component Details  -->
     <string name="bookDetailComment">Yorum</string>
     <string name="bookDetailAddComment">Yorum Ekle</string>
-    
+    <string name="like">Like</string>
+    <string name="unlike">Unlike</string>
     
     <!--  ExplorePage UI Component Details -->
     <string name="explorePageSearch">Ara</string>
@@ -98,4 +99,18 @@
 	<string name="comments">Yorumlar</string>
 	<string name="btnCommentAdd">Ekle</string>
 	<string name="commentLabel">Yorum Ekle</string>	
+	
+	<!-- Send Email for Reset Password -->
+	<string name="explainEmailForResetPassword">A password reset token will send your email address</string>
+	<string name="SendButton">Send</string>
+	
+	<!-- Reset Password Page -->
+	<string name="ResetButton">Reset</string>
+	
+	<!-- hints for editTexts -->
+	<string name="hint_email">Email</string>
+	<string name="hint_reset_token">Reset Token</string>
+	<string name="hint_new_password">New Password</string>
+	<string name="hint_retype_new_password">Retype new password</string>
+	
 </resources>
