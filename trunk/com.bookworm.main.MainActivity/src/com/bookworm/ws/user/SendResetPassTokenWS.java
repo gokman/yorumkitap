@@ -18,11 +18,11 @@ import com.bookworm.model.User;
 
 import android.os.AsyncTask;
 
-public class RegisterWS extends AsyncTask<Object, Void, String> {
+public class SendResetPassTokenWS extends AsyncTask<Object, Void, String> {
 		
         @Override
         protected String doInBackground(Object... args) {
-        	return POST((String)args[0],(User)args[1]);
+        	return POST((String)args[0],(String)args[1]);
         }
         
         @Override
@@ -30,7 +30,7 @@ public class RegisterWS extends AsyncTask<Object, Void, String> {
 
 					
        }
-    	public static String POST(String url,User user){
+    	public static String POST(String url,String email){
 
     		 InputStream inputStream = null;
     	        String result = "" ;
@@ -50,13 +50,7 @@ public class RegisterWS extends AsyncTask<Object, Void, String> {
     	            //String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
     	            //post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
     	            JSONObject jsonum=new JSONObject();
-                    jsonum.put("userName", user.getUserName());
-                    jsonum.put("userEmail", user.getUserEmail());
-                    jsonum.put("password", user.getPassword());
-                   // jsonum.put("about", user.getAbout());
-                   // jsonum.put("creationDate", user.getCreationDate());
-    	           // jsonum.put("lastUpdateDate", user.getLastUpdateDate());
-    	            jsonum.put("enabled", user.getEnabled());
+                    jsonum.put("email", email);
 
     	            StringEntity sampleEntity=new StringEntity(jsonum.toString());
                     sampleEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));

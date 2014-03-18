@@ -3,9 +3,7 @@ package com.bookworm.main;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_USER;
 import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_REGISTER;
-
 import java.util.concurrent.ExecutionException;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,8 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bookworm.common.ApplicationConstants;
 import com.bookworm.model.User;
 import com.bookworm.util.Validation;
 import com.bookworm.ws.user.RegisterWS;
