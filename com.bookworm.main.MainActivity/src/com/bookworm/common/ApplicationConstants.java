@@ -162,6 +162,7 @@ public class ApplicationConstants {
 	public static final String WS_OPERATION_SAVE			="SAVE";
 	public static final String WS_OPERATION_UPDATE			="UPDATE";
 	public static final String WS_OPERATION_DELETE			="DELETE";
+	public static final String WS_OPERATION_SEND_RESET_TOKEN			="SEND_RESET_TOKEN";
 	
 	public static final String ORDER_BY_DIRECTION_ASCENDING  ="ASC";
 	public static final String ORDER_BY_DIRECTION_DESCENDING ="DESC";

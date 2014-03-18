@@ -4,6 +4,7 @@ import static com.bookworm.common.ApplicationConstants.*;
 
 import java.util.concurrent.ExecutionException;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -35,7 +36,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 	private EditText _email;
 	private EditText _password;
 	private CheckBox _rememberMe;
-	private CheckBox _forgotPassword;
+	private TextView _forgotPassword;
 	private String savedUsername = EMPTY_STRING;
 	private String savedPassword = EMPTY_STRING;
 	private String loginResult="a";
@@ -50,15 +51,13 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 		setContentView(R.layout.login);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);
 
-		SP = getSharedPreferences(sharedPrefName, 0);
+		SP = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE);
 
 		savedUsername = SP.getString(username,unregistered_username);
 		savedPassword = SP.getString(password,unregistered_password);
 		
 		_rememberMe = (CheckBox) findViewById(R.id.rememberMe);
-		_forgotPassword = (CheckBox) findViewById(R.id.forgotPassword);
-
-		_forgotPassword.setChecked(false);
+		_forgotPassword = (TextView) findViewById(R.id.forgotPassword);
 		
 		_email = (EditText)findViewById(R.id.emailText);
 		_password = (EditText)findViewById(R.id.passwordText);
@@ -144,6 +143,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 							editit.remove(password);
 							editit.commit();
 						}
+						
 					}
 					SharedPreferences.Editor editit = SP.edit();
 					editit.clear();
@@ -167,10 +167,10 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 		_forgotPassword.setOnClickListener( new OnClickListener() {
 			
 			public void onClick(View v) {
-
-				if(((CheckBox)v).isChecked()){
-					
-				}
+				Intent mainPageIntent = new Intent(getApplicationContext(),
+						EmailForResetTokenActivity.class);
+				startActivity(mainPageIntent);
+				
 			}
 		});
 
