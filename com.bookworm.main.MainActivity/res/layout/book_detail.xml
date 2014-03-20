@@ -214,7 +214,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/imageLayout"
-            android:text="Beğen" />
+            android:text="@string/like" />
 
     </RelativeLayout>
 
