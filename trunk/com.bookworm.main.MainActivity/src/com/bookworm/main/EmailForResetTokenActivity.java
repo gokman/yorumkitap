@@ -32,8 +32,9 @@ public class EmailForResetTokenActivity extends ActivityBase {
 			
 			public void onClick(View v) {
 				//send mail
+				String email="";
 				try {
-					String email=emaill.getText().toString();
+					email=emaill.getText().toString();
 					result=new SendResetPassTokenWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_SEND_RESET_TOKEN,
 							email).get();
 				} catch (InterruptedException e) {
@@ -45,6 +46,7 @@ public class EmailForResetTokenActivity extends ActivityBase {
 				}
 				Intent resetPasswordPageIntent = new Intent(getApplicationContext(),
 						ResetPasswordActivity.class);
+				resetPasswordPageIntent.putExtra("userEmail", email);
 				startActivity(resetPasswordPageIntent);
 			}
 		});
