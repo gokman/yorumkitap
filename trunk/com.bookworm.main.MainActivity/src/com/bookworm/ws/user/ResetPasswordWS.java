@@ -14,6 +14,7 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
+import com.bookworm.custom.object.CustomResetPassword;
 import com.bookworm.model.User;
 
 import android.os.AsyncTask;
@@ -22,7 +23,7 @@ public class ResetPasswordWS extends AsyncTask<Object, Void, String> {
 		
         @Override
         protected String doInBackground(Object... args) {
-        	return POST((String)args[0],(String)args[1],(String)args[2],(Long)args[3]);
+        	return POST((String)args[0],(CustomResetPassword)args[1]);
         }
         
         @Override
@@ -30,7 +31,7 @@ public class ResetPasswordWS extends AsyncTask<Object, Void, String> {
 
 					
        }
-    	public static String POST(String url,String email,String password,long token){
+    	public static String POST(String url,CustomResetPassword customObject){
 
     		 InputStream inputStream = null;
     	        String result = "" ;
@@ -50,9 +51,9 @@ public class ResetPasswordWS extends AsyncTask<Object, Void, String> {
     	            //String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
     	            //post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
     	            JSONObject jsonum=new JSONObject();
-                    jsonum.put("email", email);
-                    jsonum.put("password", password);
-                    jsonum.put("token", token);
+                    jsonum.put("email", customObject.getEmail());
+                    jsonum.put("password", customObject.getPassword());
+                    jsonum.put("token", customObject.getToken());
                     
 
     	            StringEntity sampleEntity=new StringEntity(jsonum.toString());
