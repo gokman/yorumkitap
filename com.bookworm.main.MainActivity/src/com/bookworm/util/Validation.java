@@ -49,4 +49,23 @@ public class Validation {
 		}
 		return true;
 	}
+	public static boolean isTwoFieldsSame(final EditText text,final EditText text2){
+		final String str=text.getText().toString();
+		final String str2=text2.getText().toString();
+		if(str.equals(str2)){
+			return true;
+		}else{
+			text2.setError("Şifre aynı olmalı");
+			return false;
+		}
+	}
+	public static boolean isEmpty(final EditText text){
+		final int textLength=text.getText().toString().trim().length();
+		if(textLength==0){
+			text.setError("Zorunlu alan");
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
