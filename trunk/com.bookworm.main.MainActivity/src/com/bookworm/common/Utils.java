@@ -33,6 +33,17 @@ public class Utils {
 	        inputStream.close();
 	        return result;
 	 
-	    }        
+	    }  
+		
+		public static Boolean convertInputStreamToBoolean(InputStream inputStream) throws IOException{
+	        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+	        Boolean result =false;
+	        result = Boolean.parseBoolean(bufferedReader.readLine());
+	 
+	        inputStream.close();
+	        return result;
+	 
+	    }  
+		
     
 }
