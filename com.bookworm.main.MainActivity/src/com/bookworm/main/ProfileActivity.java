@@ -45,63 +45,16 @@ public class ProfileActivity extends ActivityBase implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		setContentView(R.layout.home_page);
+		setContentView(R.layout.profile_page);
 
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.window_title);
 
+
 		
 		
-		bookListNextButton=(TextView)findViewById(R.id.mainBookListNext_Button);
-
-		SearchCriteria sc = new SearchCriteria();
-		sc.setPageSize(item_count_per_page_for_main_page);
-		sc.setPageNumber(pageNumber);
-		sc.setOrderByCrit(GENERAL_COLUMN_NAME);
-        sc.setOrderByDrc(ORDER_BY_DIRECTION_DESCENDING);
-		try {
-			latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST,sc).get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}							
-        pageNumber++;
-
-		ApplicationUtil.addListToMainBookListView(latestBooks, latestBooksList);
-
-		latestBooksListView = (ListView) findViewById(R.id.latest_books);
-
-		adapter = new LazyAdapter(this, latestBooksList);
-		latestBooksListView.setAdapter(adapter);
-
-		bookListNextButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				SearchCriteria sc = new SearchCriteria();
-				sc.setPageSize(item_count_per_page_for_main_page);
-				sc.setPageNumber(pageNumber);
-				sc.setOrderByCrit(GENERAL_COLUMN_NAME);
-		        sc.setOrderByDrc(ORDER_BY_DIRECTION_DESCENDING);
-				try {
-					latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST+"/",sc).get();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					e.printStackTrace();
-				}							
-		        pageNumber++;
-				ApplicationUtil.addListToMainBookListView(latestBooks, latestBooksList);
-				latestBooksListView.invalidate();
-			        ((LazyAdapter) latestBooksListView.getAdapter()).notifyDataSetChanged(); 
-			}
-		});		
 		
-		// Click event for single list row
-		latestBooksListView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Object o = latestBooksListView.getItemAtPosition(position);
-			}
-		});
+		
+		
 		setNavigationButtons();
 	}
 

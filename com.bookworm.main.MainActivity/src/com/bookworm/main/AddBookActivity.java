@@ -101,7 +101,7 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 
 			    try {
 			    	//TODO adderid will be removed.
-			    	Long bookAdderId = 24L;//NetmeraUser.getCurrentUser().getEmail();
+			    	Long bookAdderId = ApplicationConstants.signed_in_userid;
 				    Book book = new Book(bookName.getText().toString(),
 				    						bookDesc.getText().toString(),
 				    						bookAdderId,
@@ -114,7 +114,7 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 
 //				    
 //				    //TODO action tablo kaydı
-				    Action addBookAction = new Action(ActionType.ADD_BOOK, 24L,book.getBookId()); 
+				    Action addBookAction = new Action(ActionType.ADD_BOOK, ApplicationConstants.signed_in_userid,book.getBookId()); 
 				    addBookAction = new AddActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,addBookAction).get();
 
 			    	String bookTagsText = bookTags.getText().toString();

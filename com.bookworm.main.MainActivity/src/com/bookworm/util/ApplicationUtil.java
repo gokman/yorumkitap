@@ -109,13 +109,14 @@ public class ApplicationUtil {
 			
 //			String tempBook1CoverURL = new GetNetmerMediaTask().execute(tempBook1).get();//.getNetmeraMedia(ApplicationConstants.book_coverPhoto);
 			
+			map.put(ActivityBase.KEY_BOOK_ID_LEFT, tempBook1.getBookId().toString());
 			map.put(ActivityBase.KEY_COVER_LEFT, tempBook1.getCoverPhoto());
 			map.put(ActivityBase.KEY_BOOK_TITLE_LEFT, tempBook1.getName());
 			map.put(ActivityBase.KEY_DESC_LEFT, tempBook1.getDescription());
 			map.put(ActivityBase.KEY_BOOK_ADDER_ID_LEFT, tempBook1.getAdderId().toString());
 			if (tempBook2 != null) {
 //				String tempBook2CoverURL = new GetNetmerMediaTask().execute(tempBook2).get();//getNetmeraMedia(ApplicationConstants.book_coverPhoto);
-
+				map.put(ActivityBase.KEY_BOOK_ID_RIGHT, tempBook2.getBookId().toString());
 				map.put(ActivityBase.KEY_COVER_RIGHT, tempBook2.getCoverPhoto());
 				map.put(ActivityBase.KEY_BOOK_TITLE_RIGHT, tempBook2.getName());
 				map.put(ActivityBase.KEY_DESC_RIGHT, tempBook2.getDescription());
