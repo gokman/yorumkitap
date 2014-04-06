@@ -70,7 +70,7 @@ public class LazyAdapter extends BaseAdapter {
         
         final  HashMap<String, String> book = data.get(position);
 
-        final String leftTitle = book.get(MainActivity.KEY_BOOK_TITLE_LEFT).toString();
+        final String leftBookId = book.get(MainActivity.KEY_BOOK_ID_LEFT).toString();
         final String leftAdderId = book.get(MainActivity.KEY_BOOK_ADDER_ID_LEFT).toString();
         
         
@@ -85,8 +85,8 @@ public class LazyAdapter extends BaseAdapter {
         titleLeft.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View paramView) {
 	         bookDetailIntent = new Intent(paramView.getContext(),BookDetailActivity.class);
-			 bookDetailIntent.putExtra(ApplicationConstants.book_name, leftTitle);
-			 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,leftAdderId);
+			 bookDetailIntent.putExtra(ApplicationConstants.book_id, Long.parseLong(leftBookId));
+			 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,Long.parseLong(leftAdderId));
 
 				paramView.getContext().startActivity(bookDetailIntent);
 			}
@@ -94,16 +94,16 @@ public class LazyAdapter extends BaseAdapter {
         descLeft.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View paramView) {
 		         bookDetailIntent = new Intent(paramView.getContext(),BookDetailActivity.class);
-				 bookDetailIntent.putExtra(ApplicationConstants.book_name, leftTitle);
-				 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,leftAdderId);				
+				 bookDetailIntent.putExtra(ApplicationConstants.book_id, Long.parseLong(leftBookId));
+				 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,Long.parseLong(leftAdderId));				
 				 paramView.getContext().startActivity(bookDetailIntent);
 			}
 		});
         image_left.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View paramView) {
 		         bookDetailIntent = new Intent(paramView.getContext(),BookDetailActivity.class);
-				 bookDetailIntent.putExtra(ApplicationConstants.book_name, leftTitle);
-				 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,leftAdderId);
+				 bookDetailIntent.putExtra(ApplicationConstants.book_id, Long.parseLong(leftBookId));
+				 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,Long.parseLong(leftAdderId));
 				 paramView.getContext().startActivity(bookDetailIntent);
 			}
 
@@ -111,7 +111,7 @@ public class LazyAdapter extends BaseAdapter {
         bookAdderIdLeft.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View paramView) {
 		         adderProfileIntent = new Intent(paramView.getContext(),ProfileActivity.class);
-		         adderProfileIntent.putExtra(ApplicationConstants.userEmailParam, leftAdderId);
+		         adderProfileIntent.putExtra(ApplicationConstants.userEmailParam, Long.parseLong(leftAdderId));
 				 paramView.getContext().startActivity(adderProfileIntent);
 			}
 		});        
@@ -127,7 +127,7 @@ public class LazyAdapter extends BaseAdapter {
     		layoutRight.setVisibility(View.VISIBLE);
     		secondDivider.setVisibility(View.VISIBLE);
          
-            final String rightTitle = book.get(MainActivity.KEY_BOOK_TITLE_RIGHT).toString();
+            final String rightBookId = book.get(MainActivity.KEY_BOOK_ID_RIGHT).toString();
             final String rightAdderId = book.get(MainActivity.KEY_BOOK_ADDER_ID_RIGHT).toString();
 
          adderProfileIntent = new Intent(vi.getContext(),ProfileActivity.class);
@@ -136,31 +136,31 @@ public class LazyAdapter extends BaseAdapter {
            titleRigth.setOnClickListener(new View.OnClickListener() {
    			public void onClick(View paramView) {
    	    	 bookDetailIntent = new Intent(paramView.getContext(),BookDetailActivity.class);
-			 bookDetailIntent.putExtra(ApplicationConstants.book_name, rightTitle);
-			 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,rightAdderId);
+			 bookDetailIntent.putExtra(ApplicationConstants.book_id, Long.parseLong(rightBookId));
+			 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,Long.parseLong(rightAdderId));
    				paramView.getContext().startActivity(bookDetailIntent);
    			}
    		});
            descRight.setOnClickListener(new View.OnClickListener() {
    			public void onClick(View paramView) {
       	    	 bookDetailIntent = new Intent(paramView.getContext(),BookDetailActivity.class);
-    			 bookDetailIntent.putExtra(ApplicationConstants.book_name, rightTitle);
-    			 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,rightAdderId);
+    			 bookDetailIntent.putExtra(ApplicationConstants.book_id, Long.parseLong(rightBookId));
+    			 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,Long.parseLong(rightAdderId));
        	   		 paramView.getContext().startActivity(bookDetailIntent);
    			}
    		});
            image_right.setOnClickListener(new View.OnClickListener() {
    			public void onClick(View paramView) {
       	    	 bookDetailIntent = new Intent(paramView.getContext(),BookDetailActivity.class);
-    			 bookDetailIntent.putExtra(ApplicationConstants.book_name, rightTitle);
-    			 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,rightAdderId);
+    			 bookDetailIntent.putExtra(ApplicationConstants.book_id, Long.parseLong(rightBookId));
+    			 bookDetailIntent.putExtra(ApplicationConstants.book_adderId,Long.parseLong(rightAdderId));
        	   		 paramView.getContext().startActivity(bookDetailIntent);
    			}
    		});
            bookAdderIdRight.setOnClickListener(new View.OnClickListener() {
    			public void onClick(View paramView) {
 		         adderProfileIntent = new Intent(paramView.getContext(),ProfileActivity.class);
-		         adderProfileIntent.putExtra(ApplicationConstants.userEmailParam, rightAdderId);
+		         adderProfileIntent.putExtra(ApplicationConstants.userEmailParam, Long.parseLong(rightAdderId));
 				 paramView.getContext().startActivity(adderProfileIntent);   			}
    		});            		
     		
