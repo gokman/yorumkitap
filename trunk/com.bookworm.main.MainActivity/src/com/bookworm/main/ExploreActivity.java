@@ -69,7 +69,11 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 				sc.setPageSize(item_count_per_page_for_explore_page);
 				sc.setUserName(searchKey);
 				try{
-					List<User> usersList = new ListUsersWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_LIST+"/",sc).get();
+					List<User> usersList = new ListUsersWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_LIST+"/",
+							sc,
+							ApplicationConstants.signed_in_email,
+							ApplicationConstants.signed_in_password
+							).get();
 					makeAllInvisible();
 					//TODO user search 
 					applyDataToTable(usersList,ApplicationConstants.user_userProfile);

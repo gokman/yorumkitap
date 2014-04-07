@@ -148,7 +148,7 @@ public class ApplicationConstants {
 	public static int timelineListStatus=1;
 	public static Date timelineLastDate=dateFormat.getCalendar().getTime();
 
-	public static final String WS_ENDPOINT_ADRESS = "http://10.0.2.2:8080/booklet-ws/services";
+	public static final String WS_ENDPOINT_ADRESS = "http://192.168.2.148:8080/booklet-ws/services";
 	public static final String WS_OPERATION_GET_BY_ID		="GET_BY_ID";
 	public static final String WS_OPERATION_ADD				="ADD";
 	public static final String WS_OPERATION_LIST			="LIST";
@@ -157,6 +157,7 @@ public class ApplicationConstants {
 	public static final String WS_OPERATION_LIST_BY_TEXT	="LIST_BY_TEXT";
 	public static final String WS_OPERATION_GET_FOLLOWINGS	="GET_FOLLOWING_LIST";
 	public static final String WS_OPERATION_GET_FOLLOWERS	="GET_FOLLOWER_LIST";
+	public static final String WS_OPERATION_LIST_FOLLOWSHIPS="LIST_FOLLOWSHIPS";
 	public static final String WS_OPERATION_REGISTER 		="REGISTER";
 	public static final String WS_OPERATION_LOGIN 			="LOGIN";
 	public static final String WS_OPERATION_SAVE			="SAVE";

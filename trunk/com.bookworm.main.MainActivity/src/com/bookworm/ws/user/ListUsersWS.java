@@ -29,14 +29,14 @@ public class ListUsersWS extends
 	@Override
 	protected List<User> doInBackground(Object... url) {
 
-		 return GET((String)url[0],(SearchCriteria)url[1]);
+		 return GET((String)url[0],(SearchCriteria)url[1],(String)url[2],(String)url[3]);
 	}
 
 	@Override
 	protected void onPostExecute(List<User> result) {
 	}
 
-	public static List<User> GET(String url,SearchCriteria sc) {
+	public static List<User> GET(String url,SearchCriteria sc,String username,String password) {
 		InputStream inputStream = null;
 		String result = "";
 		List<User> resultList= new ArrayList<User>();
@@ -51,18 +51,18 @@ public class ListUsersWS extends
             post.setHeader("Content-Type", "application/json");
             
             //credentials
-            String credentials = "gokman" + ":" + "kocaman";  
+            String credentials = username + ":" + password;  
             String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
             post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
             
         	JSONObject inputObj = new JSONObject();
             
-            if(sc.getBookIdList()!=null && sc.getBookIdList().size()>0){
-            	JSONArray bookIds = new JSONArray();
-            	for(Long bookId : sc.getBookIdList()){
-	            	bookIds.put(bookId);
+            if(sc.getUserIdList()!=null && sc.getUserIdList().size()>0){
+            	JSONArray userIds = new JSONArray();
+            	for(Long userId : sc.getUserIdList()){
+	            	userIds.put(userId);
 	            }
-	        	inputObj.put("bookIdList", bookIds);            
+	        	inputObj.put("userIdList", userIds);            
             }
             inputObj.put("orderByDrc", sc.getOrderByDrc());
             inputObj.put("orderByCrit", sc.getOrderByCrit());

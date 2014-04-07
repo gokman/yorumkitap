@@ -23,23 +23,24 @@ import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.Utils;
 import com.bookworm.model.Action;
 import com.bookworm.model.ActionType;
+import com.bookworm.model.Book;
 import com.bookworm.model.Followship;
 import com.bookworm.util.SearchCriteria;
 import com.google.gson.Gson;
 
 public class CheckFollowshipWS extends
-		AsyncTask<String, Void, Followship> {
+		AsyncTask<Object, Void, List<Followship>>{
 
 	protected List<Followship> doInBackground(Object... url) {
 
-		return (List<Followship>) GET((String)url[0],(SearchCriteria)url[1]);
+		return (List<Followship>) GET((String)url[0],(SearchCriteria)url[1],(String)url[2],(String)url[3]);
 	}
 
 	@Override
-	protected void onPostExecute(Followship result) {
+	protected void onPostExecute(List<Followship> result) {
 	}
 
-	public static List<Followship> GET(String url,SearchCriteria sc) {
+	public static List<Followship> GET(String url,SearchCriteria sc,String username,String password) {
 		InputStream inputStream = null;
 		String result = "";
 		List<Followship> resultList= new ArrayList<Followship>();
@@ -54,7 +55,7 @@ public class CheckFollowshipWS extends
             post.setHeader("Content-Type", "application/json");
             
             //credentials
-            String credentials = "gokman" + ":" + "kocaman";  
+            String credentials = username + ":" + password;  
             String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
             post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
             
@@ -95,9 +96,4 @@ public class CheckFollowshipWS extends
 		return resultList;
 	}
 
-	@Override
-	protected Followship doInBackground(String... arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
