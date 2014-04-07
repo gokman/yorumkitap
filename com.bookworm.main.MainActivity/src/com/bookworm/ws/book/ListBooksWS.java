@@ -29,14 +29,14 @@ public class ListBooksWS extends
 	@Override
 	protected List<Book> doInBackground(Object... url) {
 
-		 return GET((String)url[0],(SearchCriteria)url[1]);
+		 return GET((String)url[0],(SearchCriteria)url[1],(String)url[2],(String)url[3]);
 	}
 
 	@Override
 	protected void onPostExecute(List<Book> result) {
 	}
 
-	public static List<Book> GET(String url,SearchCriteria sc) {
+	public static List<Book> GET(String url,SearchCriteria sc,String username,String pword) {
 		InputStream inputStream = null;
 		String result = "";
 		List<Book> resultList= new ArrayList<Book>();
@@ -51,7 +51,7 @@ public class ListBooksWS extends
             post.setHeader("Content-Type", "application/json");
             
             //credentials
-            String credentials = "gokhankcmn@gmail.com" + ":" + "12345678";  
+            String credentials = username + ":" + pword;  
             String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
             post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
             
@@ -64,6 +64,7 @@ public class ListBooksWS extends
 	            }
 	        	inputObj.put("bookIdList", bookIds);            
             }
+            inputObj.put("adderId", sc.getAdderId());
             inputObj.put("orderByDrc", sc.getOrderByDrc());
             inputObj.put("orderByCrit", sc.getOrderByCrit());
             inputObj.put("pageNumber", sc.getPageNumber());

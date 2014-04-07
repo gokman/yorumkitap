@@ -59,7 +59,11 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 		sc.setOrderByCrit(GENERAL_COLUMN_NAME);
         sc.setOrderByDrc(ORDER_BY_DIRECTION_DESCENDING);
 		try {
-			latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST,sc).get();
+			latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST,
+					sc,
+					ApplicationConstants.signed_in_email,
+					ApplicationConstants.signed_in_password
+					).get();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -82,7 +86,11 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 				sc.setOrderByCrit(GENERAL_COLUMN_NAME);
 		        sc.setOrderByDrc(ORDER_BY_DIRECTION_DESCENDING);
 				try {
-					latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST+"/",sc).get();
+					latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST+"/",
+							sc,
+							ApplicationConstants.signed_in_email,
+							ApplicationConstants.signed_in_password
+							).get();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (ExecutionException e) {

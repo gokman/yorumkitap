@@ -8,13 +8,29 @@ public class SearchCriteria {
 	private Long userId;
 	private String userName;
 	private List<Long> bookIdList;
+	private List<Long> userIdList;
 	private int pageSize;
 	private int pageNumber;
 	private String orderByCrit;
 	private String orderByDrc;
 	private Long followerId;
 	private Long followingId;
+	private Long adderId;
 	
+	
+	
+	public List<Long> getUserIdList() {
+		return userIdList;
+	}
+	public void setUserIdList(List<Long> userIdList) {
+		this.userIdList = userIdList;
+	}
+	public Long getAdderId() {
+		return adderId;
+	}
+	public void setAdderId(Long adderId) {
+		this.adderId = adderId;
+	}
 	public String getBookId() {
 		return bookId;
 	}
