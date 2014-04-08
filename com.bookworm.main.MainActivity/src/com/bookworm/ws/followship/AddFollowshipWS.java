@@ -48,11 +48,11 @@ public class AddFollowshipWS extends AsyncTask<Object, Void, Followship> {
     	            String credentials = "gokman" + ":" + "kocaman";  
     	            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
     	            post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
-    	            
+     	            
                     JSONObject jsonum=new JSONObject();
                     jsonum.put("followerUserId", followship.getFollowerUserId());
                     jsonum.put("followedUserId", followship.getFollowedUserId());
-                    jsonum.put("creationDate", followship.getCreationDate());
+//                    jsonum.put("creationDate", followship.getCreationDate());
                     
     	            StringEntity sampleEntity=new StringEntity(jsonum.toString());
                     sampleEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));

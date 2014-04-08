@@ -9,6 +9,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.util.Base64;
@@ -19,23 +21,24 @@ import com.bookworm.model.Book;
 import com.bookworm.model.BookLike;
 import com.google.gson.Gson;
 
-public class GetBookInfoWS extends
-		AsyncTask<String, Void, Book> {
+public class GetCommentedBooksWS extends
+		AsyncTask<String, Void, List<Book>> {
 
 	@Override
-	protected Book doInBackground(String... url) {
+	protected List<Book> doInBackground(String... url) {
 
 		 return GET(url[0]);
 	}
 
 	@Override
-	protected void onPostExecute(Book result) {
+	protected void onPostExecute(List<Book> resultList) {
 	}
 
-	public static Book GET(String url) {
+	public static List<Book> GET(String url) {
 		InputStream inputStream = null;
 		Gson gson = new Gson();
 		String result = ApplicationConstants.EMPTY_STRING;
+		List<Book> resultList = new ArrayList<Book>();
 		try {
 
 			// create HttpClient
@@ -62,10 +65,23 @@ public class GetBookInfoWS extends
 			else
 				 result = "Did not work!";
 
+			JSONArray resultArray = new JSONArray(result);
+			for (int k = 0 ; k < resultArray.length(); k++){
+				JSONObject obj = resultArray.getJSONObject(k);
+				Book book = new Book();
+				book.setAdderId(obj.getLong("adderId"));
+				book.setBookId(obj.getLong("bookId"));
+				book.setCoverPhoto(obj.getString("coverPhoto"));
+				book.setDescription(obj.getString("description"));
+				book.setName(obj.getString("name"));
+				book.setWriter(obj.getString("writer"));
+				resultList.add(book);
+			}			
+			
 		} catch (Exception e) {
 			e.getLocalizedMessage();
 		}
 
-		return gson.fromJson(result, Book.class);
+		return resultList;
 	}
 }
