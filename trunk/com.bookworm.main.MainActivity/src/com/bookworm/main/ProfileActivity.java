@@ -3,14 +3,17 @@ package com.bookworm.main;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_FOLLOWSHIP;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_USER;
-import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_FOLLOWSHIPS;
 import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
-import static com.bookworm.common.ApplicationConstants.WS_OPERATION_GET_FOLLOWERS;
-import static com.bookworm.common.ApplicationConstants.WS_OPERATION_GET_FOLLOWINGS;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_GET_BY_ID;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_FOLLOWSHIPS;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_UNFOLLOW;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_ADD;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_COMMENTED_BOOKS;
+
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -32,9 +35,11 @@ import com.bookworm.model.Book;
 import com.bookworm.model.Followship;
 import com.bookworm.model.User;
 import com.bookworm.util.SearchCriteria;
+import com.bookworm.ws.book.GetCommentedBooksWS;
 import com.bookworm.ws.book.ListBooksWS;
+import com.bookworm.ws.followship.AddFollowshipWS;
 import com.bookworm.ws.followship.CheckFollowshipWS;
-import com.bookworm.ws.followship.GetFollowshipWS;
+import com.bookworm.ws.followship.UnfollowWS;
 import com.bookworm.ws.user.ListUsersWS;
 
 public class ProfileActivity extends ActivityBase implements OnClickListener{
@@ -123,60 +128,93 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 
 		    	final Long followingsCount = (long)followingsList.size();
 
-				
-//	    	@SuppressWarnings("unchecked")
-//			List <User> followerList = (List<User>) new GetFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_GET_FOLLOWERS+"/"+mss).get();
-//	    	Long followersCount = (long)followerList.size();
-	    	
-			
-	    	if(currentUserId.longValue()==profileUserId.longValue()){
-	    		//profil sayfasini goruntuleyen kullanici profilin sahibiyse edit iconu gosteriliyor.
-	    		statusView.setImageResource(R.drawable.edit_icon);
-	    	}else{
-	    		//profil sayfasini goruntuleyen kullanici profilin sahibi degilse bu profili takip edip etmedigine bakiliyor.
+
+	    		//profil kullanicisinin takipcileri
+	    		SearchCriteria followerSc = new SearchCriteria();
+	    		followerSc.setFollowingId(profileUserId);
+	    		
+				final List <Followship> followersList = (List<Followship>) new CheckFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_LIST_FOLLOWSHIPS+"/",
+						followerSc,
+						ApplicationConstants.signed_in_email,
+						ApplicationConstants.signed_in_password).get();
+
+		    	final Long followersCount = (long)followersList.size();
+
 	    		SearchCriteria fCriteria = new SearchCriteria();
 	    		fCriteria.setFollowerId(currentUserId);
 	    		fCriteria.setFollowingId(profileUserId);
-	    		
-				List <Followship> followList = (List<Followship>) new CheckFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_LIST_FOLLOWSHIPS+"/",
+
+		    	final List <Followship> followList = (List<Followship>) new CheckFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_LIST_FOLLOWSHIPS+"/",
 						fCriteria,
 						ApplicationConstants.signed_in_email,
 						ApplicationConstants.signed_in_password).get();
 
-				if(followList!=null && followList.size() > 0){
-					statusView.setImageResource(R.drawable.following);
-				}else{
-					statusView.setImageResource(R.drawable.follow);
-				}
-	    		
-	    	}
-//	    	statusView.setOnClickListener(new View.OnClickListener() {
-//				public void onClick(View paramView) {
-//			    	if(currentUserEmail.equals(userEmail)){
-//			         Intent bookDetailIntent = new Intent(getApplicationContext(),ProfileEditActivity.class);
-//			   		 bookDetailIntent.putExtra(ApplicationConstants.userEmailParam,userEmail);
-//					 paramView.getContext().startActivity(bookDetailIntent);
-//
-//			    	}else{
-//						NetmeraService countService = new NetmeraService(ApplicationConstants.followship);
-//						countService.whereEqual(ApplicationConstants.followship_user_id,currentUserEmail);
-//						countService.whereEqual(ApplicationConstants.followship_follows,userEmail);
-//						try {
-//							followshipStatus = new CountDataTask().execute(countService).get();
-//						} catch (Exception e1) {
-//							e1.printStackTrace();
-//						}
-//
-//			    		if(followshipStatus > 0){ 						//Unfollow Action
-//							try {
-//								NetmeraService servicer = new NetmeraService(ApplicationConstants.followship);
-//								servicer.whereEqual(ApplicationConstants.followship_user_id, currentUserEmail);
-//								servicer.whereEqual(ApplicationConstants.followship_follows, userEmail);
-//								followedUsers = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
-//								for(int k = 0 ; k <followedUsers.size() ; k++){
-//									NetmeraContent content = followedUsers.get(k);
-//									new DeletetDataTask().execute(content).get();
-//								}
+		    	
+		    	if(currentUserId.longValue()==profileUserId.longValue()){
+		    		//profil sayfasini goruntuleyen kullanici profilin sahibiyse edit iconu gosteriliyor.
+		    		statusView.setImageResource(R.drawable.edit_icon);
+		    	}else{
+		    		//profil sayfasini goruntuleyen kullanici profilin sahibi degilse bu profili takip edip etmedigine bakiliyor.
+		    		
+	
+					if(followList!=null && followList.size() > 0){
+						statusView.setImageResource(R.drawable.following);
+					}else{
+						statusView.setImageResource(R.drawable.follow);
+					}
+		    		
+		    	}
+	    	statusView.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View paramView) {
+			    	if(currentUserId.longValue()== profileUserId.longValue()){
+			    	 //TODO profile Edit page	
+			         Intent bookDetailIntent = new Intent(getApplicationContext(),ProfileEditActivity.class);
+			   		 bookDetailIntent.putExtra(ApplicationConstants.userEmailParam,profileUserId);
+					 paramView.getContext().startActivity(bookDetailIntent);
+
+			    	}else{
+			    		SearchCriteria fCriteria = new SearchCriteria();
+			    		fCriteria.setFollowerId(currentUserId);
+			    		fCriteria.setFollowingId(profileUserId);
+
+			    		List <Followship> infollowList = null;
+				    	try {
+							infollowList = (List<Followship>) new CheckFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_LIST_FOLLOWSHIPS+"/",
+									fCriteria,
+									ApplicationConstants.signed_in_email,
+									ApplicationConstants.signed_in_password).get();
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (ExecutionException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}			    		
+			    		
+
+			    		//profil kullanicisinin takipcileri
+			    		SearchCriteria followerSc = new SearchCriteria();
+			    		followerSc.setFollowingId(profileUserId);
+			    		
+						List<Followship> followers = new ArrayList<Followship>();
+						try {
+							followers = (List<Followship>) new CheckFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_LIST_FOLLOWSHIPS+"/",
+									followerSc,
+									ApplicationConstants.signed_in_email,
+									ApplicationConstants.signed_in_password).get();
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (ExecutionException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+			    		if(infollowList!=null && infollowList.size() > 0){ 						//Unfollow Action
+							try {
+
+								new UnfollowWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_UNFOLLOW+"/"+currentUserId+"/"+profileUserId).get();
+								
 //								//action sil
 //								NetmeraService servicerAction=new NetmeraService(ApplicationConstants.action);
 //								servicerAction.whereEqual(ApplicationConstants.action_follower_id, currentUserEmail);
@@ -184,91 +222,48 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 //								NetmeraContent contentAction=new SelectDataTask(ProfileActivity.this).execute(servicerAction).get().get(0);
 //								new DeletetDataTask().execute(contentAction).get();
 //								
-//								statusView.setImageResource(R.drawable.follow);	
+								statusView.setImageResource(R.drawable.follow);	
+
+//								follower sayisini simdilik +1 olarak degistiriyoruz.								
+								txtFollowersCount.setText(new Long(followers.size()-1).toString());
 //								
-//								servicer = new NetmeraService(ApplicationConstants.followship);
-//								servicer.whereEqual(ApplicationConstants.followship_follows,userEmail);
-//								Long followersCount = new CountDataTask().execute(servicer).get();			
-//								txtFollowersCount.setText(followersCount.toString());
-//								
-//							} catch (Exception e) {
-//								e.printStackTrace();
-//							}
-//						
-//						}else{											//Follow Action
-//							NetmeraContent followship = new NetmeraContent(ApplicationConstants.followship);
-//							NetmeraContent action=new NetmeraContent(ApplicationConstants.action);
-//							try {
-//								followship.add(ApplicationConstants.followship_user_id,currentUserEmail);
-//								followship.add(ApplicationConstants.followship_follows,userEmail);
-//								new InsertDataTask().execute(followship).get();
-//								
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						
+						}else{											//Follow Action
+							Followship fw = new Followship(currentUserId, profileUserId, new Date());
+
+							try {
+								fw = new AddFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_ADD,fw).get();								
+
+								
 //								action.add(ApplicationConstants.ACTION_TYPE, ApplicationConstants.ACTION_TYPE_FOLLOW);
 //								action.add(ApplicationConstants.action_follower_id, currentUserEmail);
 //								action.add(ApplicationConstants.action_followed_id, userEmail);
 //								action.add(ApplicationConstants.ACTION_OWNER, NetmeraUser.getCurrentUser().getEmail());
 //								new InsertDataTask().execute(action).get();
-//
-//								NetmeraService servicer = new NetmeraService(ApplicationConstants.followship);
-//								servicer.whereEqual(ApplicationConstants.followship_follows,userEmail);
-//								Long followersCount = new CountDataTask().execute(servicer).get();			
-//								txtFollowersCount.setText(followersCount.toString());
-//								
-//								statusView.setImageResource(R.drawable.following);	
-//							} catch (Exception e) {
-//								e.printStackTrace();
-//							}
-//						}
-//			    		
-//			    	}
-//				}
-//			});
-			
-//			servicer = new NetmeraService(ApplicationConstants.book);
-//			servicer.whereEqual(ApplicationConstants.book_adderId, userEmail); 
-//			servicer.setMax(ApplicationConstants.item_count_per_page);
-//			servicer.setPage(0);
-//			booksAddedByUser = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
-//			
-//			servicer = new NetmeraService("ApplicationConstants.comment");
-//			servicer.whereEqual(ApplicationConstants.comment_er, userEmail);
-//			servicer.setMax(ApplicationConstants.item_count_per_page_for_comments);
-//			servicer.setPage(0);
-//			List<NetmeraContent> comments = new SelectDataTask(ProfileActivity.this).execute(servicer).get();
-//			commentedBooks = new ArrayList<NetmeraContent>(); 
-//
-//			HashMap<String,String> existing = new HashMap<String, String>();
-//			for(NetmeraContent content : comments){
-//
-//				if(commentedBooks.size()< ApplicationConstants.item_count_per_page_for_comments){ //TODO bu kalkmal� sayfalama filan olmali
-//					
-//					NetmeraService service = new NetmeraService(ApplicationConstants.book);
-//					
-//					service.whereEqual(ApplicationConstants.book_adderId, content.get(ApplicationConstants.comment_edBookOwner).toString());
-//					service.whereEqual(ApplicationConstants.book_name, content.get(ApplicationConstants.comment_edBook).toString());
-//					
-//					List<NetmeraContent> tempBookList = new SelectDataTask(ProfileActivity.this).execute(service).get(); 
-//					
-//					if(tempBookList.size()==0)
-//						continue;
-//					
-//					NetmeraContent tempBook = tempBookList.get(0);
-//					
-//					if(!existing.containsKey(tempBook.get(ApplicationConstants.book_adderId).toString()) || !tempBook.get(ApplicationConstants.book_name).toString().equals(existing.get(tempBook.get(ApplicationConstants.book_adderId)))){
-//						
-//						existing.put(content.get(ApplicationConstants.comment_edBookOwner).toString(),content.get(ApplicationConstants.comment_edBook).toString());
-//						commentedBooks.add(tempBook);
-//					}
-//				}
-//				
-//			}
-//			//book list and comments list are prepared.
-//
+
+								txtFollowersCount.setText(new Long(followers.size()+1).toString());
+								
+								statusView.setImageResource(R.drawable.following);	
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+			    		
+			    	}
+				}
+			});
+	    	
 			txtBookCount.setText(addedBookCount.toString());
-//			txtFollowersCount.setText(followersCount.toString());
+			txtFollowersCount.setText(followersCount.toString());
 			txtFollowingsCount.setText(followingsCount.toString());
-//			applyDataToTable(booksAddedByUser,ApplicationConstants.book_name,ApplicationConstants.book_coverPhoto);
-//			
+			applyDataToTable(booksOfUser);			
+	    	
+
+			
+			
 			View.OnClickListener addedBooksListener = new View.OnClickListener() {
 				
 				public void onClick(View v) {
@@ -276,53 +271,50 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 						applyDataToTable(booksOfUser);
 				}
 			};
-//			btnAddedBooks.setOnClickListener(addedBooksListener);
+			btnAddedBooks.setOnClickListener(addedBooksListener);
 			txtBookCount.setOnClickListener(addedBooksListener);
-//			txtBooksText.setOnClickListener(addedBooksListener);
-//			
-//			btnCommentedBooks.setOnClickListener(new View.OnClickListener() {
-//				
-//				public void onClick(View v) {
-//					try {
-//						makeAllInvisible();
-//						applyDataToTable(commentedBooks,ApplicationConstants.book_name,ApplicationConstants.book_coverPhoto);
-//					} catch (NetmeraException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
-//			});
-//			
-//			
-//			
-//			View.OnClickListener followersListener = new View.OnClickListener() {
-//				public void onClick(View v) {
-//					try {
-//						NetmeraService followerListService = new NetmeraService(ApplicationConstants.followship);
-//						followerListService.whereEqual(ApplicationConstants.followship_follows,userEmail);
-//						followersTransactionList = new SelectDataTask(ProfileActivity.this).execute(followerListService).get();
-//						String[] userEmailList = new String[5];//ApplicationUtil.convertObjectListToInputList(followersTransactionList,ApplicationConstants.followship_user_id);
-//						
-//						/*TODO 
-//						 * profile image will be kept in User table unavailable in NetmeraUser.(todo)
-//						 */
-//						followerListService = new NetmeraService(ApplicationConstants.user);
-//						followerListService.whereContainedIn(ApplicationConstants.netmera_user_email, Arrays.asList(userEmailList));
-//						followersList = new SelectDataTask(ProfileActivity.this).execute(followerListService).get();
-//
-//						makeAllInvisible();
-//						applyDataToTable(followersList,ApplicationConstants.netmera_user_username,null);
-//					} catch (Exception e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
-//			};
-//			txtFollowersCount.setOnClickListener(followersListener);
-//			txtFollowersText.setOnClickListener(followersListener);
-//			
-//			
-//			
+			txtBooksText.setOnClickListener(addedBooksListener);
+			
+			
+			
+			final List<Book> commentedBooks = new GetCommentedBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST_COMMENTED_BOOKS+"/"+profileUserId).get();
+
+			btnCommentedBooks.setOnClickListener(new View.OnClickListener() {
+				
+				public void onClick(View v) {
+						makeAllInvisible();
+						applyDataToTable(commentedBooks);
+				}
+			});
+			
+			
+			
+			View.OnClickListener followersListener = new View.OnClickListener() {
+				public void onClick(View v) {
+					try {
+						List<Long> followerUserIds = new ArrayList<Long>();
+						for(Followship fw : followingsList){
+							followerUserIds.add(fw.getFollowerUserId());
+						}
+						SearchCriteria sc = new SearchCriteria();
+						sc.setUserIdList(followerUserIds);
+						List<User> usersList = new ListUsersWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_LIST+"/",
+								sc,
+								ApplicationConstants.signed_in_email,
+								ApplicationConstants.signed_in_password
+								).get();
+						
+						makeAllInvisible();
+						applyUserDataToTable(usersList);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			};
+			txtFollowersCount.setOnClickListener(followersListener);
+			txtFollowersText.setOnClickListener(followersListener);
+
 			View.OnClickListener followingsListener = new View.OnClickListener() {
 				public void onClick(View v) {
 					try {
@@ -349,18 +341,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 			
 			txtFollowingsText.setOnClickListener(followingsListener);
 			txtFollowingsCount.setOnClickListener(followingsListener);
-//			
-//			
-//	        } catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (ExecutionException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (NetmeraException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+
 			setNavigationButtons();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -486,96 +467,97 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 	    	}
 	    }	    
 	    private void applyDataToTable(List <Book> dataList){
-
-	    	for(int k = 0 ; k < dataList.size() ; k++){
-				Book book = dataList.get(k);
-				
-				switch (k) {
-				case 0:
-					table_1_1.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_1_1);
-					text_1_1.setVisibility(View.VISIBLE);
-					text_1_1.setText(book.getName());
-					break;
-				case 1:
-					table_1_2.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_1_2);					
-					text_1_2.setVisibility(View.VISIBLE);
-					text_1_2.setText(book.getName());
-					break;
-
-				case 2:
-					table_1_3.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_1_3);
-					text_1_3.setVisibility(View.VISIBLE);
-					text_1_3.setText(book.getName());
-					break;
-
-				case 3:
-					table_2_1.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_2_1);
-					text_2_1.setVisibility(View.VISIBLE);
-					text_2_1.setText(book.getName());
-					break;
-
-				case 4:
-					table_2_2.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_2_2);
-					text_2_2.setVisibility(View.VISIBLE);
-					text_2_2.setText(book.getName());
-					break;
-
-				case 5:
-					table_2_3.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_2_3);
-					text_2_3.setVisibility(View.VISIBLE);
-					text_2_3.setText(book.getName());
-					break;
-
-				case 6:
-					table_3_1.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_3_1);
-					text_3_1.setVisibility(View.VISIBLE);
-					text_3_1.setText(book.getName());
-					break;
-
-				case 7:
-					table_3_2.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_3_2);
-					text_3_2.setVisibility(View.VISIBLE);
-					text_3_2.setText(book.getName());
-					break;
-
-				case 8:
-					table_3_3.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_3_3);
-					text_3_3.setVisibility(View.VISIBLE);
-					text_3_3.setText(book.getName());
-					break;
-				case 9:
-					table_4_1.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_4_1);
-					text_4_1.setVisibility(View.VISIBLE);
-					text_4_1.setText(book.getName());
-					break;
-
-				case 10:
-					table_4_2.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_4_2);
-					text_4_2.setVisibility(View.VISIBLE);
-					text_4_2.setText(book.getName());
-					break;
-
-				case 11:
-					table_4_3.setVisibility(View.VISIBLE);
-//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_4_3);
-					text_4_3.setVisibility(View.VISIBLE);
-					text_4_3.setText(book.getName());
-					break;
-
-				default:
-					break;
-				}
+	    	if(dataList!=null){
+		    	for(int k = 0 ; k < dataList.size() ; k++){
+					Book book = dataList.get(k);
+					
+					switch (k) {
+					case 0:
+						table_1_1.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_1_1);
+						text_1_1.setVisibility(View.VISIBLE);
+						text_1_1.setText(book.getName());
+						break;
+					case 1:
+						table_1_2.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_1_2);					
+						text_1_2.setVisibility(View.VISIBLE);
+						text_1_2.setText(book.getName());
+						break;
+	
+					case 2:
+						table_1_3.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_1_3);
+						text_1_3.setVisibility(View.VISIBLE);
+						text_1_3.setText(book.getName());
+						break;
+	
+					case 3:
+						table_2_1.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_2_1);
+						text_2_1.setVisibility(View.VISIBLE);
+						text_2_1.setText(book.getName());
+						break;
+	
+					case 4:
+						table_2_2.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_2_2);
+						text_2_2.setVisibility(View.VISIBLE);
+						text_2_2.setText(book.getName());
+						break;
+	
+					case 5:
+						table_2_3.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_2_3);
+						text_2_3.setVisibility(View.VISIBLE);
+						text_2_3.setText(book.getName());
+						break;
+	
+					case 6:
+						table_3_1.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_3_1);
+						text_3_1.setVisibility(View.VISIBLE);
+						text_3_1.setText(book.getName());
+						break;
+	
+					case 7:
+						table_3_2.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_3_2);
+						text_3_2.setVisibility(View.VISIBLE);
+						text_3_2.setText(book.getName());
+						break;
+	
+					case 8:
+						table_3_3.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_3_3);
+						text_3_3.setVisibility(View.VISIBLE);
+						text_3_3.setText(book.getName());
+						break;
+					case 9:
+						table_4_1.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_4_1);
+						text_4_1.setVisibility(View.VISIBLE);
+						text_4_1.setText(book.getName());
+						break;
+	
+					case 10:
+						table_4_2.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_4_2);
+						text_4_2.setVisibility(View.VISIBLE);
+						text_4_2.setText(book.getName());
+						break;
+	
+					case 11:
+						table_4_3.setVisibility(View.VISIBLE);
+	//					imageLoader.DisplayImage(new GetNetmerMediaTask().execute(content).get(), table_4_3);
+						text_4_3.setVisibility(View.VISIBLE);
+						text_4_3.setText(book.getName());
+						break;
+	
+					default:
+						break;
+					}
+		    	}
 	    	}
 	    }
 		@Override

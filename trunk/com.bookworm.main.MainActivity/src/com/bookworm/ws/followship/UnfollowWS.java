@@ -1,4 +1,4 @@
-package com.bookworm.ws.book;
+package com.bookworm.ws.followship;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
@@ -19,17 +19,14 @@ import com.bookworm.model.Book;
 import com.bookworm.model.BookLike;
 import com.google.gson.Gson;
 
-public class GetBookInfoWS extends
-		AsyncTask<String, Void, Book> {
+public class UnfollowWS extends
+		AsyncTask<String, Void, Void> {
 
 	@Override
-	protected Book doInBackground(String... url) {
+	protected Void doInBackground(String... url) {
 
-		 return GET(url[0]);
-	}
-
-	@Override
-	protected void onPostExecute(Book result) {
+		 GET(url[0]);
+		return null;
 	}
 
 	public static Book GET(String url) {
@@ -40,19 +37,21 @@ public class GetBookInfoWS extends
 
 			// create HttpClient
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpGet get = new HttpGet(url);
+
+			HttpDelete delete = new HttpDelete(url);
 			
-			get.setHeader("Accept", "application/json");
-			get.setHeader("Content-Type", "application/json");
+			delete.setHeader("Accept", "application/json");
+			delete.setHeader("Content-Type", "application/json");
             
             //credentials
             String credentials = ApplicationConstants.signed_in_email + ":" + ApplicationConstants.signed_in_password;  
             String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
-            get.addHeader("Authorization", "Basic " + base64EncodedCredentials);
+            delete.addHeader("Authorization", "Basic " + base64EncodedCredentials);
 			
 			// make GET request to the given URL
-			HttpResponse httpResponse = httpclient.execute(get);
-
+			HttpResponse httpResponse = httpclient.execute(delete);
+			
+			
 			// receive response as inputStream
 			inputStream = httpResponse.getEntity().getContent();
 			
@@ -66,6 +65,6 @@ public class GetBookInfoWS extends
 			e.getLocalizedMessage();
 		}
 
-		return gson.fromJson(result, Book.class);
+		return null;
 	}
 }

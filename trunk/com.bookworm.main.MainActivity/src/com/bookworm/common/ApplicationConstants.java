@@ -163,9 +163,12 @@ public class ApplicationConstants {
 	public static final String WS_OPERATION_SAVE			="SAVE";
 	public static final String WS_OPERATION_UPDATE			="UPDATE";
 	public static final String WS_OPERATION_DELETE			="DELETE";
+	public static final String WS_OPERATION_UNFOLLOW		="UNFOLLOW";
+	public static final String WS_OPERATION_FOLLOW			="FOLLOW";
 	public static final String WS_OPERATION_SEND_RESET_TOKEN			="SEND_RESET_TOKEN";
 	public static final String WS_OPERATION_RESET_PASSWORD			="RESET_PASSWORD";
 	public static final String WS_OPERATION_IS_USER_EXIST			="IS_USER_EXIST";
+	public static final String WS_OPERATION_LIST_COMMENTED_BOOKS	="LIST_COMMENTED_BOOKS";
 	
 	public static final String ORDER_BY_DIRECTION_ASCENDING  ="ASC";
 	public static final String ORDER_BY_DIRECTION_DESCENDING ="DESC";
