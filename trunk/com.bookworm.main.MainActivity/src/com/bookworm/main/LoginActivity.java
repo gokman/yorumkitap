@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.util.Validation;
 import com.bookworm.ws.user.LoginWS;
+
 public class LoginActivity extends ActivityBase implements OnClickListener {
 
 	static String resultEmail;
@@ -151,7 +152,7 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 					ApplicationConstants.signed_in_email=loginResult.substring(loginResult.indexOf(":")+1,loginResult.indexOf(":",loginResult.indexOf(":")+1));
 					ApplicationConstants.signed_in_username=loginResult.substring(loginResult.indexOf(":",loginResult.indexOf(":")+1)+1,loginResult.lastIndexOf(":"));
 					ApplicationConstants.signed_in_userid=Long.parseLong(loginResult.substring(loginResult.lastIndexOf(":")+1));
-					ApplicationConstants.signed_in_password=_password.toString();
+					ApplicationConstants.signed_in_password=_password.getText().toString();
 					
 					Intent mainPageIntent = new Intent(getApplicationContext(),
 							MainActivity.class);

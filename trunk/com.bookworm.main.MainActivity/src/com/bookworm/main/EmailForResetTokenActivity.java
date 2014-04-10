@@ -36,14 +36,14 @@ public class EmailForResetTokenActivity extends ActivityBase {
 		sendButton=(Button)findViewById(R.id.SendEmailforResetPass);
 		explain=(TextView)findViewById(R.id.explainForEmailResetToken);
 		
-		 emaill.addTextChangedListener(new TextWatcher() {
+		emaill.addTextChangedListener(new TextWatcher() {
 	            // after every change has been made to this editText, we would like to check validity
 	            public void afterTextChanged(Editable s) {
 	                Validation.isEmailValid(emaill);
 	            }
 	            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 	            public void onTextChanged(CharSequence s, int start, int before, int count){}
-	        });
+	    });
 		
 		
 		sendButton.setOnClickListener(new View.OnClickListener() {
@@ -92,13 +92,10 @@ public class EmailForResetTokenActivity extends ActivityBase {
 	
 	private boolean checkValidation(){
 		
-		
 		if(!Validation.isEmailValid(emaill)){
 		    return false;
 		}
-		
-		
-		return true;
+		    return true;
 	}
 	
 	public boolean isUserExist(User user) throws InterruptedException, ExecutionException{
