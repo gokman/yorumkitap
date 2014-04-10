@@ -99,7 +99,7 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 		        pageNumber++;
 				ApplicationUtil.addListToMainBookListView(latestBooks, latestBooksList);
 				latestBooksListView.invalidate();
-			        ((LazyAdapter) latestBooksListView.getAdapter()).notifyDataSetChanged(); 
+			    ((LazyAdapter)latestBooksListView.getAdapter()).notifyDataSetChanged(); 
 			}
 		});		
 		
