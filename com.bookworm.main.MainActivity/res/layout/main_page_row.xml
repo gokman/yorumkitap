@@ -66,12 +66,6 @@
         android:textColor="#10bcc9"
         android:textStyle="bold"/>
     
-    <TextView
-        android:id="@+id/bookIdHiddenLeft"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
-    
 <View   android:id="@+id/firstDivider"
         android:layout_height="0.5dp"
         android:layout_width="fill_parent"
@@ -144,11 +138,6 @@
         android:textSize="10dip"
         android:textStyle="bold" />
     
-    <TextView
-        android:id="@+id/bookIdHiddenRight"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
 
 <View   android:id="@+id/secondDivider"
         android:layout_height="0.5dp"
