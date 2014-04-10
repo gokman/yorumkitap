@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.util.Base64;
 
+import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.Utils;
 import com.bookworm.model.Book;
 import com.bookworm.model.Hashtag;
@@ -50,7 +51,7 @@ public class ListBooksWS extends
             post.setHeader("Accept", "application/json");
             post.setHeader("Content-Type", "application/json");
             
-            //credentials
+            //credentials  
             String credentials = username + ":" + pword;  
             String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
             post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
