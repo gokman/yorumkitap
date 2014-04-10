@@ -49,7 +49,6 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 	private TextView bookTags;
 	private TextView userName;
 	private ImageView bookCover;
-	private ImageView likeImage;
 	private ImageView commentImage;
 	private ImageView profileImage;
 	private String coverPhotoUrl;
@@ -59,7 +58,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 	private TextView likeBook;
 	private Long bookId;
 	private Long adderId;
-	private LinearLayout profileLayout;
+	//private LinearLayout profileLayout;
 	private String currentUser;
 	Book addedBook; 
 	
@@ -68,26 +67,27 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		
 		setContentView(R.layout.book_detail);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
 				R.layout.window_title);
 
 		imageLoader = new ImageLoader(this.getApplicationContext());
 		bookTitle = (TextView) findViewById(R.id.bookNameText);
-		bookWriter = (TextView) findViewById(R.id.writer);
+		bookWriter = (TextView) findViewById(R.id.writerName);
 		bookDescription = (TextView) findViewById(R.id.sh_description);
 		bookTags = (TextView) findViewById(R.id.tags);
 		bookCover = (ImageView) findViewById(R.id.newbookImg);
 		profileImage = (ImageView) findViewById(R.id.profileImg);
 		userName = (TextView) findViewById(R.id.userName);
-		likeImage = (ImageView) findViewById(R.id.like_button);
 		commentImage = (ImageView)findViewById(R.id.comment_button);
-		profileLayout = (LinearLayout) findViewById(R.id.profileLayout);
+	//	profileLayout = (LinearLayout) findViewById(R.id.profileLayout);
+	
 		likeBook = (TextView) findViewById(R.id.btnLikeBook);
 		
 		Intent myIntent = getIntent();
-		bookId = myIntent.getLongExtra((ApplicationConstants.book_id), 0);
-		adderId = myIntent.getLongExtra(ApplicationConstants.book_adderId,0);
+		bookId = myIntent.getLongExtra((ApplicationConstants.book_id), 2);
+		adderId = myIntent.getLongExtra(ApplicationConstants.book_adderId, 2);
 		List<BookLike> likes = null;
 
 		try {
@@ -110,16 +110,16 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 					tagString += ApplicationConstants.SPACE + tag.getTag();
 				}
 				bookTags.setText(tagString);
-				userName.setText("f2");
+				userName.setText(ApplicationConstants.signed_in_username);
 				//TODO current user
-				profileLayout.setOnClickListener(new View.OnClickListener() {
+				/*profileLayout.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						 Intent profileIntent = new Intent(v.getContext(),ProfileActivity.class);
 						 profileIntent.putExtra(ApplicationConstants.userEmailParam,addedBook.getAdderId());
 						 startActivity(profileIntent);
 						
 					}
-				});
+				});*/
 	//				 bookCover.setImageBitmap(bitmap);
 	
 	//			NetmeraService userService = new NetmeraService(ApplicationConstants.user);
@@ -146,16 +146,6 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 						 v.getContext().startActivity(addCommentIntent);
 					}
 				});
-				
-				likeImage.setOnClickListener(new View.OnClickListener() {
-					
-					public void onClick(View v) {
-						//TODO like event
-						
-						
-					}
-				});
-				
 				
 				likeBook.setOnClickListener(new View.OnClickListener() {
 	
