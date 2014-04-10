@@ -52,7 +52,11 @@ public class LazyAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
         if(convertView==null)
+        	try{
             vi = inflater.inflate(R.layout.main_page_row, null);
+        	}catch(Exception e){
+        		System.out.println(e.toString());
+        	}
         
       
         TextView titleLeft = (TextView)vi.findViewById(R.id.book_title_left); 
@@ -81,7 +85,6 @@ public class LazyAdapter extends BaseAdapter {
         imageLoader.DisplayImage(book.get(MainActivity.KEY_COVER_LEFT), image_left);
         
 
-		 
         titleLeft.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View paramView) {
 	         bookDetailIntent = new Intent(paramView.getContext(),BookDetailActivity.class);
