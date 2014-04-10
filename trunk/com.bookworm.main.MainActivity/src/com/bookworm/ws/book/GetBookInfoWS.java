@@ -37,7 +37,6 @@ public class GetBookInfoWS extends
 		Gson gson = new Gson();
 		String result = ApplicationConstants.EMPTY_STRING;
 		try {
-
 			// create HttpClient
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpGet get = new HttpGet(url);
