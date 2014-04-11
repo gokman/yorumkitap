@@ -11,26 +11,27 @@ import java.util.Date;
  */
 public class Action implements java.io.Serializable {
 
-	private ActionType actionType;
+	private Long actionType;
 	private Long  userId;
 	private Long  actionId;
 	private Date actionDate;
+	private Long actionDateinMS;
 	private Long actionDetailId;
 	public Action() {
 	}
 
-	public Action(ActionType actionType, Long  userId,Long actionDetailId) {
+	public Action(Long actionType, Long  userId,Long actionDetailId) {
 		this.actionType = actionType;
 		this.userId = userId;
 		this.actionDetailId = actionDetailId;
 	}
 
 
-	public ActionType getActionType() {
+	public Long getActionType() {
 		return actionType;
 	}
 
-	public void setActionType(ActionType actionType) {
+	public void setActionType(Long actionType) {
 		this.actionType = actionType;
 	}
 
@@ -65,5 +66,14 @@ public class Action implements java.io.Serializable {
 	public void setActionDetailId(Long actionDetailId) {
 		this.actionDetailId = actionDetailId;
 	}
+
+	public Long getActionDateinMS() {
+		return actionDateinMS;
+	}
+
+	public void setActionDateinMS(Long actionDateinMS) {
+		this.actionDateinMS = actionDateinMS;
+	}
+	
 
 }

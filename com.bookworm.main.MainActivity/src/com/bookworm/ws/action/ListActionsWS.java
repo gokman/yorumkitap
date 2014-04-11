@@ -85,7 +85,7 @@ public class ListActionsWS extends
 				Action action = new Action();
 				action.setActionId(obj.getLong("actionId"));
 				action.setActionDate(new Date());
-				action.setActionType(ActionType.getActionFromString(obj.getString("actionType")));
+				action.setActionType(obj.getLong("actionType"));
 				action.setUserId(obj.getLong("userId"));
 				action.setActionDetailId(obj.getLong("actionDetailId"));
 				resultList.add(action);

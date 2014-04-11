@@ -25,7 +25,7 @@ public class AddActionWS extends AsyncTask<Object, Void, Action> {
 		
         @Override
         protected Action doInBackground(Object... args) {
-        	return POST((String)args[0],(Action)args[1]);
+        	return POST((String)args[0],(Action)args[1],(String)args[2],(String)args[3]);
         }
         
         @Override
@@ -33,7 +33,7 @@ public class AddActionWS extends AsyncTask<Object, Void, Action> {
 
 					
        }
-    	public static Action POST(String url,Action action){
+    	public static Action POST(String url,Action action,String username,String password){
 
     	       InputStream inputStream = null;
     	        String result = "";
@@ -48,7 +48,7 @@ public class AddActionWS extends AsyncTask<Object, Void, Action> {
     	            post.setHeader("Content-Type", "application/json");
     	            
     	            //credentials
-    	            String credentials = "gokman" + ":" + "kocaman";  
+    	            String credentials = username + ":" + password;  
     	            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
     	            post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
     	            
@@ -56,7 +56,7 @@ public class AddActionWS extends AsyncTask<Object, Void, Action> {
                     JSONObject jsonum=new JSONObject();
                     jsonum.put("actionType", action.getActionType());
                     jsonum.put("userId", action.getUserId());
-                    jsonum.put("actionDate", action.getActionDate());
+                    jsonum.put("actionDateinMS", new Date().getTime());
                     jsonum.put("actionDetailId", action.getActionDetailId());
     	            StringEntity sampleEntity=new StringEntity(jsonum.toString());
                     sampleEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -76,7 +76,7 @@ public class AddActionWS extends AsyncTask<Object, Void, Action> {
     					actionReturned = new Action();
     					actionReturned.setActionId(obj.getLong("actionId"));
     					actionReturned.setActionDate(new Date(obj.getLong("actionDate")));
-    					actionReturned.setActionType(ActionType.getActionFromString(obj.getString("actionType")));
+    					actionReturned.setActionType(obj.getLong("actionType"));
     					actionReturned.setUserId(obj.getLong("userId"));
     					actionReturned.setActionDetailId(obj.getLong("actionDetailId"));
     	            
