@@ -82,4 +82,17 @@
         <item name="android:textStyle">bold</item>
     </style>
     
+    <!-- book detail styles -->
+    <style name="bookTitle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="bookLikeButton">
+        <item name="android:textColor">#B40431</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
 </resources>     
