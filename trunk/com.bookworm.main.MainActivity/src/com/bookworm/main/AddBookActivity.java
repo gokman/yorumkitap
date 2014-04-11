@@ -114,8 +114,11 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 
 //				    
 //				    //TODO action tablo kaydı
-				    Action addBookAction = new Action(ActionType.ADD_BOOK, ApplicationConstants.signed_in_userid,book.getBookId()); 
-				    addBookAction = new AddActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,addBookAction).get();
+				    Action addBookAction = new Action(ActionType.ADD_BOOK.asCode(), ApplicationConstants.signed_in_userid,book.getBookId()); 
+				    addBookAction = new AddActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,
+				    		addBookAction,
+				    		ApplicationConstants.signed_in_email,
+				    		ApplicationConstants.signed_in_password).get();
 
 			    	String bookTagsText = bookTags.getText().toString();
 			    	Matcher matcher = TAG_PATTERN.matcher(bookTagsText);

@@ -1,20 +1,19 @@
 package com.bookworm.main;
 
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_ACTION;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_BOOK;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_FOLLOWSHIP;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_USER;
 import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
-import static com.bookworm.common.ApplicationConstants.WS_OPERATION_GET_BY_ID;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_ADD;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_COMMENTED_BOOKS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_FOLLOWSHIPS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_UNFOLLOW;
-import static com.bookworm.common.ApplicationConstants.WS_OPERATION_ADD;
-import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_COMMENTED_BOOKS;
-
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_DELETE;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -31,10 +30,14 @@ import android.widget.TextView;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.ImageLoader;
+import com.bookworm.model.Action;
+import com.bookworm.model.ActionType;
 import com.bookworm.model.Book;
 import com.bookworm.model.Followship;
 import com.bookworm.model.User;
 import com.bookworm.util.SearchCriteria;
+import com.bookworm.ws.action.AddActionWS;
+import com.bookworm.ws.action.DeleteActionWS;
 import com.bookworm.ws.book.GetCommentedBooksWS;
 import com.bookworm.ws.book.ListBooksWS;
 import com.bookworm.ws.followship.AddFollowshipWS;
@@ -55,13 +58,6 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 	private ImageView imgProfileImage;
 	private Button btnAddedBooks;
 	private Button btnCommentedBooks;
-//	private List<NetmeraContent> commentedBooks;
-//	private List<NetmeraContent> followersTransactionList;
-//	private List<NetmeraContent> followingTransactionList;
-//	private List<NetmeraContent> followersList;
-//	private List<NetmeraContent> booksAddedByUser;
-//	private List<NetmeraContent> followedUsers; 
-//	private List<NetmeraContent> followingUsers;
 	private ImageView statusView;
 
 	private Long followshipStatus; 
@@ -209,19 +205,13 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-
+ 
 			    		if(infollowList!=null && infollowList.size() > 0){ 						//Unfollow Action
 							try {
 
 								new UnfollowWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_UNFOLLOW+"/"+currentUserId+"/"+profileUserId).get();
-								
-//								//action sil
-//								NetmeraService servicerAction=new NetmeraService(ApplicationConstants.action);
-//								servicerAction.whereEqual(ApplicationConstants.action_follower_id, currentUserEmail);
-//								servicerAction.whereEqual(ApplicationConstants.action_followed_id, userEmail);
-//								NetmeraContent contentAction=new SelectDataTask(ProfileActivity.this).execute(servicerAction).get().get(0);
-//								new DeletetDataTask().execute(contentAction).get();
-//								
+								new DeleteActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_DELETE+"/"+currentUserId+"/"+profileUserId).get();								
+
 								statusView.setImageResource(R.drawable.follow);	
 
 //								follower sayisini simdilik +1 olarak degistiriyoruz.								
@@ -235,15 +225,19 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 							Followship fw = new Followship(currentUserId, profileUserId, new Date());
 
 							try {
-								fw = new AddFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_ADD,fw).get();								
+								fw = new AddFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"+WS_OPERATION_ADD,
+										fw,
+							    		ApplicationConstants.signed_in_email,
+							    		ApplicationConstants.signed_in_password
+							    		).get();								
 
+							    Action addFollowAction = new Action(ActionType.FOLLOW.asCode(), currentUserId,profileUserId); 
+							    addFollowAction = new AddActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,
+							    		addFollowAction,
+							    		ApplicationConstants.signed_in_email,
+							    		ApplicationConstants.signed_in_password
+							    		).get();								
 								
-//								action.add(ApplicationConstants.ACTION_TYPE, ApplicationConstants.ACTION_TYPE_FOLLOW);
-//								action.add(ApplicationConstants.action_follower_id, currentUserEmail);
-//								action.add(ApplicationConstants.action_followed_id, userEmail);
-//								action.add(ApplicationConstants.ACTION_OWNER, NetmeraUser.getCurrentUser().getEmail());
-//								new InsertDataTask().execute(action).get();
-
 								txtFollowersCount.setText(new Long(followers.size()+1).toString());
 								
 								statusView.setImageResource(R.drawable.following);	

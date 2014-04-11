@@ -24,7 +24,7 @@ public class AddBookWS extends AsyncTask<Object, Void, Book> {
 		
         @Override
         protected Book doInBackground(Object... args) {
-        	return POST((String)args[0],(Book)args[1]);
+        	return POST((String)args[0],(Book)args[1],(String)args[2],(String)args[3]);
         }
         
         @Override
@@ -32,7 +32,7 @@ public class AddBookWS extends AsyncTask<Object, Void, Book> {
 
 					
        }
-    	public static Book POST(String url,Book book){
+    	public static Book POST(String url,Book book,String username,String password){
 
     	       InputStream inputStream = null;
     	        Book resultBook =null;
@@ -47,7 +47,7 @@ public class AddBookWS extends AsyncTask<Object, Void, Book> {
     	            post.setHeader("Content-Type", "application/json");
     	            
     	            //credentials
-    	            String credentials = "gokman" + ":" + "kocaman";  
+    	            String credentials = username + ":" + password;  
     	            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
     	            post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
     	            

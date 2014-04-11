@@ -22,7 +22,7 @@ public class AddFollowshipWS extends AsyncTask<Object, Void, Followship> {
 		
         @Override
         protected Followship doInBackground(Object... args) {
-        	return POST((String)args[0],(Followship)args[1]);
+        	return POST((String)args[0],(Followship)args[1],(String)args[2],(String)args[3]);
         }
         
         @Override
@@ -30,7 +30,7 @@ public class AddFollowshipWS extends AsyncTask<Object, Void, Followship> {
 
 					
        }
-    	public static Followship POST(String url,Followship followship){
+    	public static Followship POST(String url,Followship followship,String username,String password){
 
     	        InputStream inputStream = null;
     	        Followship resultFollowship =null;
@@ -45,7 +45,7 @@ public class AddFollowshipWS extends AsyncTask<Object, Void, Followship> {
     	            post.setHeader("Content-Type", "application/json");
     	            
     	            //credentials
-    	            String credentials = "gokman" + ":" + "kocaman";  
+    	            String credentials = username + ":" + password;  
     	            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
     	            post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
      	            

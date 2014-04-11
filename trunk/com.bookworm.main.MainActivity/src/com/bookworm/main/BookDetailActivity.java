@@ -111,6 +111,22 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 				}
 				bookTags.setText(tagString);
 				userName.setText(ApplicationConstants.signed_in_username);
+				bookWriter.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						 Intent profileIntent = new Intent(v.getContext(),ProfileActivity.class);
+						 profileIntent.putExtra(ApplicationConstants.userEmailParam,addedBook.getAdderId());
+						 startActivity(profileIntent);
+						
+					}
+				});
+				profileImage.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						 Intent profileIntent = new Intent(v.getContext(),ProfileActivity.class);
+						 profileIntent.putExtra(ApplicationConstants.userEmailParam,addedBook.getAdderId());
+						 startActivity(profileIntent);
+						
+					}
+				});
 				//TODO current user
 				/*profileLayout.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {

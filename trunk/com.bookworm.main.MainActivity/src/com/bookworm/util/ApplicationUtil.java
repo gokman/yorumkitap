@@ -41,7 +41,7 @@ public class ApplicationUtil {
          try{
 			HashMap<String,String> tempMap=new HashMap<String, String>();
 			for(int i=0;i<actionList.size();i++){
-				if(actionList.get(i).getActionType().equals(ActionType.ADD_BOOK)){
+				if(actionList.get(i).getActionType() == ActionType.ADD_BOOK.asCode()){
 					
 					Action addBookAction =actionList.get(i);
 					Book book  = new GetBookInfoWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"
@@ -59,7 +59,7 @@ public class ApplicationUtil {
 					map.put(ApplicationConstants.CREATE_DATE, ApplicationConstants.dateFormat.format(addBookAction.getActionDate()).toString());
 					actionListToView.add(map);
 					
-				}else if (actionList.get(i).getActionType().equals(ActionType.ADD_COMMENT)){
+				}else if (actionList.get(i).getActionType()==ActionType.ADD_COMMENT.asCode()){
 
 					Action addCommentAction =actionList.get(i);
 					Comment comment = new GetCommentWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"
@@ -76,7 +76,7 @@ public class ApplicationUtil {
 					tempMap.put(ApplicationConstants.TYPE_COMMENTEDBOOKOWNER,commentedBook.getAdderId().toString());
 					actionListToView.add(tempMap);
 
-				}else if (actionList.get(i).getActionType().equals(ActionType.FOLLOW)){
+				}else if (actionList.get(i).getActionType() == ActionType.FOLLOW.asCode()){
 					Action action =actionList.get(i);
 					Followship followship = new GetFollowshipWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_FOLLOWSHIP+"/"
 							+WS_OPERATION_GET_BY_ID+"/"+action.getActionDetailId()).get();
