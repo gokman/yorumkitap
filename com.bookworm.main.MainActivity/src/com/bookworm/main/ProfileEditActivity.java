@@ -1,47 +1,33 @@
 package com.bookworm.main;
 
-import java.io.ByteArrayOutputStream;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_USER;
+import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_UPDATE;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.hardware.Camera;
-import android.hardware.Camera.Size;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
-//import com.bookworm.common.DeletetDataTask;
-//import com.bookworm.common.GetNetmerMediaTask;
 import com.bookworm.common.ImageLoader;
-//import com.bookworm.common.InsertDataTask;
-//import com.bookworm.common.SelectDataTask;
-//import com.bookworm.common.UpdateDataTask;
-//import com.netmera.mobile.NetmeraClient;
-//import com.netmera.mobile.NetmeraContent;
-//import com.netmera.mobile.NetmeraMedia;
-//import com.netmera.mobile.NetmeraService;
-//import com.netmera.mobile.util.HttpUtils;
+import com.bookworm.model.User;
+import com.bookworm.util.SearchCriteria;
+import com.bookworm.ws.user.ListUsersWS;
+import com.bookworm.ws.user.UpdateUserWS;
 
 public class ProfileEditActivity extends ActivityBase implements OnClickListener{
 
@@ -57,18 +43,15 @@ public class ProfileEditActivity extends ActivityBase implements OnClickListener
 	private Button btnUpdate;
     private static final int REQUEST_ID = 1;
     private static final int HALF = 2;
-   // private NetmeraContent user;
     private Uri profilePhotoUri; 
+    private User user ;
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	/*
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.profile_edit);
 
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);        
-
-		//NetmeraClient.init(this, apiKey);
 
 		imageLoader=new ImageLoader(this.getApplicationContext());
 
@@ -78,32 +61,28 @@ public class ProfileEditActivity extends ActivityBase implements OnClickListener
         btnBrowse = (Button)findViewById(R.id.btnBrowse);
         btnUpdate = (Button)findViewById(R.id.btnUpdateProfile);
         
-		Intent myIntent = getIntent();
-		user_param = myIntent.getStringExtra(ApplicationConstants.userEmailParam);
-
-		
+		SearchCriteria sc = new SearchCriteria();
+		sc.setUserId(ApplicationConstants.signed_in_userid);
+		List<User> usersList;
+		try {
+			usersList = new ListUsersWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_LIST+"/",
+					sc,
+					ApplicationConstants.signed_in_email,
+					ApplicationConstants.signed_in_password
+					).get();
+			
+        user = usersList.get(0);
         
-        NetmeraService service = new NetmeraService(ApplicationConstants.user);
-        service.whereEqual(ApplicationConstants.user_email, user_param);
-        try{
-        	List<NetmeraContent > userList = new SelectDataTask(ProfileEditActivity.this).execute(service).get();
-        	user = userList.get(0);
-        	user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
-        	
-        	txtUsername.setText(user.get(ApplicationConstants.user_username).toString());
-        	txtAbout.setText(user.get(ApplicationConstants.user_about).toString());
-        	String profilePhotoURL = new GetNetmerMediaTask().execute(user).get();
-        	if(profilePhotoURL!=null && !profilePhotoURL.equals("") && !profilePhotoURL.equals("-")){
-        		imageLoader.DisplayImage(profilePhotoURL, imgProfilePhoto);
-        	}else{
+        
+        	txtUsername.setText(user.getUserName());
+        	txtAbout.setText(user.getAbout());
+//        	String profilePhotoURL = new GetNetmerMediaTask().execute(user).get();
+//        	if(profilePhotoURL!=null && !profilePhotoURL.equals("") && !profilePhotoURL.equals("-")){
+//        		imageLoader.DisplayImage(profilePhotoURL, imgProfilePhoto);
+//        	}else{
         		imgProfilePhoto.setImageResource(R.drawable.no_image);
-        	}
+//        	}
         	
-        }catch(Exception ex ){
-        	ex.printStackTrace();
-        }
-        
-        
         btnBrowse.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View paramView) {
@@ -121,24 +100,18 @@ public class ProfileEditActivity extends ActivityBase implements OnClickListener
 			
 			public void onClick(View paramView) {
 				try{
-					NetmeraContent newUser = new NetmeraContent(ApplicationConstants.user);
-					newUser.add(ApplicationConstants.user_about, txtAbout.getText().toString());
-					newUser.add(ApplicationConstants.user_username, txtUsername.getText().toString());
-					newUser.add(ApplicationConstants.user_email,user.get(ApplicationConstants.user_email).toString());
-					newUser.add(ApplicationConstants.generic_property,ApplicationConstants.user_userProfile);
+					user.setAbout(txtAbout.getText().toString());
+					user.setUserName(txtUsername.getText().toString());
+					user.setUserId(ApplicationConstants.signed_in_userid);
+					new UpdateUserWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_UPDATE,
+							user,
+							ApplicationConstants.signed_in_email,
+							ApplicationConstants.signed_in_password
+							).get();
 					
-					Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), profilePhotoUri);
-					ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		    		bitmap.compress(CompressFormat.PNG, 0, bos);
-
-		    		NetmeraMedia profilePhoto = new NetmeraMedia(bos.toByteArray());
-		    		newUser.add(ApplicationConstants.user_userProfile, profilePhoto);
-					
-		    		new InsertDataTask().execute(newUser).get();
-					new DeletetDataTask().execute(user).get();
 					
 					Intent profileIntent = new Intent(getApplicationContext(), ProfileActivity.class);
-					profileIntent.putExtra(ApplicationConstants.userEmailParam,newUser.get(ApplicationConstants.user_email).toString());
+					profileIntent.putExtra(ApplicationConstants.userEmailParam,ApplicationConstants.signed_in_userid);
 		    		startActivity(profileIntent);
 				}catch(Exception ex){
 					ex.printStackTrace();
@@ -146,12 +119,20 @@ public class ProfileEditActivity extends ActivityBase implements OnClickListener
 				
 			}
 		});
-        */
+        
         
         /**
          * footer buttons
          */
         setNavigationButtons();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
     }
 	public void onClick(View v) {
 		
