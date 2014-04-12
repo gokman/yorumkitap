@@ -61,12 +61,12 @@ public class LazyAdapter extends BaseAdapter {
       
         TextView titleLeft = (TextView)vi.findViewById(R.id.book_title_left); 
         TextView descLeft = (TextView)vi.findViewById(R.id.desc_left); 
-        TextView bookAdderIdLeft = (TextView)vi.findViewById(R.id.book_adder_id_left); 
+        TextView bookAdderIdLeft = (TextView)vi.findViewById(R.id.book_adder_name_left); 
         ImageView image_left =(ImageView)vi.findViewById(R.id.list_imageLeft);
         
         TextView titleRigth = (TextView)vi.findViewById(R.id.book_title_right); 
         TextView descRight = (TextView)vi.findViewById(R.id.desc_right); 
-        TextView bookAdderIdRight = (TextView)vi.findViewById(R.id.book_adder_id_right); 
+        TextView bookAdderIdRight = (TextView)vi.findViewById(R.id.book_adder_name_right); 
         ImageView image_right =(ImageView)vi.findViewById(R.id.list_imageRight);
         
         LinearLayout layoutRight = (LinearLayout)vi.findViewById(R.id.coverRight);
@@ -81,7 +81,7 @@ public class LazyAdapter extends BaseAdapter {
         // Setting all values in listview
         titleLeft.setText(book.get(MainActivity.KEY_BOOK_TITLE_LEFT));
         descLeft.setText(book.get(MainActivity.KEY_DESC_LEFT));
-        bookAdderIdLeft.setText(book.get(MainActivity.KEY_BOOK_ADDER_ID_LEFT));
+        bookAdderIdLeft.setText(book.get(MainActivity.KEY_BOOK_ADDER_NAME_LEFT));
         imageLoader.DisplayImage(book.get(MainActivity.KEY_COVER_LEFT), image_left);
         
 
@@ -121,7 +121,7 @@ public class LazyAdapter extends BaseAdapter {
         if(book.containsKey(MainActivity.KEY_BOOK_TITLE_RIGHT)){
 	        titleRigth.setText(book.get(MainActivity.KEY_BOOK_TITLE_RIGHT));
 	        descRight.setText(book.get(MainActivity.KEY_DESC_RIGHT));
-	        bookAdderIdRight.setText(book.get(MainActivity.KEY_BOOK_ADDER_ID_RIGHT));
+	        bookAdderIdRight.setText(book.get(MainActivity.KEY_BOOK_ADDER_NAME_RIGHT));
 	        imageLoader.DisplayImage(book.get(MainActivity.KEY_COVER_RIGHT), image_right);
     		titleRigth.setVisibility(View.VISIBLE);
     		descRight.setVisibility(View.VISIBLE);
