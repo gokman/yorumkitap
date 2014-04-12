@@ -23,10 +23,12 @@ import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.LazyAdapter;
+import com.bookworm.custom.object.CustomBook;
 import com.bookworm.model.Book;
 import com.bookworm.util.ApplicationUtil;
 import com.bookworm.util.SearchCriteria;
 import com.bookworm.ws.book.ListBooksWS;
+import com.bookworm.ws.book.ListCustomBooksWS;
 
 public class MainActivity extends ActivityBase implements OnClickListener {
 
@@ -37,7 +39,7 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 	private LazyAdapter adapter;
 	private ArrayList<HashMap<String, String>> latestBooksList = new ArrayList<HashMap<String,String>>();
 	private TextView bookListNextButton;
-	List<Book> latestBooks = Collections.emptyList();
+	List<CustomBook> latestCustomBooks = Collections.emptyList();
 	
 
 	/** Called when the activity is first created. */
@@ -59,7 +61,7 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 		sc.setOrderByCrit(GENERAL_COLUMN_NAME);
         sc.setOrderByDrc(ORDER_BY_DIRECTION_DESCENDING);
 		try {
-			latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST,
+			latestCustomBooks = new ListCustomBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_CUSTOMLIST,
 					sc,
 					ApplicationConstants.signed_in_email,
 					ApplicationConstants.signed_in_password
@@ -71,7 +73,7 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 		}							
         pageNumber++;
 
-		ApplicationUtil.addListToMainBookListView(latestBooks, latestBooksList);
+		ApplicationUtil.addListToMainCustomBookListView(latestCustomBooks, latestBooksList);
 
 		latestBooksListView = (ListView) findViewById(R.id.latest_books);
 
@@ -86,7 +88,7 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 				sc.setOrderByCrit(GENERAL_COLUMN_NAME);
 		        sc.setOrderByDrc(ORDER_BY_DIRECTION_DESCENDING);
 				try {
-					latestBooks = new ListBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST+"/",
+					latestCustomBooks = new ListCustomBooksWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_CUSTOMLIST+"/",
 							sc,
 							ApplicationConstants.signed_in_email,
 							ApplicationConstants.signed_in_password
@@ -97,7 +99,7 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 					e.printStackTrace();
 				}							
 		        pageNumber++;
-				ApplicationUtil.addListToMainBookListView(latestBooks, latestBooksList);
+				ApplicationUtil.addListToMainCustomBookListView(latestCustomBooks, latestBooksList);
 				latestBooksListView.invalidate();
 			    ((LazyAdapter)latestBooksListView.getAdapter()).notifyDataSetChanged(); 
 			}
