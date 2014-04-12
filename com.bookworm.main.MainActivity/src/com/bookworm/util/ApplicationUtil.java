@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bookworm.common.ApplicationConstants;
+import com.bookworm.custom.object.CustomBook;
 import com.bookworm.main.ActivityBase;
 import com.bookworm.model.Action;
 import com.bookworm.model.ActionType;
@@ -121,6 +122,41 @@ public class ApplicationUtil {
 				map.put(ActivityBase.KEY_BOOK_TITLE_RIGHT, tempBook2.getName());
 				map.put(ActivityBase.KEY_DESC_RIGHT, tempBook2.getDescription());
 				map.put(ActivityBase.KEY_BOOK_ADDER_ID_RIGHT, tempBook2.getAdderId().toString());
+			}
+
+			mainListToView.add(map);
+		}
+	}
+	
+	public static void addListToMainCustomBookListView(List<CustomBook> mainBookList,ArrayList<HashMap<String, String>> mainListToView){
+
+		//latestBooksList = new ArrayList<HashMap<String, String>>();
+		for (int i = 0; i < mainBookList.size(); i += 2) {
+			HashMap<String, String> map = new HashMap<String, String>();
+			CustomBook tempBook1 = mainBookList.get(i);
+//			String tem= tempBook1.get("Path").toString();
+//			String tem2 = tempBook1.get("path").toString();
+			CustomBook tempBook2 = null;
+			if (i != mainBookList.size() - 1) {
+				tempBook2 = mainBookList.get(i + 1);
+			}
+			
+//			String tempBook1CoverURL = new GetNetmerMediaTask().execute(tempBook1).get();//.getNetmeraMedia(ApplicationConstants.book_coverPhoto);
+			
+			map.put(ActivityBase.KEY_BOOK_ID_LEFT, tempBook1.getBookId().toString());
+			map.put(ActivityBase.KEY_COVER_LEFT, tempBook1.getCoverPhoto());
+			map.put(ActivityBase.KEY_BOOK_TITLE_LEFT, tempBook1.getName());
+			map.put(ActivityBase.KEY_DESC_LEFT, tempBook1.getDescription());
+			map.put(ActivityBase.KEY_BOOK_ADDER_ID_LEFT, tempBook1.getAdderId().toString());
+			map.put(ActivityBase.KEY_BOOK_ADDER_NAME_LEFT, tempBook1.getAdderName().toString());
+			if (tempBook2 != null) {
+//				String tempBook2CoverURL = new GetNetmerMediaTask().execute(tempBook2).get();//getNetmeraMedia(ApplicationConstants.book_coverPhoto);
+				map.put(ActivityBase.KEY_BOOK_ID_RIGHT, tempBook2.getBookId().toString());
+				map.put(ActivityBase.KEY_COVER_RIGHT, tempBook2.getCoverPhoto());
+				map.put(ActivityBase.KEY_BOOK_TITLE_RIGHT, tempBook2.getName());
+				map.put(ActivityBase.KEY_DESC_RIGHT, tempBook2.getDescription());
+				map.put(ActivityBase.KEY_BOOK_ADDER_ID_RIGHT, tempBook2.getAdderId().toString());
+				map.put(ActivityBase.KEY_BOOK_ADDER_NAME_RIGHT, tempBook2.getAdderName().toString());
 			}
 
 			mainListToView.add(map);
