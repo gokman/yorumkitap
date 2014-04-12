@@ -148,11 +148,11 @@ public class ApplicationConstants {
 	public static int timelineListStatus=1;
 	public static Date timelineLastDate=dateFormat.getCalendar().getTime();
 
-//	http://192.168.2.148:8080/booklet-ws/services
-	public static final String WS_ENDPOINT_ADRESS = "http://192.168.1.7:8080/booklet-ws/services";
+	public static final String WS_ENDPOINT_ADRESS = "http://192.168.1.6:8080/booklet-ws/services";
 	public static final String WS_OPERATION_GET_BY_ID		="GET_BY_ID";
 	public static final String WS_OPERATION_ADD				="ADD";
 	public static final String WS_OPERATION_LIST			="LIST";
+	public static final String WS_OPERATION_CUSTOMLIST			="CUSTOMLIST";
 	public static final String WS_OPERATION_LIST_LIKES		="LIST_LIKES";
 	public static final String WS_OPERATION_LIST_COMMENTS	="LIST_COMMENTS";
 	public static final String WS_OPERATION_LIST_BY_TEXT	="LIST_BY_TEXT";
