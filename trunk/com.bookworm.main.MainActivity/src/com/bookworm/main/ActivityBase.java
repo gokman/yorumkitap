@@ -60,9 +60,9 @@ public class ActivityBase extends Activity{
 	public static final String KEY_DESC_RIGHT = "descRight";
 	public static final String KEY_BOOK_ADDER_ID_RIGHT = "book_adder_id_right";
 	public static final String KEY_BOOK_ADDER_ID_LEFT = "book_adder_id_left";
-	public static final String KEY_BOOK_ID_RIGHT = "book_id_right";
-	public static final String KEY_BOOK_ID_HIDDEN_LEFT = "bookIdHiddenLeft";
-	public static final String KEY_BOOK_ID_HIDDEN_RIGHT = "bookIdHiddenRight";	
+	public static final String KEY_BOOK_ADDER_NAME_RIGHT = "book_adder_name_right";
+	public static final String KEY_BOOK_ADDER_NAME_LEFT = "book_adder_name_left";
+	public static final String KEY_BOOK_ID_RIGHT = "book_id_right";	
 	public void setNavigationButtons(){
 
         setExplore_button((ImageView)findViewById(R.id.explore_button));
