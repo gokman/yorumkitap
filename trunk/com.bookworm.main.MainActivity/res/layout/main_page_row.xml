@@ -54,7 +54,7 @@
  
     <!-- Rightend Duration -->
     <TextView
-        android:id="@+id/book_adder_id_left"
+        android:id="@+id/book_adder_name_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -126,7 +126,7 @@
     <!-- Rightend Duration -->
 
     <TextView
-        android:id="@+id/book_adder_id_right"
+        android:id="@+id/book_adder_name_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@id/book_title_right"
