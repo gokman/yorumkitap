@@ -76,7 +76,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 							).get();
 					makeAllInvisible();
 					//TODO user search 
-					applyDataToTable(usersList,ApplicationConstants.user_userProfile);
+					applyDataToTable(usersList);
 					
 					if(usersList.size()==0){
 						getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -118,7 +118,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 						}
 						
 						makeAllInvisible();
-						applyDataToTable(bookList,ApplicationConstants.book_coverPhoto);
+						applyDataToTable(bookList);
 						if(bookList.size()==0){
 							getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -169,7 +169,7 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
     }
 
     
-    private void applyDataToTable(List dataList,String imageProperty){
+    private void applyDataToTable(List dataList){
     	for(int k = 0 ; k < dataList.size() ; k++){
 //			content.add(ApplicationConstants.generic_property, imageProperty);
 			String textProperty = EMPTY_STRING;

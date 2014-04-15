@@ -7,7 +7,6 @@ import java.util.Date;
 public class ApplicationConstants {
 
 	//general table columns
-	public static final String GENERAL_COLUMN_CREATE_DATE="creationdate";
 	public static final String GENERAL_COLUMN_NAME="name";
 	public static final String GENERAL_COLUMN_ACTION_DATE="actionDate";
 	public static final String GENERAL_COLUMN_UPDATE_DATE="updatedate";
@@ -23,8 +22,8 @@ public class ApplicationConstants {
 	public static final int item_count_per_page = 12;
 	public static final int item_count_per_page_for_comments = 100;
 	public static final int item_count_per_page_for_explore_page = 15;
-	public static final int item_count_per_page_for_main_page = 2;
-	public static final int item_count_per_page_for_timeline_page = 1;
+	public static final int item_count_per_page_for_main_page = 10;
+	public static final int item_count_per_page_for_timeline_page = 10;
 	
 	//Tables
 	public static final String BOOKLET_ITEM_ACTION		= "Action";
@@ -36,14 +35,7 @@ public class ApplicationConstants {
 	public static final String BOOKLET_ITEM_FOLLOWSHIP 	= "Followship";
 	
 	//Book
-	public static final String book_name = "bookName";
-	public static final String book_desc = "desc";
 	public static final String book_adderId = "adderId";
-	public static final String book_writer = "writer";	
-	public static final String book_coverPhoto = "coverPhoto";
-	public static final String book_tags = "tags";
-	public static final String book_create_date = "Create Date";
-	public static final String book_owner="Owner";
 	public static final String book_id="bookId";
 	
 	//Comment
@@ -117,37 +109,11 @@ public class ApplicationConstants {
 	public static final String ACTION_TYPE="actionType";
 	public static final String ACTION_OWNER="actionOwner";
 	//book tablo hareketleri icin
-	public static final String action_book_name = "bookName";
-	public static final String action_book_desc = "desc";
-	public static final String action_book_adderId = "adderId";
-	public static final String action_book_writer = "writer";	
-	public static final String action_book_coverPhoto = "coverPhoto";
-	public static final String action_book_tags = "tags";
-	//comment tablo hareketleri için
-	public static final String action_comment_er = "commenterID";
-	public static final String action_comment_text = "commentText";	
-	public static final String action_comment_edBook = "commentedBookName";
-	public static final String action_comment_edBookOwner ="bookAdderId";
-	//follow tablo hareketleri için
-	public static final String action_follower_id="followerID";
-	public static final String action_followed_id="followedID";
-	
-	//action tipleri
-	public static final int ACTION_TYPE_BOOK=1;
-	public static final int ACTION_TYPE_COMMENT=2;
-	public static final int ACTION_TYPE_FOLLOW=3;
-	public static final int  ACTION_TYPE_LIKE=4;
-	
-	
-	
+
 	public static final String CREATE_DATE="CREATE_DATE";
 	
 	public final static SimpleDateFormat dateFormat=new SimpleDateFormat("hh:mm dd-MM-yyyy");
 	
-	//zaman tunelindeki sonraki dugmesinin degerini tutar
-	public static int timelineListStatus=1;
-	public static Date timelineLastDate=dateFormat.getCalendar().getTime();
-
 	public static final String WS_ENDPOINT_ADRESS = "http://192.168.1.6:8080/booklet-ws/services";
 	public static final String WS_OPERATION_GET_BY_ID		="GET_BY_ID";
 	public static final String WS_OPERATION_ADD				="ADD";
@@ -166,9 +132,9 @@ public class ApplicationConstants {
 	public static final String WS_OPERATION_DELETE			="DELETE";
 	public static final String WS_OPERATION_UNFOLLOW		="UNFOLLOW";
 	public static final String WS_OPERATION_FOLLOW			="FOLLOW";
-	public static final String WS_OPERATION_SEND_RESET_TOKEN			="SEND_RESET_TOKEN";
-	public static final String WS_OPERATION_RESET_PASSWORD			="RESET_PASSWORD";
-	public static final String WS_OPERATION_IS_USER_EXIST			="IS_USER_EXIST";
+	public static final String WS_OPERATION_SEND_RESET_TOKEN="SEND_RESET_TOKEN";
+	public static final String WS_OPERATION_RESET_PASSWORD	="RESET_PASSWORD";
+	public static final String WS_OPERATION_IS_USER_EXIST	="IS_USER_EXIST";
 	public static final String WS_OPERATION_LIST_COMMENTED_BOOKS	="LIST_COMMENTED_BOOKS";
 	
 	public static final String ORDER_BY_DIRECTION_ASCENDING  ="ASC";
@@ -181,5 +147,5 @@ public class ApplicationConstants {
 	public static long signed_in_userid=-1;
 	
 	
-	
+	//new book cover
 }
