@@ -109,7 +109,11 @@ public class AddBookActivity extends ActivityBase implements OnClickListener{
 				    						null);
 				    //TODO
 //				    book.add(ApplicationConstants.book_tags, bookTags.getText().toString());
-				    book = new AddBookWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_ADD,book).get();
+				    book = new AddBookWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_ADD,
+				    		book,
+				    		ApplicationConstants.signed_in_email,
+				    		ApplicationConstants.signed_in_password
+				    		).get();
 
 
 //				    
