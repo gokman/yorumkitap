@@ -5,11 +5,13 @@ import java.util.Date;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
@@ -18,6 +20,8 @@ import android.util.Base64;
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.Utils;
 import com.bookworm.model.BookLike;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonSerializer;
 
 public class AddBookLikeActionWS extends AsyncTask<Object, Void, BookLike> {
 		
@@ -53,8 +57,9 @@ public class AddBookLikeActionWS extends AsyncTask<Object, Void, BookLike> {
     	            //TODO Aksiyon bilgileri set edilicek
                     JSONObject jsonum=new JSONObject();
                     jsonum.put("bookId", bookLike.getBookId());
-                    jsonum.put("bookLikeDate", bookLike.getBookLikeDate());
+                   jsonum.put("bookLikeDate",bookLike.getBookLikeDate());
                     jsonum.put("bookLikerId", bookLike.getBookLikerId());
+                    
     	            StringEntity sampleEntity=new StringEntity(jsonum.toString());
                     sampleEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
@@ -72,7 +77,7 @@ public class AddBookLikeActionWS extends AsyncTask<Object, Void, BookLike> {
     					JSONObject obj = new JSONObject(result);
     					bookLike = new BookLike();
     					bookLike.setBookId(obj.getLong("bookId"));
-    					bookLike.setBookLikeDate(new Date(obj.getLong("bookLikeDate")));
+    				//	bookLike.setBookLikeDate(new Date(obj.getLong("bookLikeDate")));
     					bookLike.setBookLikeId(obj.getLong("bookLikeId"));
     					bookLike.setBookLikerId(obj.getLong("bookLikerId"));
     	            
