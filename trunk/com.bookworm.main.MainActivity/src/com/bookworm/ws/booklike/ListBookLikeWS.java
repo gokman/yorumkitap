@@ -21,25 +21,26 @@ import android.util.Base64;
 import com.bookworm.common.Utils;
 import com.bookworm.model.Action;
 import com.bookworm.model.ActionType;
+import com.bookworm.model.BookLike;
 import com.bookworm.util.SearchCriteria;
 
-public class ListActionsWS extends
-		AsyncTask<Object, Void, List<Action>> {
+public class ListBookLikeWS extends
+		AsyncTask<Object, Void, List<BookLike>> {
 
 	@Override
-	protected List<Action> doInBackground(Object... url) {
+	protected List<BookLike> doInBackground(Object... url) {
 
-		 return GET((String)url[0],(SearchCriteria)url[1]);
+		 return GET((String)url[0],(SearchCriteria)url[1],(String)url[2],(String)url[3]);
 	}
 
 	@Override
-	protected void onPostExecute(List<Action> result) {
+	protected void onPostExecute(List<BookLike> result) {
 	}
 
-	public static List<Action> GET(String url,SearchCriteria sc) {
+	public static List<BookLike> GET(String url,SearchCriteria sc,String userName,String password) {
 		InputStream inputStream = null;
 		String result = "";
-		List<Action> resultList= new ArrayList<Action>();
+		List<BookLike> resultList= new ArrayList<BookLike>();
 		try {
 
             // create HttpClient
@@ -51,17 +52,13 @@ public class ListActionsWS extends
             post.setHeader("Content-Type", "application/json");
             
             //credentials
-            String credentials = "gokman" + ":" + "kocaman";  
+            String credentials = userName + ":" + password;  
             String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
             post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
             
         	JSONObject inputObj = new JSONObject();
             
-        	inputObj.put("userId", sc.getUserId());
-            inputObj.put("orderByDrc", sc.getOrderByDrc());
-            inputObj.put("orderByCrit", sc.getOrderByCrit());
-            inputObj.put("pageNumber", sc.getPageNumber());
-            inputObj.put("pageSize", sc.getPageSize());
+        	inputObj.put("bookId", sc.getBookId());
             
             
             
@@ -82,13 +79,12 @@ public class ListActionsWS extends
 			JSONArray resultArray = new JSONArray(result);
 			for (int k = 0 ; k < resultArray.length(); k++){
 				JSONObject obj = resultArray.getJSONObject(k);
-				Action action = new Action();
-				action.setActionId(obj.getLong("actionId"));
-				action.setActionDate(new Date());
-				action.setActionType(obj.getLong("actionType"));
-				action.setUserId(obj.getLong("userId"));
-				action.setActionDetailId(obj.getLong("actionDetailId"));
-				resultList.add(action);
+				BookLike bookLike = new BookLike();
+				bookLike.setBookId(obj.getLong("bookId"));
+				bookLike.setBookLikeId(obj.getLong("bookLikeId"));
+				bookLike.setBookLikerId(obj.getLong("bookLikerId"));
+				//bookLike.setBookLikeDate(new Date());
+				resultList.add(bookLike);
 			}
 
 		} catch (Exception e) {
