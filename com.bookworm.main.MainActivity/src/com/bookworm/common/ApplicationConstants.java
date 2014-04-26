@@ -113,7 +113,7 @@ public class ApplicationConstants {
 	public static final String CREATE_DATE="CREATE_DATE";
 	
 	public final static SimpleDateFormat dateFormat=new SimpleDateFormat("hh:mm dd-MM-yyyy");
-	
+
 	public static final String WS_ENDPOINT_ADRESS = "http://192.168.1.6:8080/booklet-ws/services";
 	public static final String WS_OPERATION_GET_BY_ID		="GET_BY_ID";
 	public static final String WS_OPERATION_ADD				="ADD";
