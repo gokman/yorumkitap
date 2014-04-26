@@ -17,10 +17,23 @@
     <style name="giris_button">
          <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:background">#e35507</item>
+        <item name="android:background">#5e0357</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">20dp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="create_account_button">
+         <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">#5e0357</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
     </style>
     
     <style name="add_button">
@@ -35,7 +48,7 @@
     <style name="explorePage_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/ownOrange</item>
+        <item name="android:background">#5e0357</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">20dp</item>
         <item name="android:textStyle">bold</item>
