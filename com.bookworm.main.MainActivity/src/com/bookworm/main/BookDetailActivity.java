@@ -12,6 +12,7 @@ import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_COMMENTS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_LIKES;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +41,7 @@ import com.bookworm.ws.booklike.DeleteBookLikeActionWS;
 import com.bookworm.ws.comment.ListCommentsWS;
 import com.bookworm.ws.hashtag.ListHashtagsWS;
 import com.bookworm.ws.like.GetBookLikeWS;
+import com.google.gson.GsonBuilder;
 
 public class BookDetailActivity extends ActivityBase implements OnClickListener {
 
@@ -94,8 +96,8 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 			likes = new GetBookLikeWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_LIST_LIKES+"/"+adderId+"/"+bookId).get();
 			if (likes !=null && likes.size() > 0){ 
 				BookLike like  = likes.get(0);
-				//TODO burda napiliyo anlamad�m. fyesildal
-				likeBook.setText(like.getBookId().toString());
+				//kullanici kitabi begenmistir ve like yerine unlike yazilir
+				likeBook.setText(getString(R.string.unlike));
 			}
 			addedBook  = new GetBookInfoWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOK+"/"+WS_OPERATION_GET_BY_ID+"/"+bookId).get();
 	
@@ -170,11 +172,17 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 						if (likeBook.getText().toString().equals(getString(R.string.like))) {
 							likeBook.setText(getString(R.string.unlike), null);		
 							BookLike  bookLike = new BookLike();
-							bookLike.setBookLikeDate(new Date());
+							try {
+								bookLike.setBookLikeDate(ApplicationConstants.dateFormat.parse(ApplicationConstants.timelineLastDate));
+							} catch (ParseException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
 						    bookLike.setBookId(addedBook.getBookId());
 						    bookLike.setBookLikerId(ApplicationConstants.signed_in_userid);
 						    try {
-								bookLike = new AddBookLikeActionWS().
+								new AddBookLikeActionWS().
 										        execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_BOOKLIKE+"/"+WS_OPERATION_ADD,bookLike).get();
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
@@ -187,7 +195,6 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 							//TODO like
 							likeBook.setText(getString(R.string.like), null);		
 							BookLike  bookLike = new BookLike();
-							bookLike.setBookLikeDate(new Date());
 						    bookLike.setBookId(addedBook.getBookId());
 						    bookLike.setBookLikerId(ApplicationConstants.signed_in_userid);
 						    try {
