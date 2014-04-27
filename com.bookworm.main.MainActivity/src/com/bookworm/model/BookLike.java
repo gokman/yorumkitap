@@ -12,12 +12,12 @@ public class BookLike implements java.io.Serializable {
 	private Long bookLikeId;
 	private Long bookLikerId;
 	private Long bookId;
-	private Date bookLikeDate;
+	private String bookLikeDate;
 
 	public BookLike() {
 	}
 
-	public BookLike(Long bookLikerId, Long bookId, Date bookLikeDate) {
+	public BookLike(Long bookLikerId, Long bookId, String bookLikeDate) {
 		this.bookLikerId = bookLikerId;
 		this.bookId = bookId;
 		this.bookLikeDate = bookLikeDate;
@@ -47,11 +47,11 @@ public class BookLike implements java.io.Serializable {
 		this.bookId = bookId;
 	}
 
-	public Date getBookLikeDate() {
+	public String getBookLikeDate() {
 		return this.bookLikeDate;
 	}
 
-	public void setBookLikeDate(Date bookLikeDate) {
+	public void setBookLikeDate(String bookLikeDate) {
 		this.bookLikeDate = bookLikeDate;
 	}
 
