@@ -172,7 +172,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 						if (likeBook.getText().toString().equals(getString(R.string.like))) {
 							likeBook.setText(getString(R.string.unlike), null);		
 							BookLike  bookLike = new BookLike();
-							bookLike.setBookLikeDate(new Date());
+							bookLike.setBookLikeDate(ApplicationConstants.currentDateString);
 						    bookLike.setBookId(addedBook.getBookId());
 						    bookLike.setBookLikerId(ApplicationConstants.signed_in_userid);
 						    try {
