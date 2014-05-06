@@ -62,8 +62,6 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 
 			public void onClick(View v) {
 				// TODO Form validation is needed.
-
-
 				try {
 
 					Comment comment = new Comment();
@@ -85,7 +83,6 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 				    		).get();
 
 					commentText.setText(getString(R.string.commentLabel));
-
 					
 					//List comments after last comment added.
 					listComments(book_id, adderID);
@@ -115,63 +112,23 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 	}
 
 	public void listComments(Long bookId, Long adderID) throws InterruptedException, ExecutionException{
-		//TODO list comments to show
 		
 		List<Comment> commentList = new ListCommentsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"
 				+WS_OPERATION_LIST_COMMENTS+"/"+bookId).get();
 
 		comments = new ArrayList<HashMap<String, String>>();
-		for (int i = 0; i < commentList.size(); i += 2) {
+		for (int i = 0; i < commentList.size(); i ++) {
 			HashMap<String, String> map = new HashMap<String, String>();
 			CommentSCR commentScr = new CommentSCR(commentList.get(i));
 
-			
-			//TODO retrieve user
-//			NetmeraService servicer = new NetmeraService(ApplicationConstants.user);
-//			servicer.whereEqual(ApplicationConstants.user_email,tempComment1.get(ApplicationConstants.comment_er).toString());
-//			List<NetmeraContent> usersList = new SelectDataTask(AddCommentActivity.this).execute(servicer).get();
-//			NetmeraContent user = usersList.get(0);
-//			user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
-
-//			String userProfileImageURLLeft = new GetNetmerMediaTask().execute(user).get();
-//						
-//
-//			
-//			map.put(KEY_COVER_LEFT, userProfileImageURLLeft);
 			map.put(KEY_DESC_LEFT, commentScr.getComment().getCommentText());
 			map.put(KEY_BOOK_ADDER_ID_LEFT, commentScr.getComment().getCommenterId().toString());
-			
-
-			
-			CommentSCR commentSCRRight = null;
-			if (i != commentList.size() - 1) {
-				commentSCRRight = new CommentSCR(commentList.get(i + 1));
-			}			
-			if (commentSCRRight != null) {
-
-				//TODO retrieve user
-//				servicer = new NetmeraService(ApplicationConstants.user);
-//				servicer.whereEqual(ApplicationConstants.user_email,tempComment2.get(ApplicationConstants.comment_er).toString());
-//				usersList = new SelectDataTask(AddCommentActivity.this).execute(servicer).get();
-//				user = usersList.get(0);
-//				user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
-////				String userProfileImageURLRight = new GetNetmerMediaTask().execute(user).get();
-				
-
-//				map.put(KEY_COVER_RIGHT, userProfileImageURLRight);
-				map.put(KEY_DESC_RIGHT, commentScr.getComment().getCommentText());
-				map.put(KEY_BOOK_ADDER_ID_RIGHT, commentScr.getComment().getCommenterId().toString());
-			}
 
 			comments.add(map);
 		}		
-		
-		
+			
 		adapter = new CommentAdapter(this, comments);
-		commentsListView.setAdapter(adapter);
-
-		
-		
+		commentsListView.setAdapter(adapter);		
 
 	}
 	
