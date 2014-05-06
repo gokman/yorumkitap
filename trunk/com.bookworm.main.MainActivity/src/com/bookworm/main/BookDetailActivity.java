@@ -51,7 +51,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 	private TextView bookTags;
 	private TextView userName;
 	private ImageView bookCover;
-	private ImageView commentImage;
+	private TextView commentImage;
 	private ImageView profileImage;
 	private String coverPhotoUrl;
 	private String profilePhotoUrl;
@@ -82,7 +82,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 		bookCover = (ImageView) findViewById(R.id.newbookImg);
 		profileImage = (ImageView) findViewById(R.id.profileImg);
 		userName = (TextView) findViewById(R.id.userName);
-		commentImage = (ImageView)findViewById(R.id.comment_button);
+		commentImage = (TextView)findViewById(R.id.comment_button);
 	//	profileLayout = (LinearLayout) findViewById(R.id.profileLayout);
 	
 		likeBook = (TextView) findViewById(R.id.btnLikeBook);
