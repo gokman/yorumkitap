@@ -19,8 +19,8 @@
     <string name="mainBookListNext">Show More</string>
 
     <!-- BookDetail UI Component Details  -->
-    <string name="bookDetailComment">Yorum</string>
-    <string name="bookDetailAddComment">Yorum Ekle</string>
+    <string name="bookDetailComment">Comment</string>
+    <string name="bookDetailAddComment">Add Comment</string>
     <string name="like">Like</string>
     <string name="unlike">Unlike</string>
     
