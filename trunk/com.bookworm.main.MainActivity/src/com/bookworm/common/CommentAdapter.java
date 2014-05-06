@@ -55,44 +55,14 @@ public class CommentAdapter extends BaseAdapter {
       
         TextView commentOwnerLeft = (TextView)vi.findViewById(R.id.comment_owner_left); 
         TextView commentLeft = (TextView)vi.findViewById(R.id.comment_left); 
-        ImageView image_left =(ImageView)vi.findViewById(R.id.list_imageLeft);
-        
-        TextView commentOwnerRight = (TextView)vi.findViewById(R.id.comment_owner_right); 
-        TextView commentRight= (TextView)vi.findViewById(R.id.comment_right); 
-        ImageView image_right =(ImageView)vi.findViewById(R.id.list_imageRight);
-        
-        LinearLayout layoutRight = (LinearLayout)vi.findViewById(R.id.coverRight);
-        View secondDivider = (View)vi.findViewById(R.id.secondDivider);
         
         final  HashMap<String, String> book = data.get(position);
-
-        
         
         // Setting all values in listview
         commentLeft.setText(book.get(MainActivity.KEY_DESC_LEFT));
         commentOwnerLeft.setText(book.get(MainActivity.KEY_BOOK_ADDER_ID_LEFT));
 //        imageLoader.DisplayImage(book.get(MainActivity.KEY_COVER_LEFT), image_left);
-        
-
-		 
-        if(book.containsKey(MainActivity.KEY_DESC_RIGHT)){
-	        commentRight.setText(book.get(MainActivity.KEY_DESC_RIGHT));
-	        commentOwnerRight.setText(book.get(MainActivity.KEY_BOOK_ADDER_ID_RIGHT));
-//	        imageLoader.DisplayImage(book.get(MainActivity.KEY_COVER_RIGHT), image_right);
-	        commentRight.setVisibility(View.VISIBLE);
-    		image_right.setVisibility(View.VISIBLE);
-    		commentOwnerRight.setVisibility(View.VISIBLE);
-    		layoutRight.setVisibility(View.VISIBLE);
-    		secondDivider.setVisibility(View.VISIBLE);
-         
-
-        }else{
-    		commentRight.setVisibility(View.INVISIBLE);
-    		image_right.setVisibility(View.INVISIBLE);
-    		commentOwnerRight.setVisibility(View.INVISIBLE);
-    		layoutRight.setVisibility(View.INVISIBLE);
-    		secondDivider.setVisibility(View.INVISIBLE);
-    	}
+       
         return vi;
     }
 }
