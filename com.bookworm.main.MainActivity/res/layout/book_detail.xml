@@ -49,8 +49,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="vertical"
                 android:layout_below="@+id/profileLayout" >
 
@@ -81,20 +81,32 @@
                android:layout_marginLeft="5dp"
                android:orientation="vertical"
                android:layout_below="@+id/bookLayout" >
-                
-            <TextView
-            android:id="@+id/btnLikeBook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/like"
-            style="@style/bookLikeButton"/>
-            
+	             <!-- like ve comment dugmeleri bolumu basla -->   
+		          <LinearLayout 
+		              android:orientation="horizontal"
+		              android:layout_width="fill_parent"
+	                  android:layout_height="wrap_content">      
+		            <TextView
+			            android:id="@+id/btnLikeBook"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:text="@string/like"
+			            android:layout_marginRight="10dp"
+			            style="@style/bookLikeButton"/>
+		            <TextView 
+		                android:id="@+id/comment_button"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:text="@string/bookDetailComment"
+		                style="@style/bookCommentButton"/>
+		           </LinearLayout>
+	              <!-- like ve comment dugmeleri bolumu bitir -->
             <TextView 
             android:id="@+id/writerName"    
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_marginBottom="5dip"
-            android:layout_marginTop="5dip"
+            android:layout_marginTop="10dip"
             android:singleLine="true"
             android:text="writer"
             android:textSize="16sp" />
@@ -121,25 +133,6 @@
           </LinearLayout>
       <!-- book detail start -->    
           
-          
-          <!-- like,comment part start -->
-
-          <LinearLayout
-              android:id="@+id/likeCommentLayout"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="5dp"
-              android:orientation="horizontal"
-              android:layout_below="@+id/bookDetailLayout" >
-              
-            <ImageView
-                android:id="@+id/comment_button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/comment_button"/>
-           </LinearLayout>
-       <!-- like,comment part finish -->
-       
        
         <LinearLayout
             android:id="@+id/linearLayoutAltDugmeler"
