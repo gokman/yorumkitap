@@ -14,14 +14,14 @@ public class Comment implements java.io.Serializable {
 	private String commentText;
 	private Long commentedBookId;
 	private Long commentedBookAdderId;
-	private Date creationDate;
+	private String creationDate;
 
 	public Comment() {
 	}
 
 	public Comment(Long commenterId, String commentText,
 			Long commentedBookId, Long commentedBookAdderId,
-			Date creationDate) {
+			String creationDate) {
 		this.commenterId = commenterId;
 		this.commentText = commentText;
 		this.commentedBookId = commentedBookId;
@@ -69,11 +69,11 @@ public class Comment implements java.io.Serializable {
 		this.commentedBookAdderId = commentedBookAdderId;
 	}
 
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return this.creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
 	}
 
