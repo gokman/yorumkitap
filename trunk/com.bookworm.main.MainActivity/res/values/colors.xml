@@ -7,4 +7,6 @@
     <color name="newAccountBlue">#0b84aa</color>
     <color name="backgroundBlue">#afcfcf</color>
     <color name="colorPurple">#7d2d4d</color>
+    <color name="commenterName">#2b69bd</color>
 </resources>
+
