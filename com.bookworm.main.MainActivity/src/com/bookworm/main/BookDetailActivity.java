@@ -31,6 +31,7 @@ import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.GroupEntity;
 import com.bookworm.common.GroupEntity.GroupItemEntity;
 import com.bookworm.common.ImageLoader;
+import com.bookworm.custom.object.CustomComment;
 import com.bookworm.model.Book;
 import com.bookworm.model.BookLike;
 import com.bookworm.model.Comment;
@@ -147,7 +148,7 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 	//			user.add(ApplicationConstants.generic_property, ApplicationConstants.user_userProfile);
 	//			profilePhotoUrl  = new GetNetmerMediaTask().execute(user).get();
 				
-				List<Comment> comments = new ListCommentsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"
+				List<CustomComment> comments = new ListCommentsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"
 						+WS_OPERATION_LIST_COMMENTS+"/"+bookId).get();
 	
 				imageLoader.DisplayImage(coverPhotoUrl, bookCover);
@@ -223,14 +224,14 @@ public class BookDetailActivity extends ActivityBase implements OnClickListener 
 	}
 
 
-	private void prepareResource(List <Comment> commentList){
+	private void prepareResource(List <CustomComment> commentList){
 
 		mGroupCollection = new ArrayList<GroupEntity>();
 
 		GroupEntity ge = new GroupEntity();
 		ge.Name = "Yorumlar";
 
-		for (Comment comment : commentList) {
+		for (CustomComment comment : commentList) {
 			GroupItemEntity gi = ge.new GroupItemEntity();
 			gi.Name = comment.getCommentText();
 			ge.GroupItemCollection.add(gi);
