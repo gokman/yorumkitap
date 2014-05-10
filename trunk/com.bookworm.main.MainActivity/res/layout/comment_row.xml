@@ -1,19 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_selector"
-    android:orientation="horizontal"
-    android:padding="5dip" 
+    android:orientation="horizontal" 
     android:clickable="false">
- 
-
+        
+        <TextView
+            android:id="@+id/commenter_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dip"
+            android:text="Bence mükemmel "
+            android:textColor="@color/commenterName"
+            android:textSize="10dip" />
+    
     <TextView
         android:id="@+id/comment_owner_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:text="Çalıkuşu"
         android:textColor="#040404"
-        android:textSize="15dip"
         android:textStyle="bold"
         android:typeface="sans" />
  
@@ -22,18 +31,18 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/comment_owner_left"
-        android:textColor="@color/ownOrange"
+        android:textColor="@color/black"
         android:textSize="10dip"
         android:layout_marginTop="1dip"
-        android:text="Bence mükemmel bir kitap herkes okumalı ..." />
+        android:text="..." />
  
     <!-- Rightend Duration -->
  
-     <View
+   <!--   <View
         android:id="@+id/firstDivider"
         android:layout_height="0.5dp"
         android:layout_width="fill_parent"
-        android:background="@color/ownOrange" 
-        android:layout_below="@id/comment_left"/>
+        android:background="@color/backgroundBlue" 
+        android:layout_below="@id/comment_left"/>-->
         
 </RelativeLayout>
