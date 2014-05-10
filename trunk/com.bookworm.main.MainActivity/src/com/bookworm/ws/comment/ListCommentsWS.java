@@ -8,7 +8,6 @@ import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,24 +17,24 @@ import android.util.Base64;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.Utils;
-import com.bookworm.model.Comment;
+import com.bookworm.custom.object.CustomComment;
 
 public class ListCommentsWS extends
-		AsyncTask<String, Void, List<Comment>> {
+		AsyncTask<String, Void, List<CustomComment>> {
 
 	@Override
-	protected List<Comment> doInBackground(String... url) {
+	protected List<CustomComment> doInBackground(String... url) {
 
 		 return GET(url[0]);
 	}
 
 	@Override
-	protected void onPostExecute(List<Comment> result) {
+	protected void onPostExecute(List<CustomComment> result) {
 	}
 
-	public static List<Comment> GET(String url) {
+	public static List<CustomComment> GET(String url) {
 		InputStream inputStream = null;
-		List<Comment> resultList= new ArrayList<Comment>();
+		List<CustomComment> resultList= new ArrayList<CustomComment>();
 		try {
 
 			// create HttpClient
@@ -66,20 +65,18 @@ public class ListCommentsWS extends
 			JSONArray resultArray = new JSONArray(result);
 			for (int k = 0 ; k < resultArray.length(); k++){
 				JSONObject obj = resultArray.getJSONObject(k);
-				Comment comment = new Comment();
-				comment.setCommentedBookAdderId(obj.getLong("commentedBookAdderId"));
-				comment.setCommentedBookId(obj.getLong("commentedBookId"));
-				comment.setCommenterId(obj.getLong("commenterId"));
-				comment.setCommentId(obj.getLong("commentId"));
-				comment.setCommentText(obj.getString("commentText"));
-				comment.setCreationDate(ApplicationConstants.dateFormat.
-						                parse(obj.getString("creationDate")));
+				CustomComment customComment = new CustomComment();
+				customComment.setCommentedBookAdderId(obj.getLong("commentedBookAdderId"));
+				customComment.setCommentedBookId(obj.getLong("commentedBookId"));
+				customComment.setCommenterId(obj.getLong("commenterId"));
+				customComment.setCommentId(obj.getLong("commentId"));
+				customComment.setCommentText(obj.getString("commentText"));
+				customComment.setCreationDate(ApplicationConstants.dateFormat.format(obj.getLong("creationDate")));
+				customComment.setCommenterName(obj.getString("commenterName"));
 				
-				resultList.add(comment);
+				resultList.add(customComment);
 			}
-			
-			
-			
+						
 		} catch (Exception e) {
 			e.getLocalizedMessage();
 		}
