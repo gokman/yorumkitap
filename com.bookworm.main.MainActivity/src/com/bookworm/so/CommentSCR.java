@@ -1,19 +1,19 @@
 package com.bookworm.so;
 
-import com.bookworm.model.Comment;
+import com.bookworm.custom.object.CustomComment;
 
 public class CommentSCR {
 	
-	public CommentSCR(Comment comm){
+	public CommentSCR(CustomComment comm){
 		this.comment = comm;
 	}
-	private Comment comment;
+	private CustomComment comment;
 	private String genericProperty = "profilePhoto";
 	
-	public Comment getComment() {
+	public CustomComment getComment() {
 		return comment;
 	}
-	public void setComment(Comment comment) {
+	public void setComment(CustomComment comment) {
 		this.comment = comment;
 	}
 	public String getGenericProperty() {
