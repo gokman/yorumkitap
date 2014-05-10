@@ -26,6 +26,7 @@ import android.widget.ListView;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.CommentAdapter;
+import com.bookworm.custom.object.CustomComment;
 import com.bookworm.model.Action;
 import com.bookworm.model.ActionType;
 import com.bookworm.model.Comment;
@@ -70,7 +71,7 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 					//TODO get Current User
 					comment.setCommenterId(24L);
 					comment.setCommentText(commentText.getText().toString());
-					comment.setCreationDate(new Date());
+					comment.setCreationDate(ApplicationConstants.dateFormat.format(new Date()));
 					comment = new AddCommentWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"+WS_OPERATION_ADD,comment).get();
 
 					// comment icin action kaydi olustur
@@ -113,7 +114,7 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 
 	public void listComments(Long bookId, Long adderID) throws InterruptedException, ExecutionException{
 		
-		List<Comment> commentList = new ListCommentsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"
+		List<CustomComment> commentList = new ListCommentsWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"
 				+WS_OPERATION_LIST_COMMENTS+"/"+bookId).get();
 
 		comments = new ArrayList<HashMap<String, String>>();
@@ -123,6 +124,7 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 
 			map.put(KEY_DESC_LEFT, commentScr.getComment().getCommentText());
 			map.put(KEY_BOOK_ADDER_ID_LEFT, commentScr.getComment().getCommenterId().toString());
+			map.put(KEY_BOOK_ADDER_NAME_LEFT, commentScr.getComment().getCommenterName().toString());
 
 			comments.add(map);
 		}		
