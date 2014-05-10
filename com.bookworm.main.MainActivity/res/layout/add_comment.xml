@@ -7,6 +7,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:padding="3dp"
         android:background="#fff" >
         
 <!-- kitap adı ve fotosu bölümü 1 -->
@@ -28,7 +29,7 @@
 
         </LinearLayout>
         <!-- Publisher Label -->
-        <ListView
+ <!--        <ListView
                android:id="@+id/comments_on_book"
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
@@ -36,14 +37,24 @@
                android:dividerHeight="1dp"
            	android:layout_weight="50"
                android:listSelector="@drawable/list_selector" />
+               
+               -->
+               
+                       <ListView
+               android:id="@+id/comments_on_book"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+           	android:layout_weight="50"
+               android:listSelector="@drawable/list_selector" />
 
         <LinearLayout
             android:id="@+id/addCommentArena"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_below="@+id/comments_on_book"
             android:background="@color/ownGray"
             android:gravity="bottom"
+            android:orientation="vertical"
             android:weightSum="100" >
 
         <EditText
