@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dip"
-        
+        android:padding="10dp"
         android:weightSum="100"
         android:orientation="horizontal">
 		    
@@ -37,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dip"
+        android:padding="10dp"
         android:weightSum="100"
         android:orientation="horizontal">
         
@@ -44,14 +45,14 @@
 	            android:id="@+id/exploreBooks"
 	            style="@style/explorePage_button"
 	            android:layout_weight="50"
-	            android:layout_marginRight="2dp"
+	            android:layout_marginRight="5dp"
 	            android:text="@string/exploreBooks" />
 
             <Button
                 android:id="@+id/exploreUsers"
                 style="@style/explorePage_button"
                 android:layout_weight="50"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="5dp"
                 android:text="@string/exploreUsers" />
 
 </LinearLayout>
@@ -67,7 +68,6 @@
             android:gravity="center_horizontal"/>
     -->             
         <TableLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/tableLayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -486,49 +486,6 @@
             </TableLayout>
     </LinearLayout>
 
-   <LinearLayout
-            android:id="@+id/linearLayoutAltDugmeler"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:gravity="bottom"
-            android:background="@color/ownGray"
-            android:weightSum="100" >
-
-        <ImageView
-            android:id="@+id/home_button"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="20"
-            android:src="@drawable/home_button" />
-
-        <ImageView
-            android:id="@+id/explore_button"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="20"
-            android:src="@drawable/explore_button" />
-
-        <ImageView
-            android:id="@+id/add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="20"
-            android:src="@drawable/add_button" />
-
-        <ImageView
-            android:id="@+id/profile_button"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="20"
-            android:src="@drawable/profile_button" />
-
-        <ImageView
-            android:id="@+id/timeline_button"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="20"
-            android:src="@drawable/timeline_button" />
-    </LinearLayout>
+  <include layout="@layout/alt_dugmeler"/>
 
 </RelativeLayout>

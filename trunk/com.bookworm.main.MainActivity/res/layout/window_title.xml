@@ -6,7 +6,7 @@
 	android:layout_height="35dip"
 	android:gravity="center_vertical"
 	android:paddingLeft="5dip"
-	android:background="@color/colorPurple"
+	android:background="@color/generalBg"
 	android:weightSum="100">
 
 	<ImageView 
@@ -28,13 +28,15 @@
 	        android:id="@+id/language_button"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:padding="5dp"
 	        android:layout_weight="50"
-	        android:src="@drawable/language" />
+	        android:src="@null" />
 	    				    
 	    <ImageView
 	        android:id="@+id/logout"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:padding="5dp"
 	        android:layout_weight="50"
 	        android:src="@drawable/logout" />
 				
