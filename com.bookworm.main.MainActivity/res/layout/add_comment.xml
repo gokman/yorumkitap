@@ -7,7 +7,6 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="3dp"
         android:background="#fff" >
         
 <!-- kitap adı ve fotosu bölümü 1 -->
@@ -45,6 +44,9 @@
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
            	android:layout_weight="50"
+           	android:padding="3dp"
+           	android:divider="@null"
+           	android:dividerHeight="0dp"
                android:listSelector="@drawable/list_selector" />
 
         <LinearLayout
@@ -79,52 +81,9 @@
 	            android:text="@string/btnCommentAdd" />
 		</LinearLayout>	        
 	        
-        <LinearLayout
-            android:id="@+id/linearLayoutAltDugmeler"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:gravity="bottom"
-            android:background="@color/ownGray"
-            android:weightSum="100" >
-
-            <ImageView
-                android:id="@+id/home_button"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="20"
-                android:src="@drawable/home_button" />
-
-            <ImageView
-                android:id="@+id/explore_button"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="20"
-                android:src="@drawable/explore_button" />
-
-            <ImageView
-                android:id="@+id/add_button"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="20"
-                android:src="@drawable/add_button" />
-
-            <ImageView
-                android:id="@+id/profile_button"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="20"
-                android:src="@drawable/profile_button" />
-
-            <ImageView
-                android:id="@+id/timeline_button"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="20"
-                android:src="@drawable/timeline_button" />
-        </LinearLayout>
-
-
+      
+      <include layout="@layout/alt_dugmeler"/>
+      
                 
     </RelativeLayout>
 

@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/white"
-    android:padding="3dp"
     android:orientation="vertical"
     android:weightSum="100" >
 
@@ -12,8 +11,9 @@
                 android:id="@+id/latest_books"
 	            android:layout_height="match_parent"
 	            android:layout_width="wrap_content"
-	            android:divider="#b5b5b5"
-                android:dividerHeight="1dp"
+	            android:divider="@null"
+                android:dividerHeight="0dp"
+                android:padding="3dp"
             	android:layout_weight="50"
                 android:listSelector="@drawable/list_selector" />
 	        
@@ -26,54 +26,5 @@
          android:clickable="true"
          android:text="@string/mainBookListNext" />
 
-	        <LinearLayout
-            android:id="@+id/linearLayoutAltDugmeler"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:gravity="bottom"
-            android:background="@color/ownGray"
-            android:weightSum="100" >
-
-             <ImageView
-                 android:id="@+id/home_button"
-                 android:layout_width="fill_parent"
-                 android:layout_height="fill_parent"
-                 android:layout_weight="20"
-                 android:adjustViewBounds="true"
-                 android:src="@drawable/home_button" />
-
-             <ImageView
-                 android:id="@+id/explore_button"
-                 android:layout_width="fill_parent"
-                 android:layout_height="fill_parent"
-                 android:adjustViewBounds="true"
-                 android:layout_weight="20"
-                 android:src="@drawable/explore_button" />
-
-             <ImageView
-                 android:id="@+id/add_button"
-                 android:layout_width="fill_parent"
-                 android:layout_height="fill_parent"
-                 android:adjustViewBounds="true"
-                 android:layout_weight="20"
-                 android:src="@drawable/add_button" />
-
-             <ImageView
-                 android:id="@+id/profile_button"
-                 android:layout_width="fill_parent"
-                 android:layout_height="fill_parent"
-                 android:adjustViewBounds="true"
-                 android:layout_weight="20"
-                 android:src="@drawable/profile_button" />
-
-             <ImageView
-                 android:id="@+id/timeline_button"
-                 android:layout_width="fill_parent"
-                 android:layout_height="fill_parent"
-                 android:adjustViewBounds="true"
-                 android:layout_weight="20"
-                 android:src="@drawable/timeline_button" />
-         </LinearLayout>
-
+	       <include layout="@layout/alt_dugmeler"/>
 </RelativeLayout>
