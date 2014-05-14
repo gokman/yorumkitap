@@ -7,22 +7,25 @@ import static com.bookworm.common.ApplicationConstants.WS_OPERATION_ADD;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_COMMENTS;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.CommentAdapter;
@@ -37,9 +40,9 @@ import com.bookworm.ws.comment.ListCommentsWS;
 
 public class AddCommentActivity extends ActivityBase implements OnClickListener {
 
-	private Button addCommentButton;
 	private EditText commentText;
 	private ListView commentsListView;
+	private ImageView exitView;
 	private CommentAdapter adapter;
 	private ArrayList<HashMap<String, String>> comments;
 	
@@ -58,36 +61,37 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 		final Long adderID = myIntent.getLongExtra(ApplicationConstants.book_adderId,0);
 
 		commentText = (EditText) findViewById(R.id.comment);
-		addCommentButton = (Button)findViewById(R.id.btnAddComment);
-		addCommentButton.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-				// TODO Form validation is needed.
+		exitView = (ImageView) findViewById(R.id.delete_comment_button); 
+		commentsListView = (ListView) findViewById(R.id.comments_on_book);
+		
+			commentText.setOnKeyListener(new View.OnKeyListener() {
+			    public boolean onKey(View v, int keyCode, KeyEvent event) {
+			        if ((event.getAction() == KeyEvent.ACTION_DOWN) && keyCode == KeyEvent.KEYCODE_ENTER) {	
+			        	
 				try {
 
 					Comment comment = new Comment();
 					comment.setCommentedBookId(book_id);
 					comment.setCommentedBookAdderId(adderID);
-					//TODO get Current User
-					comment.setCommenterId(24L);
+					comment.setCommenterId(ApplicationConstants.signed_in_userid);
 					comment.setCommentText(commentText.getText().toString());
-					comment.setCreationDate(ApplicationConstants.dateFormat.format(new Date()));
+					comment.setCreationDate(ApplicationConstants.currentDateString);
 					comment = new AddCommentWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_COMMENT+"/"+WS_OPERATION_ADD,comment).get();
 
 					// comment icin action kaydi olustur
 					//TODO commenter userid will be replaced with 24 
-					Action addBookAction = new Action(ActionType.ADD_COMMENT.asCode(), 24L,comment.getCommentId()); 
+					Action addBookAction = new Action(ActionType.ADD_COMMENT.asCode(), ApplicationConstants.signed_in_userid,comment.getCommentId()); 
 				    addBookAction = new AddActionWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_ACTION+"/"+WS_OPERATION_ADD,
 				    		addBookAction,
 				    		ApplicationConstants.signed_in_email,
 				    		ApplicationConstants.signed_in_password
 				    		).get();
-
-					commentText.setText(getString(R.string.commentLabel));
 					
+				    
+				    commentText.setText(null);
 					//List comments after last comment added.
 					listComments(book_id, adderID);
-
+                    
 					//TODO call list methods to show.
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -96,10 +100,13 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
+				    return true;
+			        }
+			        return false;
+			         
+			    }
 		});
 		
-		commentsListView = (ListView) findViewById(R.id.comments_on_book);
 		try {
 			listComments(book_id, adderID);
 		} catch (InterruptedException e) {
@@ -109,6 +116,7 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
 	}
 
