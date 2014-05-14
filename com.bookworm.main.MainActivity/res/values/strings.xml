@@ -96,9 +96,9 @@
 	<string name="goPast">Go Past</string>
 	
 	<!-- Comments Arena -->
-	<string name="comments">Yorumlar</string>
-	<string name="btnCommentAdd">Ekle</string>
-	<string name="commentLabel">Yorum Ekle</string>	
+	<string name="comments">Comments</string>
+	<string name="btnCommentAdd">Add</string>
+	<string name="commentLabel">Add Comment</string>	
 	
 	<!-- Send Email for Reset Password -->
 	<string name="explainEmailForResetPassword">A password reset token will send your email address</string>
