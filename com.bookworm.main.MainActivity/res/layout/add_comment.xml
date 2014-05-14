@@ -10,80 +10,57 @@
         android:background="#fff" >
         
 <!-- kitap adı ve fotosu bölümü 1 -->
-        <LinearLayout
+    <!--  <LinearLayout
             android:id="@+id/imageLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="5dip"
             android:orientation="horizontal"
             android:weightSum="100" >
-                <!-- Book Name Label -->
+                 Book Name Label 
                 <TextView 
                     android:id="@+id/bookNameText"
-                    android:layout_width="314dp"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/comments"
                     android:textColor="@color/ownGray" />
 
-        </LinearLayout>
+        </LinearLayout>-->
         <!-- Publisher Label -->
- <!--        <ListView
-               android:id="@+id/comments_on_book"
+
+               
+        <ListView
+            android:id="@+id/comments_on_book"
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
-            android:divider="#b5b5b5"
-               android:dividerHeight="1dp"
-           	android:layout_weight="50"
-               android:listSelector="@drawable/list_selector" />
-               
-               -->
-               
-                       <ListView
-               android:id="@+id/comments_on_book"
-            android:layout_height="match_parent"
-            android:layout_width="wrap_content"
-           	android:layout_weight="50"
-           	android:padding="3dp"
            	android:divider="@null"
            	android:dividerHeight="0dp"
-               android:listSelector="@drawable/list_selector" />
+            android:listSelector="@drawable/list_selector" />
 
         <LinearLayout
             android:id="@+id/addCommentArena"
             android:layout_width="fill_parent"
-            android:layout_height="30dp"
-            android:layout_below="@+id/comments_on_book"
-            android:background="@color/ownGray"
-            android:gravity="bottom"
-            android:orientation="vertical"
-            android:weightSum="100" >
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_above="@+id/commentAltDugme"
+            android:gravity="bottom" >
 
-        <EditText
-            android:id="@+id/comment"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="20"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:lines="3"
-            android:singleLine="false"
-            android:text="@string/commentLabel"
-            android:textSize="12dip" >
-
-        </EditText>            
+	        <EditText
+	            android:id="@+id/comment"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:lines="3"
+	            android:singleLine="false"
+	            android:hint="@string/commentLabel"
+	            android:textSize="12dip" >
+	
+	        </EditText>            
             
-	        <Button
-	            android:id="@+id/btnAddComment"
-	            style="@style/add_button"
-	            android:layout_height="fill_parent"
-	            android:layout_weight="80"
-	            android:text="@string/btnCommentAdd" />
 		</LinearLayout>	        
 	        
-      
-      <include layout="@layout/alt_dugmeler"/>
-      
+      <include
+          android:id="@+id/commentAltDugme"
+          layout="@layout/alt_dugmeler" />
                 
     </RelativeLayout>
 
