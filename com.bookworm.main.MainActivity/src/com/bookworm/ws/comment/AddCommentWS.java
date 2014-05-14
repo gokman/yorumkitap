@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.util.Base64;
 
+import com.bookworm.common.ApplicationConstants;
 import com.bookworm.common.Utils;
 import com.bookworm.model.Book;
 import com.bookworm.model.Comment;
@@ -47,7 +48,7 @@ public class AddCommentWS extends AsyncTask<Object, Void, Comment> {
     	            post.setHeader("Content-Type", "application/json");
     	            
     	            //credentials
-    	            String credentials = "gokman" + ":" + "kocaman";  
+    	            String credentials = ApplicationConstants.signed_in_email + ":" + ApplicationConstants.signed_in_password;  
     	            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);  
     	            post.addHeader("Authorization", "Basic " + base64EncodedCredentials);
     	            
