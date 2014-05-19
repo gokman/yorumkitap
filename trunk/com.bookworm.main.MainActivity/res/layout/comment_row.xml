@@ -3,17 +3,15 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" 
-    android:weightSum="100"
     android:padding="3dp"
     android:background="@color/white"
     android:clickable="false">
     
 <LinearLayout 
     android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
     android:background="@drawable/list_selector"
-    android:orientation="vertical"
-    android:layout_weight="95" 
-    android:clickable="false">
+    android:orientation="vertical">
         
         <TextView
             android:id="@+id/commenter_username"
@@ -27,7 +25,7 @@
     <TextView
         android:id="@+id/comment_owner_left"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:visibility="invisible"
         android:text="Çalıkuşu"
         android:textColor="#040404"
@@ -43,14 +41,14 @@
         android:textSize="10dip"
         android:layout_marginTop="1dip"
         android:text="..." />
-    </LinearLayout>
     
-    <ImageView
-        android:id="@+id/delete_comment_button"
-        android:layout_height="wrap_content"
-        android:layout_weight="5" 
-        android:visibility="invisible"
-        android:src="@drawable/exit_button" />
+    <TextView
+        android:id="@+id/comment_id"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:visibility="invisible" />
+    
+    </LinearLayout>
  
         
 </LinearLayout>
