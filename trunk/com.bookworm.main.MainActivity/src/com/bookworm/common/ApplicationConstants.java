@@ -147,6 +147,8 @@ public class ApplicationConstants {
 	public static String signed_in_email="";
 	public static long signed_in_userid=-1;
 	
+	//comment listview elements
+	public static final String TYPE_COMMENT_ID="COMMENT_ID";
 	
 	//new book cover
 }
