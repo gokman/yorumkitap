@@ -56,13 +56,15 @@ public class CommentAdapter extends BaseAdapter {
         TextView commentOwnerLeft = (TextView)vi.findViewById(R.id.comment_owner_left); 
         TextView commentLeft = (TextView)vi.findViewById(R.id.comment_left); 
         TextView commenterUserName = (TextView)vi.findViewById(R.id.commenter_username);
+        TextView commentId = (TextView)vi.findViewById(R.id.comment_id);
         
-        final  HashMap<String, String> book = data.get(position);
+        final  HashMap<String, String> comment = data.get(position);
         
         // Setting all values in listview
-        commentLeft.setText(book.get(MainActivity.KEY_DESC_LEFT));
-        commentOwnerLeft.setText(book.get(MainActivity.KEY_BOOK_ADDER_ID_LEFT));
-        commenterUserName.setText(book.get(MainActivity.KEY_BOOK_ADDER_NAME_LEFT));
+        commentLeft.setText(comment.get(MainActivity.KEY_DESC_LEFT));
+        commentOwnerLeft.setText(comment.get(MainActivity.KEY_BOOK_ADDER_ID_LEFT));
+        commenterUserName.setText(comment.get(MainActivity.KEY_BOOK_ADDER_NAME_LEFT));
+        commentId.setText(comment.get(ApplicationConstants.TYPE_COMMENT_ID));
 //        imageLoader.DisplayImage(book.get(MainActivity.KEY_COVER_LEFT), image_left);
        
         return vi;
