@@ -114,4 +114,8 @@
 	<string name="hint_new_password">New Password</string>
 	<string name="hint_retype_new_password">Retype new password</string>
 	
+	<!-- Popup window for comment  -->
+	<string name="popup_delete_comment">Delete Comment</string>
+	<string name="popup_profile">Go to Profile</string>
+	
 </resources>
