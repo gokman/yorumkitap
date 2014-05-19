@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_comment_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="1dp" >
+
+    <Button
+        android:id="@+id/popup_delete_comment_button"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="1dp"
+        android:background="@color/popupBg"
+        android:padding="0dp"
+        android:textColor="@color/white"
+        android:text="@string/popup_delete_comment" />
+
+    <Button
+        android:id="@+id/popup_profile_button"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="1dp"
+        android:background="@color/popupBg"
+        android:padding="0dp"
+        android:textColor="@color/white"
+        android:text="@string/popup_profile" />
+
+</LinearLayout>
