@@ -10,5 +10,6 @@
     <color name="commenterName">#2b69bd</color>
     <color name="generalBg2">#25074b</color>
     <color name="generalBg">#583972</color>
+    <color name="popupBg">#fd743f</color>
 </resources>
 
