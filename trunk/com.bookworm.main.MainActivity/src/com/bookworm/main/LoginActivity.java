@@ -1,15 +1,28 @@
 package com.bookworm.main;
 
-import static com.bookworm.common.ApplicationConstants.*;
+import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_USER;
+import static com.bookworm.common.ApplicationConstants.EMPTY_STRING;
+import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LOGIN;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_REGISTER;
+import static com.bookworm.common.ApplicationConstants.password;
+import static com.bookworm.common.ApplicationConstants.sharedPrefName;
+import static com.bookworm.common.ApplicationConstants.unregistered_password;
+import static com.bookworm.common.ApplicationConstants.unregistered_username;
+import static com.bookworm.common.ApplicationConstants.username;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,16 +37,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bookworm.common.ApplicationConstants;
+import com.bookworm.common.LoginPlatform;
+import com.bookworm.model.User;
+import com.bookworm.operation.UserOperation;
 import com.bookworm.util.Validation;
 import com.bookworm.ws.user.LoginWS;
+import com.bookworm.ws.user.RegisterWS;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphUser;
+import com.facebook.widget.LoginButton;
 
-public class LoginActivity extends ActivityBase implements OnClickListener {
+public class LoginActivity extends Activity implements OnClickListener {
 
 	static String resultEmail;
 	boolean registered = false;
 
 	private SharedPreferences SP;
-
 	private EditText _email;
 	private EditText _password;
 	private CheckBox _rememberMe;
@@ -42,15 +65,37 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 	private String savedPassword = EMPTY_STRING;
 	private String loginResult="a";
 	
+	//facebook variables
+	private MainFragment mainFragment;
+	private LoginButton faceLoginBtn;
+	private static final List<String> PERMISSIONS = new ArrayList<String>() {
+        {
+            add("email");
+            add("public_profile");
+        }
+    };
+    private UiLifecycleHelper uiHelper;
+    private static final String TAG = "MainFragment";
+    
+    
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-
 		
 		setContentView(R.layout.login);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title);
+		
+		//facebook elemanları
+		faceLoginBtn = (LoginButton)findViewById(R.id.facebookLoginButton);
+		faceLoginBtn.setReadPermissions(PERMISSIONS);
+		uiHelper = new UiLifecycleHelper(this, new Session.StatusCallback() {       
+	            public void call(Session session, SessionState state, Exception exception) {
+	                onSessionStateChange(session, state, exception);
+	            }
+	        });
+	        uiHelper.onCreate(savedInstanceState);
 
 		SP = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE);
 
@@ -172,10 +217,27 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 						EmailForResetTokenActivity.class);
 				startActivity(mainPageIntent);
 				
-			}
+			}	
 		});
+	
+		//facebook login başla
+		/* if (savedInstanceState == null) {
+		        // Add the fragment on initial activity setup
+		        mainFragment = new MainFragment();
+		        getSupportFragmentManager()
+		        .beginTransaction()
+		        .add(android.R.id.content, mainFragment)
+		        .commit();
+		    } else {
+		        // Or set the fragment from restored state info
+		        mainFragment = (MainFragment) getSupportFragmentManager()
+		        .findFragmentById(android.R.id.content);
+		    }*/
+		
+		//facebook login bitir
 
 	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -196,20 +258,19 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 		}
 	}
 
-	public void onClick(View v) {
-	}
-
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
+	    Session.getActiveSession().onActivityResult(this, 
+	    		                                    requestCode, resultCode, intent);
 		if (requestCode == 100) {
 			if (resultCode == RESULT_OK) {
 
 			}
 		}
-
+		uiHelper.onActivityResult(requestCode, resultCode, intent);
 	}
 
 	@Override
@@ -232,4 +293,134 @@ public class LoginActivity extends ActivityBase implements OnClickListener {
 		
 		return true;
 	}
+
+
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	//facebook methods
+	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+		   /* if (state.isOpened() && !sessionHasNecessaryPerms(session)) {
+		    	 session.requestNewReadPermissions(
+	                     new NewPermissionsRequest(
+	                             MainFragment.this, 
+	                             getMissingPermissions(session)));   */
+			if (state.isOpened()){
+		        Log.i(TAG, "Logged in...");
+		        makeMeRequest(session);
+		    } else if (state.isClosed()) {
+		        Log.i(TAG, "Logged out...");
+		    }
+    }
+	
+	private void makeMeRequest(final Session session) {
+		// Make an API call to get user data and define a
+		// new callback to handle the response.
+		Request request = Request.newMeRequest(session,
+		new Request.GraphUserCallback() {
+		
+		public void onCompleted(GraphUser user, Response response) {
+		// If the response is successful
+		if (session == Session.getActiveSession()) {
+		if (user != null) {
+
+		String fullName = user.getName();
+		String firstName = user.getFirstName();
+		String lastName = user.getLastName();
+		String fbId = user.getId();
+		String username = user.getUsername();
+		String email = (String) user.asMap().get("email");
+		
+		
+			try {
+				    String loginResult="";
+					//böyle bir kullanıcı var ise login ol
+					if(new UserOperation().isUserExist(new User(email))){
+						
+						try {
+							String credentials []= {email,fbId};
+							//new LoginUserDataTask().execute(credentials).get();
+							loginResult=new LoginWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_LOGIN,
+									credentials[0],credentials[1]).get();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						} catch (ExecutionException e) {
+							e.printStackTrace();
+						}
+						
+					//kullanıcı mevcut değil ise kaydet ve login ol
+					}else{
+						User facebookUser = new User(fullName,email,fbId,"",
+								                      Integer.valueOf(1),
+								                      Integer.valueOf(1));
+					
+					/*	User facebookUser = new User("dene","dene","dene","",
+			                      Integer.valueOf(1),
+			                      Integer.valueOf(1));*/
+						
+						String result=new RegisterWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_REGISTER,
+			            		                 facebookUser).get();
+			                
+			            try {
+							String credentials []= {email,fbId};
+							//new LoginUserDataTask().execute(credentials).get();
+							loginResult=new LoginWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_LOGIN,
+									credentials[0],credentials[1]).get();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						} catch (ExecutionException e) {
+							e.printStackTrace();
+						}
+			            
+					}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		}
+		if (response.getError() != null) {
+		// Handle errors, will do so later.
+		}
+		}
+
+		});
+
+		request.executeAsync();
+		} 
+	
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    
+	    // For scenarios where the main activity is launched and user
+	    // session is not null, the session state change notification
+	    // may not be triggered. Trigger it if it's open/closed.
+	    Session session = Session.getActiveSession();
+	    if (session != null &&
+	           (session.isOpened() || session.isClosed()) ) {
+	        onSessionStateChange(session, session.getState(), null);
+	    }
+	    
+	    uiHelper.onResume();
+	}
+
+	@Override
+	public void onPause() {
+	    super.onPause();
+	    uiHelper.onPause();
+	}
+
+	@Override
+	public void onDestroy() {
+	    super.onDestroy();
+	    uiHelper.onDestroy();
+	}
+	
 }

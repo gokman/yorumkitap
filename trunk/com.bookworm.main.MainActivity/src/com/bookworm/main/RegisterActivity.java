@@ -87,7 +87,8 @@ public class RegisterActivity extends ActivityBase {
 							
 						User user = new User(usernameTextView.getText().toString(),
 								             emailTextView.getText().toString(),
-								             passwordTextView.getText().toString(),Integer.valueOf(0));		
+								             passwordTextView.getText().toString(),Integer.valueOf(0),
+								             Integer.valueOf(0));		
 		
 						result=new RegisterWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_REGISTER,user).get();
 							
