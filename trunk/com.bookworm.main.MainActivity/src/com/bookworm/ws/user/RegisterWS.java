@@ -29,7 +29,7 @@ public class RegisterWS extends AsyncTask<Object, Void, String> {
         protected void onPostExecute(String result) {
 
 					
-       }
+        }
     	public static String POST(String url,User user){
 
     		 InputStream inputStream = null;
@@ -43,7 +43,8 @@ public class RegisterWS extends AsyncTask<Object, Void, String> {
     	            // make GET request to the given URL
     	            HttpPost post=new HttpPost(url);
     	            post.setHeader("Accept", "application/json");
-    	            post.setHeader("Content-Type", "application/json");
+    	            post.setHeader("Content-Type", "application/json; charset=UTF-8");
+    	           
     	            
     	            JSONObject jsonum=new JSONObject();
                     jsonum.put("userName", user.getUserName());
@@ -53,9 +54,13 @@ public class RegisterWS extends AsyncTask<Object, Void, String> {
                    // jsonum.put("creationDate", user.getCreationDate());
     	           // jsonum.put("lastUpdateDate", user.getLastUpdateDate());
     	            jsonum.put("enabled", user.getEnabled());
+    	            
+    	            if(user.getLoginPlatform()!=null){
+    	            	jsonum.put("loginPlatform", user.getLoginPlatform());
+    	            }
 
-    	            StringEntity sampleEntity=new StringEntity(jsonum.toString());
-                    sampleEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+    	            StringEntity sampleEntity=new StringEntity(jsonum.toString(),HTTP.UTF_8);
+                    sampleEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json; charset=UTF-8"));
 
     	            post.setEntity(sampleEntity);
     	 
