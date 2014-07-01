@@ -14,6 +14,7 @@ public class User{
 	private Date lastUpdateDate;
 	private Integer enabled;
 	private String activationToken;
+	private Integer loginPlatform;
 
 	public User() {
 	}
@@ -22,11 +23,24 @@ public class User{
 		this.userId = id;
 	}
 	
+	public User(String userEmail) {
+		this.userEmail = userEmail;
+	}
+	
+	
 	public User(String userName,String userEmail,String password,Integer enabled){
 		this.userName=userName;
 		this.userEmail=userEmail;
 		this.password=password;
 		this.enabled=enabled;
+	}
+	
+	public User(String userName,String userEmail,String password,Integer enabled,Integer loginPlatform){
+		this.userName=userName;
+		this.userEmail=userEmail;
+		this.password=password;
+		this.enabled=enabled;
+		this.loginPlatform=loginPlatform;
 	}
 	
 	public User(String userName,String userEmail,String password,
@@ -36,7 +50,17 @@ public class User{
 	this.password=password;
 	this.enabled=enabled;
 	this.about=about;
-}
+    }
+	
+	public User(String userName,String userEmail,String password,
+		     String about,Integer enabled,Integer loginPlatform){
+	this.userName=userName;
+	this.userEmail=userEmail;
+	this.password=password;
+	this.enabled=enabled;
+	this.about=about;
+	this.loginPlatform=loginPlatform;
+    }
 	
 	public User(String userName,String userEmail,String password,
 			Date creationDate, Date lastUpdateDate,Integer enabled){
@@ -128,6 +152,14 @@ public class User{
 
 	public void setActivationToken(String activationToken) {
 		this.activationToken = activationToken;
+	}
+	
+	public Integer getLoginPlatform() {
+		return loginPlatform;
+	}
+
+	public void setLoginPlatform(Integer loginPlatform) {
+		this.loginPlatform = loginPlatform;
 	}
 
 }
