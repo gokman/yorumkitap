@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_id">667003943367651</string>
     <string name="app_name">Bookworm</string>
     <string name="app_name_tr">Book-let</string>
     <string name="hello_world">Hello world!</string>
@@ -14,27 +16,26 @@
     <string name="populer_books">Populer Kitaplar</string>
     <string name="latest_books">Yeni Çıkanlar</string>
     <string name="publisher">Editörden</string>
-    
+
     <!-- home page -->
     <string name="mainBookListNext">Show More</string>
 
-    <!-- BookDetail UI Component Details  -->
+    <!-- BookDetail UI Component Details -->
     <string name="bookDetailComment">Comment</string>
     <string name="bookDetailAddComment">Add Comment</string>
     <string name="like">Like</string>
     <string name="unlike">Unlike</string>
-    
-    <!--  ExplorePage UI Component Details -->
+
+    <!-- ExplorePage UI Component Details -->
     <string name="explorePageSearch">Ara</string>
     <string name="explorePagePopulers">Vitrindekiler</string>
     <string name="exploreBooks">Kitap</string>
     <string name="exploreUsers">Okur</string>
     <string name="noResultFound">No result found related with your search key !!!</string>
-    
+
     <!-- ProfilePage UI Component Details -->
     <string name="profilePageStatus">Durum</string>
-    
-    
+
     <!-- Login&Register UI Component Labels -->
     <string name="username">Kullanıcı Adı</string>
     <string name="email">E-mail</string>
@@ -44,77 +45,74 @@
     <string name="login">Giriş</string>
     <string name="wannaToCreateAccount">Yeni Üyeyim, Hesap Oluşturmak İstiyorum</string>
     <string name="wrongEmailPassword">Email or password is wrong</string>
-    
-    
+    <string name="facebookLogin">Facebook Log In</string>
+    <string name="facebookLogout">Facebook Log Out</string>
+
     <!-- AddBook UI Component Labels -->
     <string name="writerName">Yazar</string>
     <string name="bookName">Kitap Adı</string>
     <string name="bookDescription">Açıklama</string>
     <string name="bookTags">Tags...</string>
     <string name="btnBookAdd">Kitap Ekle</string>
-    
-    
-    
-    
+
     <!-- Book properties -->
     <string name="writer">Yazar : </string>
     <string name="publisherAndDate">Y.evi-Tarihi : </string>
     <string name="adderAndDate">Ekleyen: </string>
     <string name="title">kitap ismi</string>
     <string name="description">Kitap hakkında kısa bilgi</string>
-    
-    
+
     <!-- Edit Profile Page -->
-    <string name="edit_profile_username">Kullanıcı Adı</string>    
+    <string name="edit_profile_username">Kullanıcı Adı</string>
     <string name="edit_profile_about">Hakkımda</string>
     <string name="edit_profile_image">Profil Resmi</string>
     <string name="edit_profile_upload">Yükle</string>
     <string name="edit_profile_update">Güncelle</string>
-    
-	
 
-	<!-- Menu Items -->
-	<string name="menu_add_book">Kitap Ekle</string>
-	<string name="rememberMe">Beni Hatırla</string>
-	<string name="forgotPassword">Şifremi Unuttum</string>
-	
-	<!-- Activity Base -->
-	<string name="cameraResolutionNotification">Camera resolution must be decreased</string>
-	<string name="cameraError">There was an error with the camera.</string>
-	<string name="logoutWarningTitle">Logout Warning</string>
-	<string name="logoutWarningMessage">You\'re going to log out.Are you sure ?</string>
-	<string name="okey">Ok</string>
-	<string name="cancel">Cancel</string>
-	
-	<!-- Register Activity and UI -->
-	<string name="completionRegister">Registration completed.You can sign in !!!</string>
-	
-	<!-- Timeline row2 -->
-	<string name="timeLineRow2FollowText">follows</string>
-	
-	<!-- Timeline main page -->
-	<string name="goPast">Go Past</string>
-	
-	<!-- Comments Arena -->
-	<string name="comments">Comments</string>
-	<string name="btnCommentAdd">Add</string>
-	<string name="commentLabel">Add Comment</string>	
-	
-	<!-- Send Email for Reset Password -->
-	<string name="explainEmailForResetPassword">A password reset token will send your email address</string>
-	<string name="SendButton">Send</string>
-	
-	<!-- Reset Password Page -->
-	<string name="ResetButton">Reset</string>
-	
-	<!-- hints for editTexts -->
-	<string name="hint_email">Email</string>
-	<string name="hint_reset_token">Reset Token</string>
-	<string name="hint_new_password">New Password</string>
-	<string name="hint_retype_new_password">Retype new password</string>
-	
-	<!-- Popup window for comment  -->
-	<string name="popup_delete_comment">Delete Comment</string>
-	<string name="popup_profile">Go to Profile</string>
-	
+    <!-- Menu Items -->
+    <string name="menu_add_book">Kitap Ekle</string>
+    <string name="rememberMe">Beni Hatırla</string>
+    <string name="forgotPassword">Şifremi Unuttum</string>
+
+    <!-- Activity Base -->
+    <string name="cameraResolutionNotification">Camera resolution must be decreased</string>
+    <string name="cameraError">There was an error with the camera.</string>
+    <string name="logoutWarningTitle">Logout Warning</string>
+    <string name="logoutWarningMessage">You\'re going to log out.Are you sure ?</string>
+    <string name="okey">Ok</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Register Activity and UI -->
+    <string name="completionRegister">Registration completed.You can sign in !!!</string>
+
+    <!-- Timeline row2 -->
+    <string name="timeLineRow2FollowText">follows</string>
+
+    <!-- Timeline main page -->
+    <string name="goPast">Go Past</string>
+
+    <!-- Comments Arena -->
+    <string name="comments">Comments</string>
+    <string name="btnCommentAdd">Add</string>
+    <string name="commentLabel">Add Comment</string>
+
+    <!-- Send Email for Reset Password -->
+    <string name="explainEmailForResetPassword">A password reset token will send your email address</string>
+    <string name="SendButton">Send</string>
+
+    <!-- Reset Password Page -->
+    <string name="ResetButton">Reset</string>
+
+    <!-- hints for editTexts -->
+    <string name="hint_email">Email</string>
+    <string name="hint_reset_token">Reset Token</string>
+    <string name="hint_new_password">New Password</string>
+    <string name="hint_retype_new_password">Retype new password</string>
+
+    <!-- Popup window for comment -->
+    <string name="popup_delete_comment">Delete Comment</string>
+    <string name="popup_profile">Go to Profile</string>
+    <string name="title_activity_face_book_login">FaceBookLoginActivity</string>
+    <string name="action_settings">Settings</string>
+
 </resources>
