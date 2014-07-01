@@ -32,32 +32,22 @@
 
             <!-- Email Label -->
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/email"
-                android:textColor="@color/ownGray" />
-
             <EditText
                 android:id="@+id/emailText"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dip"
+                android:hint="@string/email"
                 android:layout_marginTop="5dip"
                 android:singleLine="true" />
             <!-- Password Label -->
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/password"
-                android:textColor="@color/ownGray" />
 
             <EditText
                 android:id="@+id/passwordText"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
+                android:hint="@string/password"
                 android:password="true"
                 android:singleLine="true" />
             <!-- Login button -->
@@ -91,7 +81,7 @@
                 android:id="@+id/btnLogin"
                 style="@style/giris_button"
                 android:layout_marginTop="10dip"
-                android:height="50dip"
+                android:height="40dip"
                 android:text="@string/login" />
 
             <!-- Link to Registration Screen -->
@@ -100,12 +90,21 @@
                 android:id="@+id/link_to_register"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dip"
-                android:layout_marginTop="20dip"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
                 android:gravity="center"
                 android:text="@string/wannaToCreateAccount"
                 android:textColor="@color/newAccountBlue"
-                android:textSize="20dip" />
+                android:textSize="15sp" />
+            
+               <com.facebook.widget.LoginButton
+		        android:id="@+id/facebookLoginButton"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="5dp"
+		         />
+               <!-- facebook:fetch_user_info="true"
+               facebook:confirm_logout="false"-->
         </LinearLayout>
   </RelativeLayout>
 
