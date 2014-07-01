@@ -23,54 +23,52 @@ import com.bookworm.model.Book;
 import com.bookworm.model.User;
 import com.bookworm.util.SearchCriteria;
 
-public class IsUserExistWS extends
-		AsyncTask<Object, Void, Boolean> {
+public class IsUserExistWS extends AsyncTask<Object, Void, Boolean> {
 
 	@Override
 	protected Boolean doInBackground(Object... url) {
 
-		 return GET((String)url[0],(User)url[1]);
+		return GET((String) url[0], (User) url[1]);
 	}
 
 	protected void onPostExecute(boolean result) {
 	}
 
-	public static boolean GET(String url,User user) {
+	public static boolean GET(String url, User user) {
 		InputStream inputStream = null;
 		boolean result = false;
 		try {
 
-            // create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
+			// create HttpClient
+			HttpClient httpclient = new DefaultHttpClient();
 
-            // make GET request to the given URL
-            HttpPost post=new HttpPost(url);
-            post.setHeader("Accept", "application/json");
-            post.setHeader("Content-Type", "application/json");
-            
-            
-        	JSONObject jsonum = new JSONObject();
-            jsonum.put("userEmail", user.getUserEmail());
-            
-            StringEntity sampleEntity=new StringEntity(jsonum.toString());
-            sampleEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+			// make GET request to the given URL
+			HttpPost post = new HttpPost(url);
+			post.setHeader("Accept", "application/json");
+			post.setHeader("Content-Type", "application/json");
 
-            post.setEntity(sampleEntity);
-            HttpResponse httpResponse = httpclient.execute(post);
+			JSONObject jsonum = new JSONObject();
+			jsonum.put("userEmail", user.getUserEmail());
 
-            inputStream = httpResponse.getEntity().getContent();
+			StringEntity sampleEntity = new StringEntity(jsonum.toString());
+			sampleEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
+					"application/json"));
+
+			post.setEntity(sampleEntity);
+			HttpResponse httpResponse = httpclient.execute(post);
+
+			inputStream = httpResponse.getEntity().getContent();
 
 			// convert inputstream to string
 			if (inputStream != null)
-				 result = Utils.convertInputStreamToBoolean(inputStream);
+				result = Utils.convertInputStreamToBoolean(inputStream);
 			else
-				 result =false;
+				result = false;
 
 		} catch (Exception e) {
 			e.getLocalizedMessage();
 		}
-		
-		
+
 		return result;
 	}
 }
