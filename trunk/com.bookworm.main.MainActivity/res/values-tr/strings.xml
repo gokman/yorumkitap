@@ -45,6 +45,8 @@
     <string name="login">Giriş</string>
     <string name="wannaToCreateAccount">Yeni Üyeyim, Hesap Oluşturmak İstiyorum</string>
     <string name="wrongEmailPassword">Email veya şifre hatalı</string>
+     <string name="facebookLogin">Facebook Giriş</string>
+    <string name="facebookLogout">Facebook Çıkış</string>
     
     
     <!-- AddBook UI Component Labels -->
