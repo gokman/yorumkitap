@@ -45,6 +45,8 @@
     <string name="login">Enter</string>
     <string name="wannaToCreateAccount">New member, want to create account</string>
     <string name="wrongEmailPassword">Email or password is wrong</string>
+    <string name="facebookLogin">Facebook Log In</string>
+    <string name="facebookLogout">Facebook Log Out</string>
     
     
     <!-- AddBook UI Component Labels -->
