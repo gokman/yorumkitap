@@ -194,14 +194,19 @@ public class LoginActivity extends Activity implements OnClickListener {
 					SharedPreferences.Editor editit = SP.edit();
 					editit.clear();
 					//email ve kullanici adi kaydedilir
-					ApplicationConstants.signed_in_email=loginResult.substring(loginResult.indexOf(":")+1,loginResult.indexOf(":",loginResult.indexOf(":")+1));
-					ApplicationConstants.signed_in_username=loginResult.substring(loginResult.indexOf(":",loginResult.indexOf(":")+1)+1,loginResult.lastIndexOf(":"));
-					ApplicationConstants.signed_in_userid=Long.parseLong(loginResult.substring(loginResult.lastIndexOf(":")+1));
-					ApplicationConstants.signed_in_password=_password.getText().toString();
 					
-					Intent mainPageIntent = new Intent(getApplicationContext(),
-							MainActivity.class);
-					startActivity(mainPageIntent);
+					saveLoggedInUser(loginResult.substring(loginResult.indexOf(":",loginResult.indexOf(":")+1)+1,loginResult.lastIndexOf(":")), 
+							        _password.getText().toString(), 
+							        Long.parseLong(loginResult.substring(loginResult.lastIndexOf(":")+1)), 
+							        loginResult.substring(loginResult.indexOf(":")+1,loginResult.indexOf(":",loginResult.indexOf(":")+1)));
+					//ApplicationConstants.signed_in_email=loginResult.substring(loginResult.indexOf(":")+1,loginResult.indexOf(":",loginResult.indexOf(":")+1));
+					//ApplicationConstants.signed_in_username=loginResult.substring(loginResult.indexOf(":",loginResult.indexOf(":")+1)+1,loginResult.lastIndexOf(":"));
+					//ApplicationConstants.signed_in_userid=Long.parseLong(loginResult.substring(loginResult.lastIndexOf(":")+1));
+					//ApplicationConstants.signed_in_password=_password.getText().toString();
+					
+					//Intent mainPageIntent = new Intent(getApplicationContext(),
+					//		MainActivity.class);
+					//startActivity(mainPageIntent);
 				}
 				}
 			}
@@ -349,16 +354,13 @@ public class LoginActivity extends Activity implements OnClickListener {
 						} catch (ExecutionException e) {
 							e.printStackTrace();
 						}
+						saveLoggedInUser(username, fbId, Long.parseLong(fbId), email);
 						
 					//kullanıcı mevcut değil ise kaydet ve login ol
 					}else{
 						User facebookUser = new User(fullName,email,fbId,"",
 								                      Integer.valueOf(1),
 								                      Integer.valueOf(1));
-					
-					/*	User facebookUser = new User("dene","dene","dene","",
-			                      Integer.valueOf(1),
-			                      Integer.valueOf(1));*/
 						
 						String result=new RegisterWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_REGISTER,
 			            		                 facebookUser).get();
@@ -373,6 +375,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 						} catch (ExecutionException e) {
 							e.printStackTrace();
 						}
+			            
+			            saveLoggedInUser(username, fbId, Long.parseLong(fbId), email);
 			            
 					}
 			} catch (InterruptedException e) {
@@ -421,6 +425,19 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public void onDestroy() {
 	    super.onDestroy();
 	    uiHelper.onDestroy();
+	}
+	
+	public void saveLoggedInUser(String username,String password,Long userId,String email){
+		
+		ApplicationConstants.signed_in_email=email;
+		ApplicationConstants.signed_in_username=username;
+		ApplicationConstants.signed_in_userid=userId;
+		ApplicationConstants.signed_in_password=password;
+		
+		Intent mainPageIntent = new Intent(getApplicationContext(),MainActivity.class);
+		startActivity(mainPageIntent);
+		
+		
 	}
 	
 }
