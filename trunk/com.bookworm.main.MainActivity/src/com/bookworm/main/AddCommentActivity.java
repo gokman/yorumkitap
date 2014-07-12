@@ -278,7 +278,6 @@ public class AddCommentActivity extends ActivityBase implements OnClickListener 
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		super.onActivityResult(requestCode, resultCode);
 	}
 
 	public void onClick(View v) {
