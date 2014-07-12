@@ -6,19 +6,29 @@ import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_FOLLOWSHIP;
 import static com.bookworm.common.ApplicationConstants.BOOKLET_ITEM_USER;
 import static com.bookworm.common.ApplicationConstants.WS_ENDPOINT_ADRESS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_ADD;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_DELETE;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_COMMENTED_BOOKS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_LIST_FOLLOWSHIPS;
 import static com.bookworm.common.ApplicationConstants.WS_OPERATION_UNFOLLOW;
-import static com.bookworm.common.ApplicationConstants.WS_OPERATION_DELETE;
+import static com.bookworm.common.ApplicationConstants.WS_OPERATION_UPDATE;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +54,7 @@ import com.bookworm.ws.followship.AddFollowshipWS;
 import com.bookworm.ws.followship.CheckFollowshipWS;
 import com.bookworm.ws.followship.UnfollowWS;
 import com.bookworm.ws.user.ListUsersWS;
+import com.bookworm.ws.user.UpdateUserWS;
 
 public class ProfileActivity extends ActivityBase implements OnClickListener{
 
@@ -62,7 +73,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 
 	private Long followshipStatus; 
 	public ImageLoader imageLoader;
-	
+	private final int ACTIVITY_CHOOSE_PHOTO = 41;
 	    /** Called when the activity is first created. */
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
@@ -94,7 +105,7 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 
 	        currentUserId = ApplicationConstants.signed_in_userid;
 	        
-	        if(profileUserId==null || profileUserId.longValue()==-1){
+	        if(profileUserId==null || profileUserId.longValue()==-1 || profileUserId.longValue()==0){
 	        	profileUserId = currentUserId;
 	        }
 	        
@@ -102,6 +113,30 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 
 			try {
 		    	
+				//profile sahibinin bilgileri
+		    	SearchCriteria scForProfileUser = new SearchCriteria();
+		    	List<Long> profileUserIdList = new ArrayList<Long>();
+		    	profileUserIdList.add(profileUserId);
+		    	scForProfileUser.setUserIdList(profileUserIdList);
+				List<User> profileUser = new ListUsersWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_LIST+"/",
+						scForProfileUser,
+						ApplicationConstants.signed_in_email,
+						ApplicationConstants.signed_in_password
+						).get();
+				
+				if(profileUser != null && profileUser.size()==1){
+				      	User profUser = profileUser.get(0);
+				        if(profUser.getProfileImage()!=null){
+
+				        	Bitmap bm = BitmapFactory.decodeByteArray(profUser.getProfileImage(), 0, profUser.getProfileImage().length);
+					        DisplayMetrics dm = new DisplayMetrics();
+					        getWindowManager().getDefaultDisplay().getMetrics(dm);
+	
+					        imgProfileImage.setMinimumHeight(dm.heightPixels);
+					        imgProfileImage.setMinimumWidth(dm.widthPixels);
+					        imgProfileImage.setImageBitmap(bm);
+				        }
+				}
 				//profil sahibinin ekledigi kitaplar
 		    	SearchCriteria sc = new SearchCriteria();
 		    	sc.setAdderId(profileUserId);
@@ -336,6 +371,19 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 			txtFollowingsText.setOnClickListener(followingsListener);
 			txtFollowingsCount.setOnClickListener(followingsListener);
 
+			if(currentUserId.longValue() == profileUserId.longValue()){
+				imgProfileImage.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+	
+						 Intent intent = new Intent();
+		                 intent.setType("image/*");
+		                 intent.setAction(Intent.ACTION_GET_CONTENT);
+		                 startActivityForResult(Intent.createChooser(intent,"Select Picture"), ACTIVITY_CHOOSE_PHOTO);
+	
+						
+					}
+				});
+			}
 			setNavigationButtons();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -345,14 +393,6 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 				e.printStackTrace();
 			}
 	    }
-
-	    /**
-	     * 
-	     * @param netmeraContentList
-	     * @return
-	     * 
-	     */
-
 
 	    @Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
@@ -558,7 +598,55 @@ public class ProfileActivity extends ActivityBase implements OnClickListener{
 		protected void onActivityResult(int requestCode, int resultCode,
 				Intent intent) {
 			super.onActivityResult(requestCode, resultCode, intent);
-			super.onActivityResult(requestCode, resultCode);
+			
+			switch (requestCode ){
+				case ACTIVITY_CHOOSE_PHOTO:
+					Uri selectedImageUri = intent.getData();
+					imgProfileImage.setImageURI(selectedImageUri);
+					
+			        String [] proj={MediaStore.Images.Media.DATA};
+			        Cursor cursor = managedQuery( selectedImageUri,
+			                        proj, // Which columns to return
+			                        null,       // WHERE clause; which rows to return (all rows)
+			                        null,       // WHERE clause selection arguments (none)
+			                        null); // Order-by clause (ascending by name)
+			        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			        cursor.moveToFirst();
+
+			        //save image into database
+			    	File file = new File(cursor.getString(column_index));
+			        byte[] bFile = new byte[(int) file.length()];
+			 
+			        try {
+				     FileInputStream fileInputStream = new FileInputStream(file);
+				     //convert file into array of bytes
+				     fileInputStream.read(bFile);
+				     fileInputStream.close();
+			        } catch (Exception e) {
+				     e.printStackTrace();
+			        }
+			 
+			        User user = new User();
+			        user.setUserId(currentUserId);
+			        user.setProfileImage(Base64.encode(bFile, Base64.NO_WRAP));
+
+				try {
+					new UpdateUserWS().execute(WS_ENDPOINT_ADRESS+"/"+BOOKLET_ITEM_USER+"/"+WS_OPERATION_UPDATE,
+							user,
+							ApplicationConstants.signed_in_email,
+							ApplicationConstants.signed_in_password
+							).get();
+
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+					
+				break;
+		}
+			
+			
 		}
 		private void preparelistItems(){
 			table_1_1 = (ImageView)findViewById(R.id.explore_1_1);
