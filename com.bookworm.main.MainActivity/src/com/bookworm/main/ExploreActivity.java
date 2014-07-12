@@ -165,7 +165,6 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		super.onActivityResult(requestCode, resultCode);
     }
 
     

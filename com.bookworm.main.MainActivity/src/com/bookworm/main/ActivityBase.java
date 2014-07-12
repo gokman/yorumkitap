@@ -40,7 +40,6 @@ public class ActivityBase extends Activity{
 	final Context context = this; 
 	private ImageView explore_button;
 	private ImageView home_button;
-	private ImageView add_book_button;
 	private ImageView profile_button;
 	private ImageView timeline_button;
 	private ImageView logout_button;
@@ -51,6 +50,7 @@ public class ActivityBase extends Activity{
 	RadioButton englishRadio;
 	PopupWindow pwindo;
 	
+	private final int ACTIVITY_CHOOSE_PHOTO = 41;
 	public static final String KEY_COVER_LEFT = "coverLeft";
 	public static final String KEY_BOOK_ID_LEFT = "book_id_left";
 	public static final String KEY_COVER_RIGHT = "coverRight";
@@ -67,7 +67,6 @@ public class ActivityBase extends Activity{
 
         setExplore_button((ImageView)findViewById(R.id.explore_button));
 		setHome_button((ImageView)findViewById(R.id.home_button));
-		setAdd_book_button((ImageView)findViewById(R.id.add_button));
 		setProfile_button((ImageView)findViewById(R.id.profile_button));
 		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
 		setLogout_button((ImageView)findViewById(R.id.logout));
@@ -142,44 +141,6 @@ public class ActivityBase extends Activity{
 				startActivity(homeIntent);
 			}
 		});
-		add_book_button.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				try {
-					PackageManager packageManager = getPackageManager();
-					boolean doesHaveCamera = packageManager
-							.hasSystemFeature(PackageManager.FEATURE_CAMERA);
-
-					if (doesHaveCamera) {
-						Camera mCamera = Camera.open();
-						// start the image capture Intent
-						Camera.Parameters cp = mCamera.getParameters();
-
-						Size cameraResolution = cp.getPictureSize();
-						mCamera.release();
-						if (cameraResolution.height > 1024
-								&& cameraResolution.width > 1024) {
-							Toast.makeText(getApplicationContext(),
-									getString(R.string.cameraResolutionNotification),
-									Toast.LENGTH_LONG).show();
-						} else {
-							Intent intent = new Intent(
-									MediaStore.ACTION_IMAGE_CAPTURE);
-							// Get our fileURI
-							fileUri = getOutputMediaFile();
-							intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-							startActivityForResult(intent, 100);
-						}
-					}
-				} catch (Exception ex) {
-					Toast.makeText(getApplicationContext(),
-							getString(R.string.cameraError),
-							Toast.LENGTH_LONG).show();
-				}
-			}
-		});
 		profile_button.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
@@ -226,49 +187,74 @@ public class ActivityBase extends Activity{
 		});
 		
 	}
-	public void onActivityResult(int requestCode,int resultCode){
-		if (requestCode == 100) {
-			if (resultCode == RESULT_OK) {
-
-				Matrix matrix = new Matrix();
-				// rotate the Bitmap (there a problem with exif so we'll query the mediaStore for orientation
-				Cursor cursor = getApplicationContext().getContentResolver().query(this.fileUri,
-				      new String[] { MediaStore.Images.ImageColumns.ORIENTATION }, null, null, null);
-				if (cursor !=null && cursor.getCount() == 1) {
-				cursor.moveToFirst();
-				    int orientation =  cursor.getInt(0);
-				    matrix.preRotate(orientation);
-				    }
-				
-				Intent newbookIntent = new Intent(this, AddBookActivity.class);
-				newbookIntent.putExtra("newBookImageURI", fileUri.toString());
-
-				startActivity(newbookIntent);
-
-			}
-		}
-
-	}
-	private Uri getOutputMediaFile() throws IOException {
-		File mediaStorageDir = new File(
-				Environment
-						.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-				"DayTwentyNine");
-		// Create a media file name
-		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-				.format(new Date());
-		File mediaFile;
-		mediaFile = new File(mediaStorageDir.getPath() + File.separator
-				+ "IMG_" + timeStamp + ".jpg");
-
-		if (mediaFile.exists() == false) {
-			mediaFile.getParentFile().mkdirs();
-			mediaFile.createNewFile();
-		}
-		return Uri.fromFile(mediaFile);
-	}
-
+	protected void onActivityResult(int requestCode,int resultCode,Intent data){
+		switch (requestCode ){
+			case 100:
+				if (resultCode == RESULT_OK) {
 	
+					Matrix matrix = new Matrix();
+					// rotate the Bitmap (there a problem with exif so we'll query the mediaStore for orientation
+					Cursor cursor = getApplicationContext().getContentResolver().query(this.fileUri,
+					      new String[] { MediaStore.Images.ImageColumns.ORIENTATION }, null, null, null);
+					if (cursor !=null && cursor.getCount() == 1) {
+					cursor.moveToFirst();
+					    int orientation =  cursor.getInt(0);
+					    matrix.preRotate(orientation);
+					    }
+					
+					Intent newbookIntent = new Intent(this, AddBookActivity.class);
+					newbookIntent.putExtra("newBookImageURI", fileUri.toString());
+	
+					startActivity(newbookIntent);
+	
+				}
+				break;
+			case ACTIVITY_CHOOSE_PHOTO:
+				
+			    String selectedImagePath;
+			    //ADDED
+			    String filemanagerstring;
+			    
+				   Uri selectedImageUri = data.getData();
+
+	                //OI FILE Manager
+	                filemanagerstring = selectedImageUri.getPath();
+
+	                //MEDIA GALLERY
+	                selectedImagePath = getPath(selectedImageUri);
+
+	                //DEBUG PURPOSE - you can delete this if you want
+	                if(selectedImagePath!=null)
+	                    System.out.println(selectedImagePath);
+	                else System.out.println("selectedImagePath is null");
+	                if(filemanagerstring!=null)
+	                    System.out.println(filemanagerstring);
+	                else System.out.println("filemanagerstring is null");
+
+	                //NOW WE HAVE OUR WANTED STRING
+	                if(selectedImagePath!=null)
+	                    System.out.println("selectedImagePath is the right one for you!");
+	                else
+	                    System.out.println("filemanagerstring is the right one for you!");
+	            				
+				break;
+		}
+		}
+
+	public String getPath(Uri uri) {
+	    String[] projection = { MediaStore.Images.Media.DATA };
+	    Cursor cursor = managedQuery(uri, projection, null, null, null);
+	    if(cursor!=null)
+	    {
+	        //HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+	        //THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+	        int column_index = cursor
+	        .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+	        cursor.moveToFirst();
+	        return cursor.getString(column_index);
+	    }
+	    else return null;
+	}	
 	public Uri getFileUri() {
 		return fileUri;
 	}
@@ -286,12 +272,6 @@ public class ActivityBase extends Activity{
 	}
 	public void setHome_button(ImageView home_button) {
 		this.home_button = home_button;
-	}
-	public ImageView getAdd_book_button() {
-		return add_book_button;
-	}
-	public void setAdd_book_button(ImageView add_book_button) {
-		this.add_book_button = add_book_button;
 	}
 	public ImageView getProfile_button() {
 		return profile_button;
