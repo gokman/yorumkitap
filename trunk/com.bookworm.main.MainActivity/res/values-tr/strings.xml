@@ -34,7 +34,8 @@
     
     <!-- ProfilePage UI Component Details -->
     <string name="profilePageStatus">Durum</string>
-    
+    <string name="profilePageAddedBooks">Eklenen Kitaplar</string>
+    <string name="profilePageCommentedBooks">Yorumlanan Kitaplar</string>
     
     <!-- Login&Register UI Component Labels -->
     <string name="username">Kullanıcı Adı</string>
@@ -47,6 +48,7 @@
     <string name="wrongEmailPassword">Email veya şifre hatalı</string>
      <string name="facebookLogin">Facebook Giriş</string>
     <string name="facebookLogout">Facebook Çıkış</string>
+    <string name="projectIntroductionTitle">Book-let kitap paylaşıp daha çok bilgi sahibi olmanızı sağlar</string>
     
     
     <!-- AddBook UI Component Labels -->
