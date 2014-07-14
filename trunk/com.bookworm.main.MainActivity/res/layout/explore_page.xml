@@ -46,6 +46,7 @@
 	            style="@style/explorePage_button"
 	            android:layout_weight="50"
 	            android:layout_marginRight="5dp"
+	            android:background="@drawable/explore_page_button"
 	            android:text="@string/exploreBooks" />
 
             <Button
@@ -53,6 +54,7 @@
                 style="@style/explorePage_button"
                 android:layout_weight="50"
                 android:layout_marginLeft="5dp"
+                android:background="@drawable/explore_page_button"
                 android:text="@string/exploreUsers" />
 
 </LinearLayout>
