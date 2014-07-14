@@ -95,7 +95,8 @@ public class TimeLineActivity extends ActivityBase implements OnClickListener{
 			        
 				}
 			});			
-			
+	        setNavigationButtons();
+			setFooterButtonState(getTimeline_button());
 			
 	}
 
