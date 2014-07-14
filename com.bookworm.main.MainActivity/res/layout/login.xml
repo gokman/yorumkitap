@@ -12,14 +12,24 @@
         <LinearLayout android:id="@+id/header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="#e35507"
+                android:background="#FFFFFF"
                 android:paddingTop="5dip"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
                 android:paddingBottom="5dip">
                 <!-- Logo Start-->
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/proje_tanitim_baslik"
+                    android:layout_gravity="center"
+                    android:text="@string/projectIntroductionTitle"/>
+               <!--  
+                12.07.2014 tarihinde gokman tarafindan gereksiz gorulup kaldirildi
                 <ImageView android:src="@drawable/logo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dip"/>
+                            android:layout_marginLeft="10dip"/>  -->
                 <!-- Logo Ends -->
         </LinearLayout>
 

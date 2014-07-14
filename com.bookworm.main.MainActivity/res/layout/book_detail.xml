@@ -28,7 +28,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dip"
-                        android:src="@drawable/profile_button" />
+                        android:src="@drawable/profile_button_img" />
 
                     <TextView
                         android:id="@+id/userName"
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dip"
-                android:src="@drawable/profile_button" />
+                android:src="@drawable/profile_button_img" />
                    
                 <TextView
                     android:id="@+id/bookNameText"

@@ -6,7 +6,7 @@
 	android:layout_height="35dip"
 	android:gravity="center_vertical"
 	android:paddingLeft="5dip"
-	android:background="@color/generalBg"
+	android:background="@color/projetColor"
 	android:weightSum="100">
 
 	<ImageView 

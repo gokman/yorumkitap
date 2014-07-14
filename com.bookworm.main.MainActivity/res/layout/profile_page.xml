@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
-                android:src="@drawable/profile_button"
+                android:src="@drawable/profile_button_img"
                 />
 
             <LinearLayout
@@ -116,30 +116,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/proPlusStats"
-            android:orientation="vertical" 
-            android:layout_marginTop="10dip">
+            android:layout_above="@+id/profile_footer_layout"
+            android:layout_marginTop="10dip"
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:id="@+id/commentedOrAddedList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dip"
                 android:orientation="horizontal"
                 android:weightSum="60" >
 
                 <Button
                     android:id="@+id/addedBooks"
-                    style="android:buttonStyle"
+                    style="@style/profilePage_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="30"
-                    android:text="Eklenen Kitaplar" />
+                    android:background="@drawable/profile_page_button"
+                    android:text="@string/profilePageAddedBooks" />
 
                 <Button
                     android:id="@+id/commentedBooks"
+                    style="@style/profilePage_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="30"
-                    android:text="Yorumlanan Kitaplar" />
+                    android:background="@drawable/profile_page_button"
+                    android:text="@string/profilePageCommentedBooks" />
             </LinearLayout>
 
             <TableLayout
@@ -505,9 +512,16 @@
 
         
         <!-- Footer Panel Icons -->
-        
-        
-    <include layout="@layout/alt_dugmeler"/>
+
+    <LinearLayout
+        android:id="@+id/profile_footer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+    
+    <include
+        layout="@layout/alt_dugmeler" />
+    </LinearLayout>
     
     </RelativeLayout>
 
