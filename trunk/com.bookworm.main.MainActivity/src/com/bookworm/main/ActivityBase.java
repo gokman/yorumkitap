@@ -25,6 +25,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -38,10 +39,10 @@ public class ActivityBase extends Activity{
 
 	private Uri fileUri;
 	final Context context = this; 
-	private ImageView explore_button;
-	private ImageView home_button;
-	private ImageView profile_button;
-	private ImageView timeline_button;
+	private ImageButton explore_button;
+	private  ImageButton home_button;
+	private ImageButton profile_button;
+	private ImageButton timeline_button;
 	private ImageView logout_button;
 	private ImageView language_button;
 	private View layout;
@@ -64,19 +65,19 @@ public class ActivityBase extends Activity{
 	public static final String KEY_BOOK_ADDER_NAME_LEFT = "book_adder_name_left";
 	public static final String KEY_BOOK_ID_RIGHT = "book_id_right";	
 	public void setNavigationButtons(){
-
-        setExplore_button((ImageView)findViewById(R.id.explore_button));
-		setHome_button((ImageView)findViewById(R.id.home_button));
-		setProfile_button((ImageView)findViewById(R.id.profile_button));
-		setTimeline_button((ImageView)findViewById(R.id.timeline_button));
+     
+        setExplore_button((ImageButton)findViewById(R.id.explore_button));
+		setHome_button((ImageButton)findViewById(R.id.home_button));
+		setProfile_button((ImageButton)findViewById(R.id.profile_button));
+		setTimeline_button((ImageButton)findViewById(R.id.timeline_button));
 		setLogout_button((ImageView)findViewById(R.id.logout));
 		setLanguage_button((ImageView)findViewById(R.id.language_button));
-		
 		
 		explore_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent exploreIntent = new Intent(getApplicationContext(), ExploreActivity.class);
 				startActivity(exploreIntent);
+				setFooterButtonState(explore_button);
 			}
 		});
 		language_button.setOnClickListener(new View.OnClickListener() {
@@ -133,12 +134,14 @@ public class ActivityBase extends Activity{
 			public void onClick(View v) {
 				Intent timelineIntent = new Intent(getApplicationContext(), TimeLineActivity.class);
 				startActivity(timelineIntent);
+				setFooterButtonState(timeline_button);
 			}
 		});
 		home_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent homeIntent = new Intent(getApplicationContext(),MainActivity.class);
 				startActivity(homeIntent);
+				setFooterButtonState(home_button);
 			}
 		});
 		profile_button.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +149,7 @@ public class ActivityBase extends Activity{
 			public void onClick(View v) {
 				Intent profileIntent = new Intent(getApplicationContext(), ProfileActivity.class);
 				startActivity(profileIntent);
-				
+				setFooterButtonState(profile_button);
 			}
 		});
 		
@@ -261,22 +264,22 @@ public class ActivityBase extends Activity{
 	public void setFileUri(Uri fileUri) {
 		this.fileUri = fileUri;
 	}
-	public ImageView getExplore_button() {
+	public ImageButton getExplore_button() {
 		return explore_button;
 	}
-	public void setExplore_button(ImageView explore_button) {
+	public void setExplore_button(ImageButton explore_button) {
 		this.explore_button = explore_button;
 	}
-	public ImageView getHome_button() {
+	public ImageButton getHome_button() {
 		return home_button;
 	}
-	public void setHome_button(ImageView home_button) {
+	public void setHome_button(ImageButton home_button) {
 		this.home_button = home_button;
 	}
-	public ImageView getProfile_button() {
+	public ImageButton getProfile_button() {
 		return profile_button;
 	}
-	public void setProfile_button(ImageView profile_button) {
+	public void setProfile_button(ImageButton profile_button) {
 		this.profile_button = profile_button;
 	}
 	public ImageView getLanguage_button() {
@@ -285,10 +288,10 @@ public class ActivityBase extends Activity{
 	public void setLanguage_button(ImageView language_button) {
 		this.language_button = language_button;
 	}
-	public ImageView getTimeline_button() {
+	public ImageButton getTimeline_button() {
 		return timeline_button;
 	}
-	public void setTimeline_button(ImageView timeline_button) {
+	public void setTimeline_button(ImageButton timeline_button) {
 		this.timeline_button = timeline_button;
 	}
 	public ImageView getLogout_button() {
@@ -308,6 +311,31 @@ public class ActivityBase extends Activity{
 	}
 	public void setEnglishRadio(RadioButton englishRadio) {
 		this.englishRadio = englishRadio;
+	}
+	
+	protected void setFooterButtonState(ImageButton button){
+		if(button==getHome_button()){
+			button.setPressed(true);
+			getExplore_button().setPressed(false);
+			getProfile_button().setPressed(false);
+			getTimeline_button().setPressed(false);
+		}else if(button==getExplore_button()){
+			button.setPressed(true);
+			getHome_button().setPressed(false);
+			getProfile_button().setPressed(false);
+			getTimeline_button().setPressed(false);
+		}else if(button==getProfile_button()){
+			button.setPressed(true);
+			getExplore_button().setPressed(false);
+			getHome_button().setPressed(false);
+			getTimeline_button().setPressed(false);
+		}else if(button==getTimeline_button()){
+			button.setPressed(true);
+			getExplore_button().setPressed(false);
+			getProfile_button().setPressed(false);
+			getHome_button().setPressed(false);
+		}
+	
 	}
 	
 }
