@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -112,7 +113,9 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 				Object o = latestBooksListView.getItemAtPosition(position);
 			}
 		});
+		
 		setNavigationButtons();
+		setFooterButtonState(getHome_button());
 	}
 
 	@Override
@@ -131,4 +134,6 @@ public class MainActivity extends ActivityBase implements OnClickListener {
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 	}
+	
+	
 }
