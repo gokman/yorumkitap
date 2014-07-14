@@ -155,7 +155,9 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 
 
 		});
+		
 		setNavigationButtons();
+		setFooterButtonState(getExplore_button());
     }
 	public void onClick(View v) {
 		
@@ -384,4 +386,5 @@ public class ExploreActivity extends ActivityBase implements OnClickListener{
 	private TextView text_5_1;
 	private TextView text_5_2;
 	private TextView text_5_3;	
+	
 }
