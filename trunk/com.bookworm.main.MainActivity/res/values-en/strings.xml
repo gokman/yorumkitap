@@ -34,7 +34,8 @@
     
     <!-- ProfilePage UI Component Details -->
     <string name="profilePageStatus">Status</string>
-    
+    <string name="profilePageAddedBooks">Added Books</string>
+    <string name="profilePageCommentedBooks">Commented Books</string>
     
     <!-- Login&Register UI Component Labels -->
     <string name="username">User Name</string>
@@ -47,6 +48,7 @@
     <string name="wrongEmailPassword">Email or password is wrong</string>
     <string name="facebookLogin">Facebook Log In</string>
     <string name="facebookLogout">Facebook Log Out</string>
+    <string name="projectIntroductionTitle">Book-let lets you share and learn more about books</string>
     
     
     <!-- AddBook UI Component Labels -->
